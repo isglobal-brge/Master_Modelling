@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Data Modelling</title>
-  <meta name="description" content="Data Modelling" />
+  <title>Data Visualisation and Modelling</title>
+  <meta name="description" content="Data Visualisation and Modelling" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Data Modelling" />
+  <meta property="og:title" content="Data Visualisation and Modelling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Data Modelling" />
+  <meta name="twitter:title" content="Data Visualisation and Modelling" />
   
   
   
@@ -32,7 +32,7 @@
   
   
 
-<link rel="next" href="regresion-lineal-con-big-data.html"/>
+<link rel="next" href="dealing-with-big-data-in-r.html"/>
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -131,19 +131,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Aprendizaje Automático 1</a></li>
+<li><a href="./">Data Visualisation and Modelling</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
-<li class="chapter" data-level="2" data-path="regresion-lineal-con-big-data.html"><a href="regresion-lineal-con-big-data.html"><i class="fa fa-check"></i><b>2</b> Regresion lineal con Big Data</a>
+<li class="chapter" data-level="2" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html"><i class="fa fa-check"></i><b>2</b> Dealing with Big Data in R</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="regresion-lineal-con-big-data.html"><a href="regresion-lineal-con-big-data.html#paralelización"><i class="fa fa-check"></i><b>2.1</b> Paralelización</a></li>
-<li class="chapter" data-level="2.2" data-path="regresion-lineal-con-big-data.html"><a href="regresion-lineal-con-big-data.html#mapreduce"><i class="fa fa-check"></i><b>2.2</b> MapReduce</a>
+<li class="chapter" data-level="2.1" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#nodes-cores-processes-and-threads"><i class="fa fa-check"></i><b>2.1</b> Nodes, cores, processes and threads</a></li>
+<li class="chapter" data-level="2.2" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#paralelización"><i class="fa fa-check"></i><b>2.2</b> Paralelización</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="regresion-lineal-con-big-data.html"><a href="regresion-lineal-con-big-data.html#map"><i class="fa fa-check"></i><b>2.2.1</b> Map</a></li>
-<li class="chapter" data-level="2.2.2" data-path="regresion-lineal-con-big-data.html"><a href="regresion-lineal-con-big-data.html#reduce"><i class="fa fa-check"></i><b>2.2.2</b> Reduce</a></li>
+<li class="chapter" data-level="2.2.1" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#shared-memory-programming"><i class="fa fa-check"></i><b>2.2.1</b> Shared Memory Programming</a></li>
+<li class="chapter" data-level="2.2.2" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#distributed-memory-programming"><i class="fa fa-check"></i><b>2.2.2</b> Distributed Memory Programming</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="regresion-lineal-con-big-data.html"><a href="regresion-lineal-con-big-data.html#linear-regression-for-big-data"><i class="fa fa-check"></i><b>2.3</b> Linear regression for Big Data</a></li>
+<li class="chapter" data-level="2.3" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#mapreduce"><i class="fa fa-check"></i><b>2.3</b> MapReduce</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#map"><i class="fa fa-check"></i><b>2.3.1</b> Map</a></li>
+<li class="chapter" data-level="2.3.2" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#reduce"><i class="fa fa-check"></i><b>2.3.2</b> Reduce</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#linear-regression-for-big-data"><i class="fa fa-check"></i><b>2.4</b> Linear regression for Big Data</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -157,7 +162,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Modelling</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Visualisation and Modelling</a>
           </h1>
         </div>
 
@@ -166,25 +171,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">Data Modelling</h1>
+<h1 class="title">Data Visualisation and Modelling</h1>
 <p class="author"><em>Juan R González</em></p>
 <p class="date"><em>2020-10-07</em></p>
 </div>
 <div id="introducción" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Introducción</h1>
-<p>This bookdown is written as a supporting material for the subject sirven como notas para el curso <a href="https://guies.uab.cat/guies_docents/public/portal/html/2020/assignatura/104870/es">Aprendizaje Automático 1</a> given at <a href="https://www.uab.cat/web/estudiar/official-master-s-degrees/general-information/modelling-for-science-and-engineering-1096480962610.html?param1=1307112830469">Master for Modelling in Science and Engineering</a> from <a href="https://www.uab.cat/web/universitat-autonoma-de-barcelona-1345467954774.html">Autonomous University of Barelona</a> (UAB).</p>
+<p>This bookdown is written as a supporting material for some of the lectures belonging to the subject <a href="https://guies.uab.cat/guies_docents/public/portal/html/2020/assignatura/43482/en">Data Visualisation and Modelling</a> given at <a href="https://www.uab.cat/web/estudiar/official-master-s-degrees/general-information/modelling-for-science-and-engineering-1096480962610.html?param1=1307112830469">Master for Modelling in Science and Engineering</a> from <a href="https://www.uab.cat/web/universitat-autonoma-de-barcelona-1345467954774.html">Autonomous University of Barelona</a> (UAB).</p>
 <p>The contents are:</p>
-<p>*Big data analysis
-- Parallelization in R
-- Linear regression for Big Data</p>
-<p>*Model fitting
-- Multivariate linear regression
-- General rules for variable selection
-- Stepwise variable selection
-- Comparing models
-- Automatic variable selection</p>
-<p>En el aula virtual de la asignatura (Moodle) se dispondrán de numerosas preguntas de autoevaluación para que el alumno pueda ver si adquiere los conocimientos descritos en cada sesión teórica, así como varias prácticas que permitirán formar al alumno en el análisis de datos mediante las principales técnicas de aprendizaje automático utilizando datos reales usando el software R.</p>
-<p>Algunas partes de este material está inspirados en vignettes que se referencian en cada capítulo. Los ejemplos de regresión lineal se basan en el trabajo de <a href="https://github.com/jefftwebb">Jeff Webb</a>. Este material está licenciado bajo una <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+<ul>
+<li>Dealing with big data analysis in R
+<ul>
+<li>Parallelization in R</li>
+<li>MapReduce</li>
+<li>Linear regression for Big Data</li>
+</ul></li>
+<li>Model fitting
+<ul>
+<li>Multivariate linear regression</li>
+<li>General rules for variable selection</li>
+<li>Stepwise variable selection</li>
+<li>Comparing models</li>
+<li>Automatic variable selection</li>
+<li>Cross validation</li>
+<li>K-fold and bootstrap cross validation</li>
+<li>Missing data imputation</li>
+<li>Regularization (Lasso and Elastic Net)</li>
+</ul></li>
+</ul>
+<p>Some parts of this material are inspired in vignettes that are referenced at each chapter. Examples corresponding to model fitting are based on material from <a href="https://github.com/jefftwebb">Jeff Webb</a>. This material is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAEZ0FNQQAAsY58+1GTAAAAAXNSR0IB2cksfwAAAW5QTFRF////////////////7+/v39/f1tXV09bS0tXS0tXR0dTR0dTQ0NTQ0NPPz9PPztLOztHNzdHNzdHMz8/PzdDMzNDMzNDLzM/Ly8/Ly8/Ky87Kys3Jyc3Jyc3IyMzIyMzHx8vHxsrGxsrFxcnFxcnExMnExMjDw8jDxMfDw8fCwsfCwcXAwMXAwMW/wMS/v8S+v8O+vsO+vsK9vcK9vcK8v7+/vMG8vMG7vMC8u8C7u8C6ur+6ur+5ub65ub64uL23t7y2tru1tbq0tLqztLmzs7iysrixsrexsbewsbawsLavsLWvr7Wur7SusLOvrrStrrOtr7KvrbOsrLKrr6+vq7Gqn6OenqCdn5+flpmWk5iTkZSRkZORj4+PiYyJhIaEhIWEgoWCgICAfX98fH98eXx5cHJvcHBwYGBgXV5dUFFQUFBQQ0RDQEBAPj8+NTY1MjMxMDAwKSkpKCkoICAgGxsbEBAQDg4ODQ4NAAAAlzoSDQAAAAN0Uk5TAAoO5yEBUwAAAvhJREFUeNq1lutX2kAQxWmXFDVGYy1EIjQ2VZDiu1CsRQQURYvV+qSKj6II8rANYOT+9z0JqIASo9Y5ydkP2f2d2Ts7d2N4jRcJgwEIBwO+SbdTFGw8ZzZz1n5BdLgnfLPBcCT6fW1jY3P78QEYEA76PWMu0W5lGbrNZGrrYNg+u+ga9fgVcmxtY/NJZAOCfs+IY4Bn6eN8RdlEJX9Ed1uFIfdnfzC8uBJbv5tyqqhMLKa0wQHPiEOwMInLW4Eu9xmzfdDtmQ0uLK3cSXmvBBTS6QJQ2tMC+8YcgpnOApAzSa83mZEBZIff2odGfYFQJNqc8s4VchQhhFA5XO1pgCddAxaFKyeNpBpxGSgNmwXXxMxcWE25fkkJGUIIoExESQPsFnkmC0gUuQmjBGQZq+j2BEKR5dUGLVLIvbkGkxxSrcHO92wCkIyENJL3u+2O8Zng/FJsvR5cRF0GFIqtwaKVvoTcSxrCKOOS7hPdXwLhxUYtUFC+Z6AKQgpoDRZ6joEkaYo4cMQKril/KLLcCE4TVYmqFmkNsK0rD9lIiDdXKCSrwwEhREae6Ve0WIiuPg3M0xVlW171BBe21CGjbLbSYR0c/To3H409TQquHTggREKZ8pbjEiRqqxxXtWjjRLdvLrzUAK4Vr5qwZvEsJsCrzExWF9Tk9gIm84e74BRyRN9xeyS4vkHSmg1yK4Wxt5yUIClDayn0t3SteLWq3RQvjQrN31O87e2dEiBl0tJDJmTrykImN8dtq6AOpIw8Y3OMf2s+bvptU+hJqFrc1yCfpmZDkWYX0mv0H9WWpvS2tH6w8z27e58JJVi7c2ImuNBkQvrBOOWZc0CqsyFKtU3+97OuaQBnXGe90RuTMvCHtpziuWCcmDvPm64m+t2vlmuq/YHqqwnGCcfs1l+mCcbSmgtSe8iDGQNnPEsnrq//fZrltXS4tk3oAOPvT2tPF91uMrXTDNv340JrjQ4hbsHAxeE0z1ksHD99eKFdl0dl/P//Cl+9EPcfS+yBAoqk3eUAAAAASUVORK5CYII=" /></p>
 
 </div>
@@ -194,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 
-<a href="regresion-lineal-con-big-data.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dealing-with-big-data-in-r.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,16 +1,56 @@
-# Regresion lineal con Big Data
+# Dealing with Big Data in R
 
-En la era de los macrodatos (Big Data), podemos tener acceso a grandes volúmenes de datos obtenidos de nuestra población de interés teniendo así la oportunidad de analizar la población prácticamente en su totalidad. Sin embargo, los algoritmos tradicionales para incluso los métodos estadísticos más sencillos (descriptivas, regresión lineal, ...) necesitan mucho tiempo de computación. Para resolver este problema de computación, una de las aproximaciones que disponemos es dividir nuestros datos en conjuntos más pequeños que no requieran tanto coste computacional y combinar estos resultados de forma inteligente de forma que nos permita resolver el problema más grande. Esto se puede hacer paralelizando los cálculos puesto que incluso los ordenadores portátiles ya disponen de multiples cores de computación, y/o combinar los cálculos con paradigmas como *MapReduce* que ha diseñado para tratar Big Data de forma eficiente. Es por ello que en esta sección aprenderemos a:
+In the era of big data, we can have access to large volumes of data obtained from our population of interest. Traditional algorithms implemented for even the simplest statistical methods (descriptive, linear regression, ...) require a lot of computing time. To address this issue, one of the approaches we have is to divide our data into smaller sets that do not require as much computational cost and to combine these results in a clever way that allows us to solve the largest problem. This can be done by parallelizing the calculations since even laptops already have multiple computing cores, and/or combining the calculations with paradigms such as *MapReduce* that has been designed to deal with Big Data efficiently. In this section we will learn how to:
 
-- Paralelizar en R
-- Usar MapReduce
-- Ver una aplicación de cómo implementar la regresión lineal múltiple en un sistema distribuido
+- Parallelize in R
+- Use MapReduce
+- Implement multiple linear regression in a distributed system using MapReduce paradigm
+
+
+## Nodes, cores, processes and threads
+
+The terminology of nodes, cores, processes and threads is not universal. Depending on the computer, software (etc.), they can have various meanings. Typical examples: socket instead of node; cpu instead of core; task instead of process. Supercomputers have complex architectures, mainly due to their processors capability to work together on the same memory space. More precisely, the smallest computing units, called cores, are grouped in nodes. All the cores in one node share the same memory space. In other terms, the cores of the same node can operate on the same data, at the same time; no need for sending the data back and forth. This hardware architecture is summarized in this figure that shows a simple schematic of a 16-core node. The node contains two CPUs and each CPU consists of 8 cores. The schematic also shows the attached memory and the connections between the CPUs and memory.
+
+![Nodes, cores and processors](figures/hpc_node-cpu-core.png){width=50%}
+
+
+
+**Nodes**: Refers to the physical machine/server. In current systems, a node would typically include one or more processors, as well as memory and other hardware.
+
+**Processor**: Refers to the central processing unit (CPU), which contains one or more cores.
+
+**Cores**: Refers to the basic computation unit of the CPU. This is unit that carries out the actual computations.
+
+So in essence, each compute node contains one or more processors/CPUs and each CPU will typically consist of one or more cores.
+
 
 
 ## Paralelización
 
+When using a single CPU, or serial computing, the problem size is limited by the available memory and performance. As data sizes become larger and systems become more complex, programs/applications rapidly run out of resources. Effectively utilising parallel computing can overcome these limitations. Parallel computing has become essential to solving big problems (high resolution, lots of timesteps, etc.) in science and engineering.
 
-There are several R packages to perform parallel computing. The reason for using `doParallel` package, and not `parallel`, is that the  `parallel` package is not working entirely on Windows and you had to write different code for it to work. The `doParallel` package is trying to make it happen on all platforms: UNIX, LINUX and WINDOWS, so it’s a pretty decent wrapper. To me, the most simple way of doing parallelization is to use `mclapply()` function from `parallel` but this cannot be used in Window. 
+Parallel computing can be simply defined as the simultaneous use of multiple processors/computers, i.e. parallel computers, to solve a computational problem. The general pattern is:
+
+* The problem is broken down into discrete sections or separate tasks.
+* Each processor works on its task or section of the problem. With multiple processors this means that several tasks can be processed at any given time.
+* Processors exchange information with other processors, when required.
+
+It allows leveraging the resources of multiple processors/computers, increasing the resources available to the application/software. This enables the execution of tasks that do not fit on a single CPU and the completion of the tasks in a reasonable time. This has many benefits. For instance, we can add more data points which can translate to the use of bigger domains, improved spatial resolution or the inclusion of more particles in a simulation. Faster execution time can translate to increased number of solutions in a given time or a faster time to solution.
+
+
+### Shared Memory Programming
+Parallel programming for shared memory machines is easier since the all cores have access to the same memory address space and so all have access to the same data structures. This greatly simplifies the task of parallelisation. Use can be made of auto-parallelisation via compiler options, loop-level parallelism through compiler directives or OpenMP. On the other hand, speedup and scalability are limited by the number of cores in the shared memory machine, and this is generally a relatively small number. In addition, code can only be used on a shared memory machine.
+
+### Distributed Memory Programming
+Programming for distributed memory machines provides a means to take advantage of more resources than those available on a shared memory machine. In addition, code developed for distributed memory machines can be used on shared memory machines. However, this type of programming is generally more difficult than shared memory programming. Since each processor only has access to its local memory, the programmer is responsible for mapping data structures across the separate nodes. In addition, there is a need to coordinate the communications between nodes, i.e. message passing, to ensure that a node can access remote data when it is needed for a local computation. The standard library used for this is MPI.
+
+Next figure illustrate the difference between both approaches
+
+![Memory Organization: (a) Shared Memory, (b) Distributed Memory](figures/shared_distributed_memory.jpg){width=70%}
+
+
+
+Doing these tasks in R without strong knowledge in informatics can be hard. However, there are several R packages to perform parallel computing. The reason for using `doParallel` package, and not `parallel`, is that the  `parallel` package is not working entirely on Windows and you had to write different code for it to work. The `doParallel` package is trying to make it happen on all platforms: UNIX, LINUX and WINDOWS, so it’s a pretty decent wrapper. To me, the most simple way of doing parallelization is to use `mclapply()` function from `parallel` but this cannot be used in Window. 
 
 
 Let us assume we want to compute $f(x)=x^2 + x$ of 10 numbers stored in a vector called `vec`. 
@@ -189,7 +229,7 @@ One year later, Google published a new paper describing how to perform operation
 
 For example, as illustrated in next Figure, we can use MapReduce to count words in two different text files stored in different machines. The map operation splits each word in the original file and outputs a new word-counting file with a mapping of words and counts. The reduce operation can be defined to take two word-counting files and combine them by aggregating the totals for each word; this last file will contain a list of word counts across all the original files. Counting words is often the most basic MapReduce example, but we can also use MapReduce for much more sophisticated and interesting applications in statistics.
 
-![MapReduce example counting words across files](figures/mapreduce.png){width=40%}
+![MapReduce example counting words across files](figures/mapreduce.png){width=60%}
 
 After these papers were released by Google, a team at Yahoo worked on implementing the Google File System and MapReduce as a single open source project. This project was released in 2006 as *Hadoop*, with the Google File System implemented as the Hadoop Distributed File System (HDFS). The Hadoop project made distributed file-based computing accessible to a wider range of users and organizations, making MapReduce useful beyond web data processing. In the R language, processing data via MapReduce is accomplished by the `rmr2` and `rhdfs` packages. The R programmer needs to just divide their application logic into the map and reduce phases and submit it with the rmr2 methods. Once this has been performed, `rmr2 calls the Hadoop streaming MapReduce API with several job parameters as input directory, output directory, mapper, reducer, and so on, to perform the R MapReduce job over Hadoop cluster.
 
@@ -327,22 +367,26 @@ Reduce(intersect, l)
 
 
 
-
-
-
-
 ## Linear regression for Big Data
 
 In this section, we describe a very nice application of MapReduce framework to a Big Data problem. 
 
 There are several problems that require the analysis of large volumes of information. The analysis at very large scale of data is a challenging task since the available information cannot be practically analyzed on a single machine due to the sheer size of the data to fit in memory. In order to overcome this difficulty, high-performance analytical systems running on distributed environments can be used. To this end standard analytics algorithms need to be adapted to take advantage of cloud computing models which provide scalability and flexibility. Here, we describe an approach that introduces a new distributed training method for Multiple Linear Regression which will be based on the QR decomposition and the ordinary least squares method adapted to MapReduce framework. The method is called MLR-MR and is described in ([Moufida Adjout Rehab and Faouzi Boufares, 2105](https://ieeexplore.ieee.org/document/7345473)). The paper is also available in our Moodle.
 
+In this figure we can observe as the model fitting using MLR-MR algorithm is dramatically reduced when the number of MapReduce processors increases. 
+
+
+
+![Speedup training MLR-MR with different MapReduce working nodes](figures/MLR-MR_time.png){width=50%}
+
+
+
 
 Let us start by recalling how to describe linear regression using the classical matrix notation: 
 
 $$\mathbf{Y}=\mathbf{X}\mathbf{\beta}+\mathbf{\varepsilon}.$$  
 
-The OLS estimate of $\mathbf{\beta}$ is $$\widehat{\mathbf{\beta}}=[\mathbf{X}^T\mathbf{X}]^{-1}\mathbf{X}^T\mathbf{y}$$. To illustrate, let us consider the "mtcars" example, and run this regression:
+The ordinary least square (OLS) estimate of $\mathbf{\beta}$ is $$\widehat{\mathbf{\beta}}=[\mathbf{X}^T\mathbf{X}]^{-1}\mathbf{X}^T\mathbf{y}$$. To illustrate, let us consider the "mtcars" example, and run this regression:
 
 ```{r}
 data(mtcars)
