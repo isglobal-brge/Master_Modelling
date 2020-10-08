@@ -194,7 +194,7 @@ ggplot() +
 ```
 
 
-Finally, another example could be to compare the performance of the five methods for fitting generalized linear model
+Finally, we could also compare the performance of the five methods for fitting generalized linear model
 
 ```{r}
 FUN <- function(i) {
@@ -225,19 +225,19 @@ To sum up, generally, `parLapply ()` perform better than `foreach ()`. However, 
 
 ## MapReduce
 
-One year later, Google published a new paper describing how to perform operations across the Google File System, an approach that came to be known as MapReduce.^[Dean J, Ghemawat S (2004). “MapReduce: Simplified data processing on large clusters.” In USENIX Symposium on Operating System Design and Implementation (OSDI).] As you would expect, there are two operations in MapReduce: map and reduce. The map operation provides an arbitrary way to transform each file into a new file, whereas the reduce operation combines two files. Both operations require custom computer code, but the MapReduce framework takes care of automatically executing them across many computers at once. These two operations are sufficient to process all the data available on the web, while also providing enough flexibility to extract meaningful information from it.
+MapReduce is a programming model and an associated implementation for processing and generating big data sets with a parallel, distributed algorithm on a cluster. A MapReduce program is composed of a map procedure, which performs filtering and sorting (such as sorting students by first name into queues, one queue for each name), and a reduce method, which performs a summary operation (such as counting the number of students in each queue, yielding name frequencies). The "MapReduce System" (also called "infrastructure" or "framework") orchestrates the processing by marshalling the distributed servers, running the various tasks in parallel, managing all communications and data transfers between the various parts of the system, and providing for redundancy and fault tolerance. The model is a specialization of the split-apply-combine strategy for data analysis. It is inspired by the map and reduce functions commonly used in [functional programming](https://en.wikipedia.org/wiki/Functional_programming). There are two main frameworks to deal with Big Data and where MapReduce can be applied efficiently 
 
-For example, as illustrated in next Figure, we can use MapReduce to count words in two different text files stored in different machines. The map operation splits each word in the original file and outputs a new word-counting file with a mapping of words and counts. The reduce operation can be defined to take two word-counting files and combine them by aggregating the totals for each word; this last file will contain a list of word counts across all the original files. Counting words is often the most basic MapReduce example, but we can also use MapReduce for much more sophisticated and interesting applications in statistics.
+- **[Hadoop](https://hadoop.apache.org/)** provides support to perform MapReduce operations over a distributed file system of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage. 
+- **[Spark](https://spark.apache.org/)** provides a richer set of verbs beyond MapReduce to facilitate optimizing code running in multiple machines. Spark also loaded data in-memory, making operations much faster than Hadoop’s on-disk storage. 
+
+
+Thre are some pacakges to connect R and both [Hadoop](https://datascienceplus.com/integrating-r-with-apache-hadoop/) and [Spark](https://spark.apache.org/docs/latest/sparkr.html), but they use is beyond the scope of this short introduction to Big Data analysis.
+
+
+Next figure illustrate how to use MapReduce to count words in two different text files stored in different machines. The map operation splits each word in the original file and outputs a new word-counting file with a mapping of words and counts. The reduce operation can be defined to take two word-counting files and combine them by aggregating the totals for each word; this last file will contain a list of word counts across all the original files. Counting words is often the most basic MapReduce example, but we can also use MapReduce for much more sophisticated and interesting applications in statistics.
 
 ![MapReduce example counting words across files](figures/mapreduce.png){width=60%}
-
-After these papers were released by Google, a team at Yahoo worked on implementing the Google File System and MapReduce as a single open source project. This project was released in 2006 as *Hadoop*, with the Google File System implemented as the Hadoop Distributed File System (HDFS). The Hadoop project made distributed file-based computing accessible to a wider range of users and organizations, making MapReduce useful beyond web data processing. In the R language, processing data via MapReduce is accomplished by the `rmr2` and `rhdfs` packages. The R programmer needs to just divide their application logic into the map and reduce phases and submit it with the rmr2 methods. Once this has been performed, `rmr2 calls the Hadoop streaming MapReduce API with several job parameters as input directory, output directory, mapper, reducer, and so on, to perform the R MapReduce job over Hadoop cluster.
-
-
-
-The MapReduce paradigm has long been a staple of big data computational strategies. However, properly leveraging MapReduce in R can be a challenge, even for experienced  users. To get the most out of MapReduce, it is helpful to understand its relationship to functional programming. 
-
-La programación funcional, en un sentido amplio, es aquella en que determinadas funciones admiten otras como argumento. Por ejemplo, la función `sapply()`:
+The MapReduce paradigm has long been a staple of big data computational strategies. However, properly leveraging MapReduce in R can be a challenge, even for experienced  users. To get the most out of MapReduce, it is helpful to understand its relationship to functional programming. Functional programming, in a broad sense, is the one that some functions allows to have another function in one of its arguments. For instance, the function `sapply()`:
 
 
 ```{r}
@@ -246,15 +246,14 @@ sapply(-4:10, ff)
 ```
 
 
-La programación funcional es una herramienta muy potente que permite programar de la siguiente manera:
+Functional programming is a very powerful tool that allows you to program in the following way:
 
-- Crear funciones pequeñas y simples que resuelven un problema pequeño y acotado
-- Aplicar esas funciones a grupos homogéneos de valores.
+- Create small and simple functions that solve a small and bounded problem
+- Apply these functions to homogeneous groups of values.
 
+In the previous example, we have built an `ff` function and through the `sapply ()` function we have applied it to a list of homogeneous values: the numbers from -4 to 10.
 
-En el ejemplo anterior, hemos construido una función `ff` y me diante la función `sapply()` la hemos aplicado a una lista de valores homogéneos, los números del -4 al 10.
-
-Hay muchas funciones en R, algunas de las cuales ya habéis visto, que admiten otras como argumento. Algunas de las más corrientes son:
+There are many functions in R, some of which you have already seen, that take others as arguments. Some of the most common are:
 
 - sapply y lapply
 - tapply
@@ -262,14 +261,15 @@ Hay muchas funciones en R, algunas de las cuales ya habéis visto, que admiten o
 - Las funciones ddply, ldply, etc. del paquete `plyr`
 
 
-Un ejemplo muy habitual de este tipo de funciones se usa para inspeccionar el tipo de columnas de una tabla ya que aprovechan el hecho que una tabla es una lista de columnas y las recorren una a una 
+A very common example of this type of functions is used to inspect the type of columns in a table since they take advantage of the fact that a table is a list of columns and go through them one by one
 
 ```{r}
 lapply(iris, class)
 sapply(iris, length)
 ```
 
-Una de las ventajas de este tipo de programación es que el código es más breve y legible. Debemos recordar que estas fuciones incluyen el argumento `...` que permite pasar argumentos adicionales a la función a la que llaman. Por ejemplo esta función haría lo mismo que la anterior, pero sería más genérica ya que permitiría hacer cálculos variando el argumento `s`.
+One of the advantages of this type of programming is that the code is shorter and more readable. We must remember that these functions include the argument `...` that allows to pass additional arguments to the function they call. For example this function would do the same as the previous one, but it would be more generic since it would allow calculations by varying the `s` argument.
+
 
 ```{r}
 ff2 <- function(x, s) {
@@ -281,11 +281,11 @@ sapply(-4:10, ff2, s=0)
 
 ### Map
 
-The MapReduce methodology is also implemented in base R (`Map ()` and `Reduce ()` functions) as well as in `tidyverse`. La función `Map ()` consiste en aplicar una función a todos los elementos de una lista o vector: 
+The MapReduce methodology is also implemented in base R (`Map ()` and `Reduce ()` functions) as well as in `tidyverse`. Function `Map ()` applies one function to all elements from a list o vector:
 
 ```map(YOUR_LIST, YOUR_FUNCTION)```
 
-Las operaciones que hemos realizado anteriormente podrían ejecutarse también como (`sapply ()` es un caso especial de la función `Map ()`):
+Previous operations could also be executed by usint this code (`sapply ()` es un caso especial de la función `Map ()`):
 
 ```{r}
 Map(ff, c(9, 16, 25))
@@ -297,7 +297,7 @@ y
 Map(ff2, c(9, 16, 25), s=0)
 ```
 
-Otra de las ventajas aparece cuando queremos variar más de un argumento. With lapply(), only one argument to the function varies; the others are fixed. For example, how would you find a weighted mean when you have two lists, one of observations and the other of weights?
+Another advantage appears when we want to **vary more than one argument**. With `lapply ()`, only one argument varies; the others are fixed. For example, how would you find a weighted mean when you have two lists, one of observations and the other of weights?
 
 
 ```{r}
@@ -362,7 +362,6 @@ That’s hard to read. With `Reduce()`, the equivalent is:
 ```{r}
 Reduce(intersect, l)
 ```
-
 
 
 

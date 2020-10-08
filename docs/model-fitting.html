@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Model Fitting | Data Visualisation and Modelling</title>
+  <meta name="description" content="3 Model Fitting | Data Visualisation and Modelling" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Model Fitting | Data Visualisation and Modelling" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Model Fitting | Data Visualisation and Modelling" />
+  
+  
+  
+
+<meta name="author" content="Juan R González" />
+
+
+<meta name="date" content="2020-10-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dealing-with-big-data-in-r.html"/>
+
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualisation and Modelling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html"><i class="fa fa-check"></i><b>2</b> Dealing with Big Data in R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#nodes-cores-processes-and-threads"><i class="fa fa-check"></i><b>2.1</b> Nodes, cores, processes and threads</a></li>
+<li class="chapter" data-level="2.2" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#paralelización"><i class="fa fa-check"></i><b>2.2</b> Paralelización</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#shared-memory-programming"><i class="fa fa-check"></i><b>2.2.1</b> Shared Memory Programming</a></li>
+<li class="chapter" data-level="2.2.2" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#distributed-memory-programming"><i class="fa fa-check"></i><b>2.2.2</b> Distributed Memory Programming</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#mapreduce"><i class="fa fa-check"></i><b>2.3</b> MapReduce</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#map"><i class="fa fa-check"></i><b>2.3.1</b> Map</a></li>
+<li class="chapter" data-level="2.3.2" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#reduce"><i class="fa fa-check"></i><b>2.3.2</b> Reduce</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="dealing-with-big-data-in-r.html"><a href="dealing-with-big-data-in-r.html#linear-regression-for-big-data"><i class="fa fa-check"></i><b>2.4</b> Linear regression for Big Data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="model-fitting.html"><a href="model-fitting.html"><i class="fa fa-check"></i><b>3</b> Model Fitting</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="model-fitting.html"><a href="model-fitting.html#getting-started"><i class="fa fa-check"></i><b>3.1</b> Getting started</a></li>
+<li class="chapter" data-level="3.2" data-path="model-fitting.html"><a href="model-fitting.html#general-rules-for-variable-selection"><i class="fa fa-check"></i><b>3.2</b> General rules for variable selection</a></li>
+<li class="chapter" data-level="3.3" data-path="model-fitting.html"><a href="model-fitting.html#stepwise-variable-selection"><i class="fa fa-check"></i><b>3.3</b> Stepwise variable selection</a></li>
+<li class="chapter" data-level="3.4" data-path="model-fitting.html"><a href="model-fitting.html#comparing-models"><i class="fa fa-check"></i><b>3.4</b> Comparing models</a></li>
+<li class="chapter" data-level="3.5" data-path="model-fitting.html"><a href="model-fitting.html#automatic-variable-selection"><i class="fa fa-check"></i><b>3.5</b> Automatic variable selection</a></li>
+<li class="chapter" data-level="3.6" data-path="model-fitting.html"><a href="model-fitting.html#cross-validation"><i class="fa fa-check"></i><b>3.6</b> Cross validation</a></li>
+<li class="chapter" data-level="3.7" data-path="model-fitting.html"><a href="model-fitting.html#cross-validation-and-bootstrap"><i class="fa fa-check"></i><b>3.7</b> Cross-validation and Bootstrap</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="model-fitting.html"><a href="model-fitting.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>3.7.1</b> Leave-one-out cross validation (LOOCV)</a></li>
+<li class="chapter" data-level="3.7.2" data-path="model-fitting.html"><a href="model-fitting.html#k-fold-cross-validation-k-fold-cv"><i class="fa fa-check"></i><b>3.7.2</b> K-fold cross validation (K-fold CV)</a></li>
+<li class="chapter" data-level="3.7.3" data-path="model-fitting.html"><a href="model-fitting.html#bootstrap"><i class="fa fa-check"></i><b>3.7.3</b> Bootstrap</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="model-fitting.html"><a href="model-fitting.html#example-with-caret-library"><i class="fa fa-check"></i><b>3.8</b> Example with <code>caret</code> library</a></li>
+<li class="chapter" data-level="3.9" data-path="model-fitting.html"><a href="model-fitting.html#missing-data-imputation"><i class="fa fa-check"></i><b>3.9</b> Missing data imputation</a></li>
+<li class="chapter" data-level="3.10" data-path="model-fitting.html"><a href="model-fitting.html#regularization"><i class="fa fa-check"></i><b>3.10</b> Regularization</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Visualisation and Modelling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="model-fitting" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Model Fitting</h1>
+<p>This chapter covers a range of additional topics related to model fitting, such as variable selection, model comparison, cross-validation and missing data imputation. It culminates with a discussion of ridge and LASSO regression, two useful regression-based machine learning techniques for automatically selecting variables in high dimensional data so as to balance the bias-variance trade-off. The concepts and methods discussed here apply to both linear and logistic regression.</p>
+<p>Additional resource:</p>
+<ul>
+<li><a href="http://www-bcf.usc.edu/~gareth/ISL/index.html">Introduction to Statistical Learning</a>. See chapters 5 and 6.</li>
+</ul>
+<div id="getting-started" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Getting started</h2>
+<p>Before starting showing how to perform data modelling in the context of linear regression (NOTE: everything applies to logistic regression), let us start by implementing some functions that will be required to evaluate model performance.</p>
+<p>A multivariate linear model with an outcome, <span class="math inline">\(y\)</span>, and <span class="math inline">\(p\)</span> predictors <span class="math inline">\(x\)</span> can be written as:</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1x_i + \epsilon_i,
+\]</span>
+where <span class="math inline">\(i = 1, \ldots, n.\)</span></p>
+<p>The subscript in this equation, <span class="math inline">\(i\)</span>, indexes the <span class="math inline">\(n\)</span> observations in the dataset. (Think of <span class="math inline">\(i\)</span> as a row number.) The equation can be read as follows: the value of <span class="math inline">\(i^{th}\)</span> outcome variable, <span class="math inline">\(y_i\)</span>, is defined by an intercept, <span class="math inline">\(\beta_0\)</span>, plus a slope, <span class="math inline">\(\beta_1\)</span>, multiplied by the <span class="math inline">\(i^{th}\)</span> predictor variable, <span class="math inline">\(x_i\)</span>. These elements define the <em>systematic</em> or <em>deterministic</em> portion of the model. However, because the world is uncertain, containing randomness, we know that the model will be wrong (as George Box said). To fully describe the data we need an error term, <span class="math inline">\(\epsilon_i\)</span>, which is also indexed by row. The error term is the <em>stochastic</em> portion of the model. <span class="math inline">\(\epsilon_i\)</span> measures the distance between the fitted or expected values of the model—calculated from the deterministic portion of the model—and the actual values. The errors in a linear model—also known as model residuals—are the part of the data that remains unexplained by the deterministic portion of the model. One of the key assumptions of a linear model is that the residuals are normally distributed with mean = 0 and variance = <span class="math inline">\(\sigma^2\)</span>, which we denote, in matrix notation, as <span class="math inline">\(N(0,\sigma^2)\)</span>.</p>
+<p>The model performance can be summarized with</p>
+<p><span class="math display">\[
+\operatorname{RSS} = \sum_{i=1}^n ((\beta_0 + \beta_1x_i) - y_i)^2 = \sum_{i=1}^n (\hat{y}_i - y_i)^2
+\]</span></p>
+<p>A related measure is root mean squared error (RMSE), the square root of the average of the squared errors:</p>
+<p><span class="math display">\[
+\operatorname{RMSE}= \sqrt{\frac{\sum_{i=1}^n ((\beta_0 + \beta_1x_i) - y_i)^2}{n}} 
+\]</span></p>
+<p><span class="math display">\[
+= \sqrt{\frac{\sum_{i=1}^n (\hat{y}_i - y_i)^2}{n}}
+\]</span></p>
+<p>The nice thing about RMSE is that, unlike RSS, it returns a value that is on the scale of the outcome.</p>
+<p><span class="math inline">\(R^2\)</span> is another measure of model fit that is convenient because it is a standardized measure—scaled between 0 and 1—and is therefore comparable across contexts.</p>
+<p><span class="math display">\[
+R^2 = 1 - \frac{SS_\text{resid}}{SS_\text{tot}}, 
+\]</span>
+where <span class="math inline">\(SS_\text{tot}=\sum_i (y_i-\bar{y})^2\)</span> and <span class="math inline">\(SS_\text{res}=\sum_i (y_i - \hat{y}_i)^2\)</span>. In words: <span class="math inline">\(R^2\)</span> represents the variation in the outcome variable explained by the model as a proportion of the total variation. In the plot below, the left hand panel, TSS, serves as the denominator in calculating <span class="math inline">\(R^2\)</span>, and the right hand panel, RSS, is the numerator.</p>
+<p>Next R code illustrates how to implement such measurements and one example with Hitters dataset which contains information of the performance statistics and salaries of major league baseball players in the 1986 season. It includes information about Salary, which is our outcome, and some predictor: hits, years in the league, home runs, RBIs, walks and assists.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="model-fitting.html#cb60-1"></a><span class="kw">library</span>(ISLR)</span>
+<span id="cb60-2"><a href="model-fitting.html#cb60-2"></a><span class="kw">data</span>(Hitters)</span>
+<span id="cb60-3"><a href="model-fitting.html#cb60-3"></a></span>
+<span id="cb60-4"><a href="model-fitting.html#cb60-4"></a></span>
+<span id="cb60-5"><a href="model-fitting.html#cb60-5"></a>rss &lt;-<span class="st"> </span><span class="cf">function</span>(fitted, actual){</span>
+<span id="cb60-6"><a href="model-fitting.html#cb60-6"></a>  <span class="kw">sum</span>((fitted <span class="op">-</span><span class="st"> </span>actual)<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb60-7"><a href="model-fitting.html#cb60-7"></a>}</span>
+<span id="cb60-8"><a href="model-fitting.html#cb60-8"></a></span>
+<span id="cb60-9"><a href="model-fitting.html#cb60-9"></a>rmse &lt;-<span class="st"> </span><span class="cf">function</span>(fitted, actual){</span>
+<span id="cb60-10"><a href="model-fitting.html#cb60-10"></a>  <span class="kw">sqrt</span>(<span class="kw">mean</span>((fitted <span class="op">-</span><span class="st"> </span>actual)<span class="op">^</span><span class="dv">2</span>))</span>
+<span id="cb60-11"><a href="model-fitting.html#cb60-11"></a>}</span>
+<span id="cb60-12"><a href="model-fitting.html#cb60-12"></a></span>
+<span id="cb60-13"><a href="model-fitting.html#cb60-13"></a>R2 &lt;-<span class="st"> </span><span class="cf">function</span>(fitted, actual){</span>
+<span id="cb60-14"><a href="model-fitting.html#cb60-14"></a>  tss &lt;-<span class="st"> </span><span class="kw">sum</span>((actual <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(actual))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb60-15"><a href="model-fitting.html#cb60-15"></a>  rss &lt;-<span class="st"> </span><span class="kw">sum</span>((actual <span class="op">-</span><span class="st"> </span>fitted)<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb60-16"><a href="model-fitting.html#cb60-16"></a>  <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rss<span class="op">/</span>tss</span>
+<span id="cb60-17"><a href="model-fitting.html#cb60-17"></a>}</span>
+<span id="cb60-18"><a href="model-fitting.html#cb60-18"></a></span>
+<span id="cb60-19"><a href="model-fitting.html#cb60-19"></a><span class="kw">display</span>(h &lt;-<span class="st"> </span><span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span>Hits, <span class="dt">data=</span> Hitters))</span></code></pre></div>
+<pre><code>## lm(formula = Salary ~ Hits, data = Hitters)
+##             coef.est coef.se
+## (Intercept) 63.05    64.98  
+## Hits         4.39     0.56  
+## ---
+## n = 263, k = 2
+## residual sd = 406.17, R-Squared = 0.19</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="model-fitting.html#cb62-1"></a><span class="kw">rss</span>(<span class="kw">fitted</span>(h), <span class="kw">na.omit</span>(Hitters<span class="op">$</span>Salary))</span></code></pre></div>
+<pre><code>## [1] 43058621</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="model-fitting.html#cb64-1"></a><span class="kw">rmse</span>(<span class="kw">fitted</span>(h), <span class="kw">na.omit</span>(Hitters<span class="op">$</span>Salary))</span></code></pre></div>
+<pre><code>## [1] 404.6245</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="model-fitting.html#cb66-1"></a><span class="kw">R2</span>(<span class="kw">fitted</span>(h), <span class="kw">na.omit</span>(Hitters<span class="op">$</span>Salary))</span></code></pre></div>
+<pre><code>## [1] 0.1924355</code></pre>
+</div>
+<div id="general-rules-for-variable-selection" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> General rules for variable selection</h2>
+<p>How do we know which variables belong in a model? The short answer is: we often don’t. Here are some rules of thumb when thinking about variable selection:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<ul>
+<li><p><em>Think about the data</em>. What variables does it make sense to include given the situation? Does any published literature offer guidance? If we are in descriptive mode then we may only care about certain variables and use the others as controls. If we are in predictive mode then we include all variables that, for substantive reasons, might be important in predicting the outcome. This is very general guidance, however, as different contexts demand different approaches to model fitting.</p></li>
+<li><p><em>Include quadratic terms if there is evidence from bivariate plots of a non-linear relationship between predictor and outcome.</em> In general, we don’t include polynomial terms with degrees greater than 2. To do so risks overfitting.</p></li>
+<li><p><em>Look for possible interactions among variables with the largest main effects.</em> In general we don’t include higher order interactions (greater than 2) unless we have a sensible rationale and can explain it (to ourselves and to our audience). 2 way interactions are hard enough to explain.</p></li>
+<li><p><em>Consider combining separate predictors into a single predictor—a “total score”—by summing or averaging them.</em></p></li>
+<li><p><em>Keep it simple.</em> Parsimonious models are almost always better—they are more interpretable and tend to have lower variance.</p></li>
+</ul>
+</div>
+<div id="stepwise-variable-selection" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Stepwise variable selection</h2>
+<p>The traditional technique in statistics for selecting variables is <em>stepwise selection</em>.</p>
+<p>With <em>forward selection</em> we start with a null model (intercept only) and add one variable at a time. If the added variable improves the model, then we keep it in and add another. We continue until all variables have been tested. See this figure</p>
+<div class="figure">
+<img src="figures/fwd_stepwise.png" style="width:40.0%" alt="" />
+<p class="caption">Forward selection</p>
+</div>
+<p>With <em>backward selection</em> we start with a full model (all available terms), and serially remove variables. If the model is better after a variable has been removed, then we leave it out. We continue until all variables have been tested. See this figure</p>
+<div class="figure">
+<img src="figures/bwd_stepwise.png" style="width:40.0%" alt="" />
+<p class="caption">Backward selection</p>
+</div>
+<p><em>Forward selection followed by backward selection</em>. Select forward then backward.</p>
+<p>Unfortunately these hand-fitting procedures are flawed. They depend on the order in which variables are added or excluded and often will not select the best model. Furthermore, in the Boston data there are <span class="math inline">\(k\)</span> = 13 predictor variables, which means there are <span class="math inline">\(2^k\)</span> or 8192 possible models we could fit, not even including interactions or polynomial terms. This is an extremely large space to search through to find the best model, and the search is computationally expensive and time consuming. Conducting such a search manually would be impossible.</p>
+</div>
+<div id="comparing-models" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Comparing models</h2>
+<p>We are already familiar with <span class="math inline">\(R^2\)</span>, RMSE and RSS as tools for comparing models. In general, if we add a variable and <span class="math inline">\(R^2\)</span> goes up and RMSE/RSS goes down, then the model with the additional variable is better. The amount of unexplained variance has decreased. However, there is a danger of overfitting. As we’ve seen, adjusted <span class="math inline">\(R^2\)</span> penalizes the fit for the number of predictors. Likewise, information criterion methods like AIC (Akaike Information Criterion) penalize the fit for model complexity, defined as the number of predictors.</p>
+<p><span class="math display">\[\mathrm{AIC} = - 2\ln(L) + 2k\]</span>
+where <span class="math inline">\(k\)</span> the number of estimated parameters in the model, <span class="math inline">\(L\)</span> is the maximized value of the likelihood function for the model, and <span class="math inline">\(ln\)</span> is the natural log. Given a set of candidate models for the data, the preferred model is the one with the lowest AIC value. In penalizing for larger <span class="math inline">\(k\)</span> (ensured by the final term, <span class="math inline">\(+2k\)</span>), AIC attempts to guard against overfitting. It is possible, then, to see <span class="math inline">\(R^2\)</span> go up with the addition of predictors, while AIC goes down.</p>
+<p>We can also compare models with a formal statistic test using the likelihood ratio test (LRT):<br />
+<span class="math display">\[
+2 \times [ \ln(L_{a}) - \ln(L_{c}) ]
+\]</span>
+where <span class="math inline">\(\ln(L_{c})\)</span> is the log likelihood of the current model and <span class="math inline">\(\ln(L_{a})\)</span> is the log likelihood of the alternative model with additional predictors. The <code>lrtest()</code> function in the lmtest package implements the LRT. The <code>anova()</code> function in base R will also compare models using an f-test, with results that will be virtually identical to the LRT.</p>
+<p>Here are some examples of model comparison using the Hitters data from the ISLR package. We start with a null model of Salary:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="model-fitting.html#cb68-1"></a><span class="kw">library</span>(ISLR); <span class="kw">data</span>(Hitters)</span>
+<span id="cb68-2"><a href="model-fitting.html#cb68-2"></a><span class="kw">display</span>(null &lt;-<span class="st"> </span><span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> Hitters))</span></code></pre></div>
+<pre><code>## lm(formula = Salary ~ 1, data = Hitters)
+##             coef.est coef.se
+## (Intercept) 535.93    27.82 
+## ---
+## n = 263, k = 1
+## residual sd = 451.12, R-Squared = 0.00</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="model-fitting.html#cb70-1"></a><span class="kw">round</span>(<span class="kw">mean</span>(Hitters<span class="op">$</span>Salary, <span class="dt">na.rm =</span> T),<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 535.93</code></pre>
+<p>A null model consists only in an intercept, the coefficient of which, as we can see, is just the mean of Salary. (Note that in order to calculate the mean of Salary we needed to remove the missing values. <code>lm()</code> silently removes the missing values: <code>display()</code> reports <span class="math inline">\(n = 263\)</span>, whereas the dataset has 322 rows.) The key question as we make a model more complex is whether that complexity is justified, whether adding predictors not only lowers the bias but does so without unduly increasing the potential variance. Let’s add predictors.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="model-fitting.html#cb72-1"></a><span class="kw">library</span>(lmtest)</span>
+<span id="cb72-2"><a href="model-fitting.html#cb72-2"></a><span class="kw">display</span>(h1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span>Hits, <span class="dt">data =</span> Hitters))</span></code></pre></div>
+<pre><code>## lm(formula = Salary ~ Hits, data = Hitters)
+##             coef.est coef.se
+## (Intercept) 63.05    64.98  
+## Hits         4.39     0.56  
+## ---
+## n = 263, k = 2
+## residual sd = 406.17, R-Squared = 0.19</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="model-fitting.html#cb74-1"></a><span class="kw">lrtest</span>(null, h1)</span></code></pre></div>
+<pre><code>## Likelihood ratio test
+## 
+## Model 1: Salary ~ 1
+## Model 2: Salary ~ Hits
+##   #Df  LogLik Df  Chisq Pr(&gt;Chisq)    
+## 1   2 -1980.1                         
+## 2   3 -1952.0  1 56.212  6.508e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="model-fitting.html#cb76-1"></a><span class="kw">anova</span>(null, h1)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Salary ~ 1
+## Model 2: Salary ~ Hits
+##   Res.Df      RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    262 53319113                                  
+## 2    261 43058621  1  10260491 62.194 8.531e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="model-fitting.html#cb78-1"></a><span class="kw">as.matrix</span>(<span class="kw">AIC</span>(null, h1))</span></code></pre></div>
+<pre><code>##      df      AIC
+## null  2 3964.130
+## h1    3 3909.918</code></pre>
+<p>Hits is statistically significant, since the 95% CI does not include 0 (4.39 <span class="math inline">\(\pm\)</span> 2 x .56). These three methods agree that the model with Hits is an improvement over the null model. In the case of <code>lrtest()</code> and <code>anova()</code> the p-value represents the results of a statistical test (chi-squared test and f-test, respectively) for whether the second, more complex model is a better fit to the data. Does adding an additional predictor, AtBat, improve the model further?</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="model-fitting.html#cb80-1"></a><span class="kw">display</span>(h2 &lt;-<span class="st"> </span><span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span>Hits <span class="op">+</span><span class="st"> </span>AtBat, <span class="dt">data =</span> Hitters))</span></code></pre></div>
+<pre><code>## lm(formula = Salary ~ Hits + AtBat, data = Hitters)
+##             coef.est coef.se
+## (Intercept) 141.27    76.55 
+## Hits          8.21     2.08 
+## AtBat        -1.22     0.64 
+## ---
+## n = 263, k = 3
+## residual sd = 404.13, R-Squared = 0.20</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="model-fitting.html#cb82-1"></a><span class="kw">lrtest</span>(h1, h2)</span></code></pre></div>
+<pre><code>## Likelihood ratio test
+## 
+## Model 1: Salary ~ Hits
+## Model 2: Salary ~ Hits + AtBat
+##   #Df  LogLik Df  Chisq Pr(&gt;Chisq)  
+## 1   3 -1952.0                       
+## 2   4 -1950.1  1 3.6588    0.05577 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="model-fitting.html#cb84-1"></a><span class="kw">anova</span>(h1, h2)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Salary ~ Hits
+## Model 2: Salary ~ Hits + AtBat
+##   Res.Df      RSS Df Sum of Sq      F  Pr(&gt;F)  
+## 1    261 43058621                              
+## 2    260 42463750  1    594871 3.6423 0.05743 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="model-fitting.html#cb86-1"></a><span class="kw">as.matrix</span>(<span class="kw">AIC</span>(h1, h2))</span></code></pre></div>
+<pre><code>##    df      AIC
+## h1  3 3909.918
+## h2  4 3908.260</code></pre>
+<p>The results are ambiguous. R-squared goes up, while AIC, log likelihood and RSS go down, but the decline in the latter two cases is not statistically significant. (This result is consistent with the fact that AtBat is not itself statistically significant, since the 95% CI for AtBat includes 0: -1.22 <span class="math inline">\(pm\)</span> 2 x .64.) Should we leave AtBat in the model? It doesn’t improve the fit much, if at all, while adding complexity. So, we should take it out. Unfortunately such choices are often not clear, which is why model fitting sometimes seems more like an art than a science.</p>
+<p>To implement forward selection, we would keep adding variables and comparing models using <code>lrtest()</code> or <code>anova()</code> trying to find the best possible fit. One problem with this procedure, however, is that the order in which we step through predictors will impact our selection decisions because each predictor’s impact on model fit is contingent on the presence of the others. For example, suppose we had added AtBat later in the selection process:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="model-fitting.html#cb88-1"></a>h3 &lt;-<span class="st"> </span><span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span>Hits <span class="op">+</span><span class="st"> </span>Years <span class="op">+</span><span class="st"> </span>HmRun <span class="op">+</span><span class="st"> </span>RBI <span class="op">+</span><span class="st"> </span>Walks <span class="op">+</span><span class="st"> </span>Assists, <span class="dt">data =</span> Hitters)</span>
+<span id="cb88-2"><a href="model-fitting.html#cb88-2"></a></span>
+<span id="cb88-3"><a href="model-fitting.html#cb88-3"></a>h4 &lt;-<span class="st"> </span><span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span>Hits <span class="op">+</span><span class="st"> </span>Years <span class="op">+</span><span class="st"> </span>HmRun <span class="op">+</span><span class="st"> </span>RBI <span class="op">+</span><span class="st"> </span>Walks <span class="op">+</span><span class="st"> </span>Assists <span class="op">+</span><span class="st"> </span>AtBat, <span class="dt">data =</span> Hitters)</span>
+<span id="cb88-4"><a href="model-fitting.html#cb88-4"></a></span>
+<span id="cb88-5"><a href="model-fitting.html#cb88-5"></a><span class="kw">lrtest</span>(h3, h4)</span></code></pre></div>
+<pre><code>## Likelihood ratio test
+## 
+## Model 1: Salary ~ Hits + Years + HmRun + RBI + Walks + Assists
+## Model 2: Salary ~ Hits + Years + HmRun + RBI + Walks + Assists + AtBat
+##   #Df  LogLik Df  Chisq Pr(&gt;Chisq)    
+## 1   8 -1916.7                         
+## 2   9 -1911.1  1 11.114  0.0008569 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="model-fitting.html#cb90-1"></a><span class="kw">as.matrix</span>(<span class="kw">AIC</span>(h3, h4))</span></code></pre></div>
+<pre><code>##    df      AIC
+## h3  8 3849.311
+## h4  9 3840.198</code></pre>
+<p>Now AtBat clearly improves the fit, but we would never have discovered that had we already thrown it out. This is troubling. Is there a better way? Perhaps.</p>
+</div>
+<div id="automatic-variable-selection" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Automatic variable selection</h2>
+<p>Algorithms have been developed to search model space efficiently for the optimal model. A caution about automatic variable selection is in order at the outset, however. <em>Choosing variables should not be a mechanical process.</em> We should, instead, seek to understand the data generating process. Indeed, the greatest benefit of manual stepwise selection consists less in producing a good model than in the understanding gained by fitting many models, and seeing, through trial and error, which predictors are most reactive with the outcome. Especially when it comes to description, automatic variable selection algorithms are just tools for exploring your data and thinking about models.</p>
+<p>The <code>step()</code> function in base R automates stepwise variable selection using AIC.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="model-fitting.html#cb92-1"></a><span class="kw">display</span>(<span class="kw">step</span>(<span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Hitters), <span class="dt">trace =</span> F, <span class="dt">direction =</span> <span class="st">&quot;forward&quot;</span>))</span></code></pre></div>
+<pre><code>## lm(formula = Salary ~ AtBat + Hits + HmRun + Runs + RBI + Walks + 
+##     Years + CAtBat + CHits + CHmRun + CRuns + CRBI + CWalks + 
+##     League + Division + PutOuts + Assists + Errors + NewLeague, 
+##     data = Hitters)
+##             coef.est coef.se
+## (Intercept)  163.10    90.78
+## AtBat         -1.98     0.63
+## Hits           7.50     2.38
+## HmRun          4.33     6.20
+## Runs          -2.38     2.98
+## RBI           -1.04     2.60
+## Walks          6.23     1.83
+## Years         -3.49    12.41
+## CAtBat        -0.17     0.14
+## CHits          0.13     0.67
+## CHmRun        -0.17     1.62
+## CRuns          1.45     0.75
+## CRBI           0.81     0.69
+## CWalks        -0.81     0.33
+## LeagueN       62.60    79.26
+## DivisionW   -116.85    40.37
+## PutOuts        0.28     0.08
+## Assists        0.37     0.22
+## Errors        -3.36     4.39
+## NewLeagueN   -24.76    79.00
+## ---
+## n = 263, k = 20
+## residual sd = 315.58, R-Squared = 0.55</code></pre>
+<p>Forward selection settled on 19 predictors with model <span class="math inline">\(R^2\)</span> of .55.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="model-fitting.html#cb94-1"></a><span class="kw">display</span>(<span class="kw">step</span>(<span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Hitters), <span class="dt">trace =</span> F, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>))</span></code></pre></div>
+<pre><code>## lm(formula = Salary ~ AtBat + Hits + Walks + CAtBat + CRuns + 
+##     CRBI + CWalks + Division + PutOuts + Assists, data = Hitters)
+##             coef.est coef.se
+## (Intercept)  162.54    66.91
+## AtBat         -2.17     0.54
+## Hits           6.92     1.65
+## Walks          5.77     1.58
+## CAtBat        -0.13     0.06
+## CRuns          1.41     0.39
+## CRBI           0.77     0.21
+## CWalks        -0.83     0.26
+## DivisionW   -112.38    39.21
+## PutOuts        0.30     0.07
+## Assists        0.28     0.16
+## ---
+## n = 263, k = 11
+## residual sd = 311.81, R-Squared = 0.54</code></pre>
+<p>Backward selection settled on 10 predictors with <span class="math inline">\(R^2\)</span> of .54. (The default setting in <code>step()</code> for direction is “both,” which returns the same result as the above.) This function certainly simplifies stepwise variable selection, but even the automated stepwise algorithm is not guaranteed to return the optimal model, as the result still depends on the sequence in which variables are entered into the model. Moreover, the fact that backward selection returned such a different model is concerning. Ideally, we do not want our model to depend on a methodological choice—we just want the best model. And in this case, while the larger model has a marginally higher <span class="math inline">\(R^2\)</span>, it is also much more complicated: does the better fit justify the additional complication? Probably not. With the bigger model we have likely crossed the line into overfitting, an issue we will take up when we discuss cross-validation.</p>
+<p>The <code>regsubsets()</code> function in the leaps package performs exhaustive search of the model space using the leaps algorithm for variable selection.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="model-fitting.html#cb96-1"></a><span class="kw">library</span>(leaps)</span>
+<span id="cb96-2"><a href="model-fitting.html#cb96-2"></a></span>
+<span id="cb96-3"><a href="model-fitting.html#cb96-3"></a><span class="kw">plot</span>(<span class="kw">regsubsets</span>(Salary <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Hitters, <span class="dt">method =</span> <span class="st">&quot;exhaustive&quot;</span>, <span class="dt">nbest =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-42-1.png" width="672" /></p>
+<p>The plot presents multiple candidate models organized by BIC on the y-axis. Like AIC, BIC penalizes for model complexity.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Lower BIC is better. The model with the lowest BIC is the rather simple one at the top of the plot: Intercept, AtBat, Hits, Walks, CRBI, DivisionW and PutOuts. If we refit a model with these predictors using <code>lm()</code> we find it has an <span class="math inline">\(R^2\)</span> of .51.</p>
+<!-- ```{r} -->
+<!-- display(lm(Salary ~ AtBat + Hits + Walks + CRBI + Division + PutOuts, data = Hitters)) -->
+<!-- ``` -->
+<p>Is this model really better? The algorithm did an exhaustive search of the model space yet returned a model with lower <span class="math inline">\(R^2\)</span>! How could that be better? But it probably is better. While the bias in this model will be higher than in the larger model selected by the <code>step()</code> function, the variance is likely lower. Remember: bias refers to in-sample model performance and variance refers to the out-of-sample model performance—how the model does when it encounters new data. If the model performs poorly on new data, with a big discrepancy between in-sample and out-of-sample performance, then it is overfitting. AIC, BIC, and adjusted R-squared all penalize for model complexity in order to avoid overfitting and will tend to select models with higher bias and lower variance.</p>
+</div>
+<div id="cross-validation" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Cross validation</h2>
+<p>Cross validation (CV) is the technique we use to assess whether a model is overfitting and to estimate how it will perform on new data.</p>
+<p>Overfitting is a major hazard in predictive analytics, especially when using machine learning algorithms like random forest which, without proper tuning, can learn sample data almost perfectly, essentially fitting noise. When such a model is used to predict new data, with different noise, model performance can be shockingly bad. We use CV to help us identify and avoid such situations. How so? Many machine learning algorithms require the user to specify certain parameters. In the case of random forest, for example, we need to specify values for <span class="math inline">\(m\)</span>, the number of randomly chosen predictors to be used at each tree split. The lower the <span class="math inline">\(m\)</span>, the simpler the tree. We can use CV to choose the value of <span class="math inline">\(m\)</span> that minimizes variance and reduces overfitting. Linear regression has no user-specified parameters, but CV still helps us assess how much a model might be overfitting the sample data.</p>
+<p>The simplest version of CV is the so-called validation set method, consisting in the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><em>Split the sample data into two parts: a train set and a test set.</em> Researchers use different proportions, but it is common to randomly select 70% of the data as the train set and 30% as the test or validation set. (Obviously, we must have enough data in the sample to fit a model after splitting the data.) Because CV relies on random sampling, our results will vary unless we use <code>set.seed()</code>. We will demonstrate using the Hitters data, using only complete cases.</li>
+</ol>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="model-fitting.html#cb97-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb97-2"><a href="model-fitting.html#cb97-2"></a>Hitters_complete &lt;-<span class="st"> </span>Hitters[<span class="kw">complete.cases</span>(Hitters), ]</span>
+<span id="cb97-3"><a href="model-fitting.html#cb97-3"></a>rows &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Hitters_complete), <span class="fl">.7</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(Hitters_complete))</span>
+<span id="cb97-4"><a href="model-fitting.html#cb97-4"></a>train &lt;-<span class="st"> </span>Hitters_complete[rows, ]</span>
+<span id="cb97-5"><a href="model-fitting.html#cb97-5"></a>test &lt;-<span class="st"> </span>Hitters_complete[<span class="op">-</span>rows, ]</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><em>Fit a model on the training set</em> using an appropriate variable selection procedure. We will create two models for comparison: one with all the variables, then one with just the variables chosen by <code>regsubsets()</code>.</li>
+</ol>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="model-fitting.html#cb98-1"></a>full_model &lt;-<span class="st"> </span><span class="kw">lm</span>(Salary <span class="op">~</span>., <span class="dt">data =</span> train)</span>
+<span id="cb98-2"><a href="model-fitting.html#cb98-2"></a></span>
+<span id="cb98-3"><a href="model-fitting.html#cb98-3"></a>select_model &lt;-<span class="st"> </span><span class="kw">lm</span>(Salary <span class="op">~</span><span class="st"> </span>AtBat <span class="op">+</span><span class="st"> </span>Hits <span class="op">+</span><span class="st"> </span>Walks <span class="op">+</span><span class="st"> </span>CRBI <span class="op">+</span><span class="st"> </span>Division <span class="op">+</span><span class="st"> </span>PutOuts, <span class="dt">data =</span> train)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li><em>Use that model to predict on the testing set.</em> Performance on the test set is the CV estimate for the model’s out-of-sample performance.</li>
+</ol>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="model-fitting.html#cb99-1"></a>results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="kw">c</span>(<span class="st">&quot;Full model in-sample&quot;</span>,</span>
+<span id="cb99-2"><a href="model-fitting.html#cb99-2"></a>                                <span class="st">&quot;Select model in-sample&quot;</span>,</span>
+<span id="cb99-3"><a href="model-fitting.html#cb99-3"></a>                                <span class="st">&quot;Full model out-of-sample&quot;</span>,</span>
+<span id="cb99-4"><a href="model-fitting.html#cb99-4"></a>                                <span class="st">&quot;Select model out-of-sample&quot;</span>),</span>
+<span id="cb99-5"><a href="model-fitting.html#cb99-5"></a>                      <span class="dt">RMSE =</span> <span class="kw">round</span>(<span class="kw">c</span>(<span class="kw">rmse</span>(<span class="kw">fitted</span>(full_model), train<span class="op">$</span>Salary),</span>
+<span id="cb99-6"><a href="model-fitting.html#cb99-6"></a>                               <span class="kw">rmse</span>(<span class="kw">fitted</span>(select_model), train<span class="op">$</span>Salary),</span>
+<span id="cb99-7"><a href="model-fitting.html#cb99-7"></a>                               <span class="kw">rmse</span>(<span class="kw">predict</span>(full_model, <span class="dt">newdata =</span> test), test<span class="op">$</span>Salary), </span>
+<span id="cb99-8"><a href="model-fitting.html#cb99-8"></a>                               <span class="kw">rmse</span>(<span class="kw">predict</span>(select_model, <span class="dt">newdata =</span> test), test<span class="op">$</span>Salary)),<span class="dv">1</span>))</span>
+<span id="cb99-9"><a href="model-fitting.html#cb99-9"></a></span>
+<span id="cb99-10"><a href="model-fitting.html#cb99-10"></a>results</span></code></pre></div>
+<pre><code>##                        Model  RMSE
+## 1       Full model in-sample 297.8
+## 2     Select model in-sample 326.1
+## 3   Full model out-of-sample 368.2
+## 4 Select model out-of-sample 306.4</code></pre>
+<p>We can see that the full model is overfitting—in-sample RMSE is worse than out-of-sample RMSE—while the select model chosen by <code>regsubsets()</code> using BIC is not overfitting. In fact, the select model actually does better out-of-sample than in-sample, though this particular result is likely a matter of chance, a function of random split we happen to be using. Generally, though, these results illustrate the danger of model complexity, and why it makes sense to choose predictors using measures of model fit that penalize for complexity. Simple models tend to generalize better. This figure depicts these relationships:</p>
+<p><img src="figures/overfit.png" /></p>
+<p>As model complexity increases, the in-sample fit will likely keep getting better and better. But the out-of-sample fit starts getting worse at a certain threshold of complexity, as the model begins fitting noise in the sample. CV is designed to identify that threshold.</p>
+</div>
+<div id="cross-validation-and-bootstrap" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Cross-validation and Bootstrap</h2>
+<p>The problem with this train-test CV procedure is that results can be quite variable due to the single random split defining the two sets. <span class="math inline">\(K\)</span>-fold CV is designed to solve this problem. From <em>Statistical Learning</em>:</p>
+<blockquote>
+<p>This approach involves randomly dividing the set of observations into <span class="math inline">\(k\)</span> groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining <span class="math inline">\(k − 1\)</span> folds. The mean squared error, <span class="math inline">\(MSE_1\)</span>,is then computed on the observations in the held-out fold. This procedure is repeated <span class="math inline">\(k\)</span> times; each time, a different group of observations is treated as a validation set. This process results in <span class="math inline">\(k\)</span> estimates of the test error, <span class="math inline">\(MSE_1,MSE_2,...,MSE_k\)</span>. The <span class="math inline">\(k-fold\)</span> CV estimate is computed by averaging these values: <span class="math inline">\(CV_k = \sum_{i=1}^{k}MSE_i.\)</span>(181)</p>
+</blockquote>
+<p>There are different types of CV that we briefly describe here.</p>
+<div id="leave-one-out-cross-validation-loocv" class="section level3" number="3.7.1">
+<h3><span class="header-section-number">3.7.1</span> Leave-one-out cross validation (LOOCV)</h3>
+<p>This method works as follows:</p>
+<ul>
+<li>Extract one observation from the data and use the rest to train the model</li>
+<li>Tests the model with the observation that has been extracted in the previous step and save the error associated with that prediction</li>
+<li>Repeat the process for all observations</li>
+<li>Calculate the global prediction error using the average of all the errors estimated in step 2.</li>
+</ul>
+<p>We will see later how to do these calculations with a specific library. For now, for you to learn how this methodology works, you must perform the following exercise</p>
+<table style="width:75%;">
+<colgroup>
+<col width="75%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>EXERCISE</strong> (Deliver at Moodle: Exercise-LOOCV): Upload the R function.</td>
+</tr>
+<tr class="even">
+<td>Create an R function that performs the LOOCV procedure and estimates the LOOCV value for the full model (e.g object <code>full_model</code>) and the selected model (e.g. object <code>select_model</code>) in the train data.</td>
+</tr>
+<tr class="odd">
+<td>HINT: use the function <code>update ()</code> to re-evaluate the model in a new dataset.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="k-fold-cross-validation-k-fold-cv" class="section level3" number="3.7.2">
+<h3><span class="header-section-number">3.7.2</span> K-fold cross validation (K-fold CV)</h3>
+<p>The difference with LOOCV is that this method evaluates the behavior of the model in a data set of different size (K). The algorithm is as follows:</p>
+<ul>
+<li>Separate the data into k-subsets (k-fold) randomly</li>
+<li>Save one of the subsets of data and train the model with the rest of the individuals</li>
+<li>Tests the model with the reserved data and saves the average prediction error.</li>
+<li>Repeat the process until the k subsets have served as test sample.</li>
+<li>Calculate the average of the k errors that have been saved. This value is the cross-validation error and it helps us to evaluate the behavior of our model as if we were using it in an external database.</li>
+</ul>
+<p>The main advantage of this method over LOOCV is the computational cost. Another advantage that is not so obvious is that this method often gives better estimates of model error than LOOCV.</p>
+<p>A typical question is how to choose the optimal value of K. Small values of K give biased estimates. On the other hand, large K values are less skewed, but have a lot of variability. In practice, values of k = 5 or k = 10 are normally used, since these values have, empirically, estimated error rates that are not too biased or with too much variance.</p>
+<p>As in the previous case, we will see an R package to perform these analyzes efficiently. For now, do the following exercise:</p>
+<table style="width:75%;">
+<colgroup>
+<col width="75%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>EXERECISE</strong> (Deliver at Moodle: Exercise-Kfold): Upload the R function.</td>
+</tr>
+<tr class="even">
+<td>Create an R function that performs the K-fold CV procedure and estimates the value of value K-fold CV for the full model (e.g object <code>full_model</code>) and the selected model (e.g. object <code>select_model</code>) in the train data. The function should have a parameter that depends on K. Give the results for K = 5 and K = 10.</td>
+</tr>
+<tr class="odd">
+<td>HINT: use the function <code>update ()</code> to re-evaluate the model in a new dataset.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="bootstrap" class="section level3" number="3.7.3">
+<h3><span class="header-section-number">3.7.3</span> Bootstrap</h3>
+<p>Instead of dividing our sample into <span class="math inline">\(K\)</span> sub-samples we can carry out a random selection of samples with replacement. These re-samples are called <em>bootstrap</em> tambples. This is a technique widely used in statistics to make inference when the distribution of the statistic is unknown. This will be further explained in the next letures, but here you have a simple description of this methodoloty.</p>
+<div class="figure">
+<img src="figures/bootstrap_1.jpg" style="width:60.0%" alt="" />
+<p class="caption">Boostrap</p>
+</div>
+<div class="figure">
+<img src="figures/bootstrap_2.png" style="width:60.0%" alt="" />
+<p class="caption">Boostrap</p>
+</div>
+<p>The <em>bootstrap</em> procedure applied to regression would be:</p>
+<ul>
+<li>Draw a random sample with replacement of size $ n $ from our data (we have $ n $ observations)</li>
+<li>Save samples that have not been selected (test data)</li>
+<li>Train the model with the sample * bootstrap *</li>
+<li>Tests the model with the test data and saves the average prediction error.</li>
+<li>Repeat the process $ B $ times</li>
+<li>Calculate the average of the $ B $ errors that have been saved. This value is the * bootstrap * error and it helps us to evaluate the behavior of our model.</li>
+</ul>
+<table style="width:75%;">
+<colgroup>
+<col width="75%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>EXERCISE</strong> (Deliver at Moodle: Exercise-bootstrap): Upload the R function.</td>
+</tr>
+<tr class="even">
+<td>Create a function R that implements the <em>bootstrap</em> procedure and estimate the value of this method for the full model (e.g object <code>full_model</code>) and the selected model (e.g. object <code>select_model</code>) in the train data. The function should have a parameter that depends on <span class="math inline">\(B\)</span>. Provide the the results for B = 25, B = 50, and B = 100.</td>
+</tr>
+<tr class="odd">
+<td>HINT: use the function <code>update ()</code> to re-evaluate the model in a new dataset.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="example-with-caret-library" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Example with <code>caret</code> library</h2>
+<p>The <code>caret</code> R package (short for Classification And REgression Training) contains functions to streamline the model training process for complex regression and classification problems. <a href="https://topepo.github.io/caret/">Here</a> there is an excellent bookdown describing how to do machine learning with R using different methods.</p>
+<p>By default <code>caret</code> uses 25 bootstrap samples rather than folds to perform model evaluation. Some data points will be left out of each bootstrap sample; caret uses those as the test set for estimating out-of-sample predictive error.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="model-fitting.html#cb101-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb101-2"><a href="model-fitting.html#cb101-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb101-3"><a href="model-fitting.html#cb101-3"></a><span class="kw">train</span>(Salary <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb101-4"><a href="model-fitting.html#cb101-4"></a>      <span class="dt">data =</span> train, </span>
+<span id="cb101-5"><a href="model-fitting.html#cb101-5"></a>      <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<pre><code>## Linear Regression 
+## 
+## 184 samples
+##  19 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 184, 184, 184, 184, 184, 184, ... 
+## Resampling results:
+## 
+##   RMSE      Rsquared   MAE     
+##   365.7867  0.4751905  261.7278
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+<p>The output that caret prints to the screen is <em>not</em> in-sample RMSE and <span class="math inline">\(R^2\)</span> but is rather the CV estimate of out-of-sample error. Estimated out-of-sample RMSE for the full model is 391.19. Let’s compare this result to the one for the select model.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="model-fitting.html#cb103-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb103-2"><a href="model-fitting.html#cb103-2"></a><span class="kw">train</span>(Salary <span class="op">~</span><span class="st"> </span>AtBat <span class="op">+</span><span class="st"> </span>Hits <span class="op">+</span><span class="st"> </span>Walks <span class="op">+</span><span class="st"> </span>CRBI <span class="op">+</span><span class="st"> </span>Division <span class="op">+</span><span class="st"> </span>PutOuts, </span>
+<span id="cb103-3"><a href="model-fitting.html#cb103-3"></a>      <span class="dt">data =</span> train, </span>
+<span id="cb103-4"><a href="model-fitting.html#cb103-4"></a>      <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<pre><code>## Linear Regression 
+## 
+## 184 samples
+##   6 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 184, 184, 184, 184, 184, 184, ... 
+## Resampling results:
+## 
+##   RMSE      Rsquared   MAE     
+##   349.7814  0.5100381  246.7548
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+<p>Estimated out-of-sample RMSE for the select model is 362.17, which roughly agrees with the result we obtained using the validation set method: the simpler model has lower variance. And why do we care about lower variance? Because models that perform better on new data are less yoked to the idiosyncrasies of sample data and presumably doing a better job of describing the characteristics of the population. Such models are better at both inference and prediction.</p>
+</div>
+<div id="missing-data-imputation" class="section level2" number="3.9">
+<h2><span class="header-section-number">3.9</span> Missing data imputation</h2>
+<p>Real-world datasets often have missing observations. The <code>lm()</code> function, for better or worse, silently removes rows with missing observations. Should we remove these rows or impute the missing observations? We are almost always better off imputing.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> While we can choose whether to impute in the case of linear regression, many machine learning applications require complete datasets: so we must impute. Missing data imputation is a large and complicated topic; the following discussion is very introductory.</p>
+<p>Types of missing values:</p>
+<ul>
+<li><p><em>Missing completely at random (MCAR)</em>: the probability that an observation is missing is the same for all cases. Deleting missing cases in this instance will not cause bias, though we may lose information.</p></li>
+<li><p><em>Missing at random (MAR)</em>: the probability that an observation is missing depends on a known mechanism. For example, some groups are less likely to answer surveys. If we know group membership we can delete the missing observations provided we include group as a factor in a regression. However, we can generally do better than just deleting such cases.</p></li>
+<li><p><em>Missing not at random (MNAR)</em>: the probability that an observation is missing depends on some unknown mechanism—an unobserved variable. Dealing with MNAR problems is difficult or even impossible.</p></li>
+</ul>
+<p>In this discussion we we will focus on MAR problems. A simple solution is to fill in or <em>impute</em> the MAR values. There are two major strategies:</p>
+<p><strong>Single imputation</strong> replaces missing values based on a univariate statistic or a multivariable regression model. The caret package will do single imputation with medians, KNN regression or random forest. The missForest package will do single imputation using random forest. In single imputation using medians we impute missing data using the median of the univariate column vector. (The median is better than the mean when the column data are skewed.) In single imputation using KNN or random forest we create a multivariable model of the missing observations using the other column vectors and use that model to predict the missing values.</p>
+<p>The problem with single imputation, theoretically, is that the variability of the imputed variable is lower than the variability in the actual variable would have been, creating a bias towards 0 in the coefficients. Thus, while deletion loses information, single imputation can cause bias. (It is not clear to me, however, how big a problem this actually is in practice.)</p>
+<p><strong>Multiple imputation</strong> addresses these problems by imputing missing values with a multivariable model but adding the variability back in by re-including the error variation that we would normally see in the data. The “multiple” in multiple imputation refers to the multiple datasets created in the process of estimating regression coefficients. The steps are as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Create <span class="math inline">\(m\)</span> complete datasets with imputed missing values. Imputations are done by randomly drawing from distributions of plausible values for each column vector.</li>
+<li>Fit a linear model on each imputed dataset,and store <span class="math inline">\(\hat\beta\)</span>s and SEs.</li>
+<li>Average the <span class="math inline">\(\hat\beta\)</span>s and combine the SEs to produce coefficients based on multiply imputed datasets.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></li>
+</ol>
+<p>Multiple imputation works better for description than for prediction, and is probably preferrable to single imputation if we only want to estimate coefficients. For prediction it will usually be necessary to use single imputation.</p>
+<p>We will demonstrate imputation methods using the Carseats data from the ISLR package. This is a simulated dataset of carseat sales, from which we will randomly remove 25% of the observations using the <code>prodNA()</code> function in the missForest package (taking care to leave the outcome variable, Sales, intact).</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="model-fitting.html#cb105-1"></a><span class="kw">data</span>(Carseats)</span>
+<span id="cb105-2"><a href="model-fitting.html#cb105-2"></a><span class="kw">levels</span>(Carseats<span class="op">$</span>ShelveLoc) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bad&quot;</span>,<span class="st">&quot;Medium&quot;</span>,<span class="st">&quot;Good&quot;</span>) <span class="co"># Relevel the factor</span></span>
+<span id="cb105-3"><a href="model-fitting.html#cb105-3"></a><span class="kw">library</span>(missForest)</span>
+<span id="cb105-4"><a href="model-fitting.html#cb105-4"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb105-5"><a href="model-fitting.html#cb105-5"></a>carseats_missx &lt;-<span class="st"> </span><span class="kw">prodNA</span>(Carseats[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">noNA=</span>.<span class="dv">25</span>)</span>
+<span id="cb105-6"><a href="model-fitting.html#cb105-6"></a>carseats_miss &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">Sales=</span>Carseats[, <span class="dv">1</span>], carseats_missx)</span>
+<span id="cb105-7"><a href="model-fitting.html#cb105-7"></a><span class="kw">glimpse</span>(carseats_miss)</span></code></pre></div>
+<pre><code>## Rows: 400
+## Columns: 11
+## $ Sales       &lt;dbl&gt; 9.50, 11.22, 10.06, 7.40, 4.15, 10.81, 6.63, 11.85, 6.54, 4.69, 9.01, 11.96, 3.98, 10.96, 11.17, 8.71, ...
+## $ CompPrice   &lt;dbl&gt; 138, 111, 113, 117, 141, 124, 115, NA, NA, NA, 121, 117, NA, 115, 107, NA, 118, NA, 110, 129, 125, 134,...
+## $ Income      &lt;dbl&gt; 73, 48, 35, 100, 64, 113, NA, 81, 110, 113, 78, 94, NA, 28, 117, 95, 32, 74, 110, 76, NA, NA, 46, NA, 1...
+## $ Advertising &lt;dbl&gt; 11, 16, NA, 4, 3, 13, NA, 15, 0, 0, 9, 4, 2, NA, 11, 5, NA, 13, 0, 16, 2, 12, 6, 0, 16, 0, 11, 0, NA, 1...
+## $ Population  &lt;dbl&gt; 276, 260, 269, NA, 340, 501, 45, 425, 108, 131, 150, 503, NA, 29, 148, 400, 284, 251, 408, 58, 367, 239...
+## $ Price       &lt;dbl&gt; 120, NA, NA, 97, 128, 72, 108, 120, NA, 124, 100, NA, NA, NA, 118, 144, 110, 131, 68, 121, NA, 109, 138...
+## $ ShelveLoc   &lt;fct&gt; Bad, NA, Good, NA, Bad, Bad, Good, NA, Good, Good, Bad, Medium, NA, Medium, Medium, Good, Medium, Mediu...
+## $ Age         &lt;dbl&gt; 42, 65, NA, 55, 38, NA, 71, 67, 76, 76, 26, 50, NA, 53, 52, 76, 63, 52, 46, 69, NA, NA, NA, 79, 42, 54,...
+## $ Education   &lt;dbl&gt; NA, 10, 12, NA, 13, 16, 15, 10, 10, 17, 10, 13, NA, NA, NA, 18, 13, 10, 17, 12, 18, NA, NA, NA, 12, 11,...
+## $ Urban       &lt;fct&gt; NA, Yes, Yes, Yes, Yes, NA, NA, Yes, No, NA, NA, Yes, Yes, Yes, Yes, No, Yes, Yes, No, NA, Yes, No, Yes...
+## $ US          &lt;fct&gt; Yes, Yes, Yes, Yes, No, Yes, No, Yes, NA, Yes, Yes, Yes, No, Yes, Yes, No, No, NA, Yes, Yes, NA, Yes, N...</code></pre>
+<p>There are now many missing observations. When we fit a regression model of Sales, notice that <code>lm()</code> silently removes the rows with NAs, producing a model based on a very small subset of the data.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="model-fitting.html#cb107-1"></a><span class="kw">display</span>(<span class="kw">lm</span>(Sales <span class="op">~</span><span class="st"> </span>CompPrice <span class="op">+</span><span class="st"> </span>Income <span class="op">+</span><span class="st"> </span>Advertising <span class="op">+</span><span class="st"> </span>Population <span class="op">+</span><span class="st"> </span>Price, <span class="dt">data =</span> carseats_miss))</span></code></pre></div>
+<pre><code>## lm(formula = Sales ~ CompPrice + Income + Advertising + Population + 
+##     Price, data = carseats_miss)
+##             coef.est coef.se
+## (Intercept)  6.24     1.99  
+## CompPrice    0.10     0.02  
+## Income       0.01     0.01  
+## Advertising  0.13     0.03  
+## Population   0.00     0.00  
+## Price       -0.11     0.01  
+## ---
+## n = 93, k = 6
+## residual sd = 2.06, R-Squared = 0.59</code></pre>
+<p>Out of an original dataset of 400 we now only have 82 rows!</p>
+<p>We will demonstrate multiple imputation using the <code>mice()</code> function from the mice package. (mice stands for “multiple imputation using chained equations.”)</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="model-fitting.html#cb109-1"></a><span class="kw">library</span>(mice)</span>
+<span id="cb109-2"><a href="model-fitting.html#cb109-2"></a><span class="kw">names</span>(Carseats)</span></code></pre></div>
+<pre><code>##  [1] &quot;Sales&quot;       &quot;CompPrice&quot;   &quot;Income&quot;      &quot;Advertising&quot; &quot;Population&quot;  &quot;Price&quot;       &quot;ShelveLoc&quot;   &quot;Age&quot;        
+##  [9] &quot;Education&quot;   &quot;Urban&quot;       &quot;US&quot;</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="model-fitting.html#cb111-1"></a>mice_imp &lt;-<span class="st"> </span><span class="kw">mice</span>(carseats_miss, <span class="dt">printFlag =</span> F)</span></code></pre></div>
+<p>The <code>carseats_imp</code> object created by <code>mice()</code> includes (among many other things) <span class="math inline">\(m\)</span> imputed datasets (the default setting in mice is m = 5). The imputed datasets differ because the imputations are randomly drawn from distributions of plausible values. We can visualize the variability of the predictors in these imputed datasets using the <code>densityplot()</code> function.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="model-fitting.html#cb112-1"></a><span class="kw">library</span>(lattice)</span>
+<span id="cb112-2"><a href="model-fitting.html#cb112-2"></a><span class="kw">densityplot</span>(mice_imp)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-51-1.png" width="672" /></p>
+<p>The solid blue lines depict the actual distribution of the predictors, while the red lines show the imputed distributions. The next step is to use these imputed datasets to average the <span class="math inline">\(\hat\beta\)</span>s and SEs using mice’s <code>pool()</code> function.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="model-fitting.html#cb113-1"></a>mice_model_imp &lt;-<span class="st"> </span><span class="kw">with</span>(<span class="dt">data =</span> mice_imp, </span>
+<span id="cb113-2"><a href="model-fitting.html#cb113-2"></a>     <span class="dt">exp =</span> <span class="kw">lm</span>(Sales <span class="op">~</span><span class="st"> </span>CompPrice <span class="op">+</span><span class="st"> </span>Income <span class="op">+</span><span class="st"> </span>Advertising <span class="op">+</span><span class="st"> </span>Population <span class="op">+</span><span class="st"> </span>Price))</span>
+<span id="cb113-3"><a href="model-fitting.html#cb113-3"></a></span>
+<span id="cb113-4"><a href="model-fitting.html#cb113-4"></a>(mi &lt;-<span class="st"> </span><span class="kw">summary</span>(<span class="kw">pool</span>(mice_model_imp))[, <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>])</span></code></pre></div>
+<pre><code>##        estimate    std.error   statistic        df      p.value
+## 1  4.6263624799 1.1624569136   3.9798142  37.55669 3.039761e-04
+## 2  0.0962389964 0.0090052111  10.6870339 203.99830 0.000000e+00
+## 3  0.0139312628 0.0041805139   3.3324283  73.95233 1.346656e-03
+## 4  0.1312940996 0.0198363397   6.6188673  28.85229 3.036800e-07
+## 5 -0.0008278999 0.0008809387  -0.9397929  32.66445 3.542220e-01
+## 6 -0.0929212662 0.0064621362 -14.3793419  41.67056 0.000000e+00</code></pre>
+<p>These coefficients are similar to the ones from the earlier model fitted using the non-imputed data, but they should be closer to population values because, rather than just removing the incomplete cases, instead uses distributional information to make educated guesses about missing data. Multiple imputation works best for purposes of description—estimating coefficients to report in an academic paper, for example—but using it for prediction on new data is awkward or impossible, for the following reasons:</p>
+<ul>
+<li>If the new data is complete then we can use the coefficient estimates derived from multiple imputation in a regression equation for prediction. But this is a pain. We use the original Carseats data for illustration.</li>
+</ul>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="model-fitting.html#cb115-1"></a>preds &lt;-<span class="st"> </span>mi[<span class="dv">1</span>, <span class="dv">2</span>] <span class="op">+</span><span class="st"> </span></span>
+<span id="cb115-2"><a href="model-fitting.html#cb115-2"></a><span class="st">  </span>mi[<span class="dv">2</span>, <span class="dv">2</span>]<span class="op">*</span>Carseats<span class="op">$</span>CompPrice <span class="op">+</span></span>
+<span id="cb115-3"><a href="model-fitting.html#cb115-3"></a><span class="st">  </span>mi[<span class="dv">3</span>, <span class="dv">2</span>]<span class="op">*</span>Carseats<span class="op">$</span>Income <span class="op">+</span></span>
+<span id="cb115-4"><a href="model-fitting.html#cb115-4"></a><span class="st">  </span>mi[<span class="dv">4</span>, <span class="dv">2</span>]<span class="op">*</span>Carseats<span class="op">$</span>Advertising <span class="op">+</span></span>
+<span id="cb115-5"><a href="model-fitting.html#cb115-5"></a><span class="st">  </span>mi[<span class="dv">5</span>, <span class="dv">2</span>]<span class="op">*</span>Carseats<span class="op">$</span>Population <span class="op">+</span></span>
+<span id="cb115-6"><a href="model-fitting.html#cb115-6"></a><span class="st">  </span>mi[<span class="dv">6</span>, <span class="dv">2</span>]<span class="op">*</span>Carseats<span class="op">$</span>Price</span>
+<span id="cb115-7"><a href="model-fitting.html#cb115-7"></a>  </span>
+<span id="cb115-8"><a href="model-fitting.html#cb115-8"></a>   </span>
+<span id="cb115-9"><a href="model-fitting.html#cb115-9"></a><span class="kw">head</span>(preds)</span></code></pre></div>
+<pre><code>## [1] 3.947149 3.445483 3.278671 3.750808 3.885926 3.915998</code></pre>
+<ul>
+<li>If the new data is not complete then these multiply imputed coefficients are useless for predicting on rows with missing observations. This, for example, is the result of trying to predict using the carseats data with missing observations.</li>
+</ul>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="model-fitting.html#cb117-1"></a>preds &lt;-<span class="st"> </span>mi[<span class="dv">1</span>, <span class="dv">2</span>] <span class="op">+</span><span class="st"> </span></span>
+<span id="cb117-2"><a href="model-fitting.html#cb117-2"></a><span class="st">  </span>mi[<span class="dv">2</span>, <span class="dv">2</span>]<span class="op">*</span>carseats_miss<span class="op">$</span>CompPrice <span class="op">+</span></span>
+<span id="cb117-3"><a href="model-fitting.html#cb117-3"></a><span class="st">  </span>mi[<span class="dv">3</span>, <span class="dv">2</span>]<span class="op">*</span>carseats_miss<span class="op">$</span>Income <span class="op">+</span></span>
+<span id="cb117-4"><a href="model-fitting.html#cb117-4"></a><span class="st">  </span>mi[<span class="dv">4</span>, <span class="dv">2</span>]<span class="op">*</span>carseats_miss<span class="op">$</span>Advertising <span class="op">+</span></span>
+<span id="cb117-5"><a href="model-fitting.html#cb117-5"></a><span class="st">  </span>mi[<span class="dv">5</span>, <span class="dv">2</span>]<span class="op">*</span>carseats_miss<span class="op">$</span>Population <span class="op">+</span></span>
+<span id="cb117-6"><a href="model-fitting.html#cb117-6"></a><span class="st">  </span>mi[<span class="dv">6</span>, <span class="dv">2</span>]<span class="op">*</span>carseats_miss<span class="op">$</span>Price</span>
+<span id="cb117-7"><a href="model-fitting.html#cb117-7"></a>  </span>
+<span id="cb117-8"><a href="model-fitting.html#cb117-8"></a>   </span>
+<span id="cb117-9"><a href="model-fitting.html#cb117-9"></a><span class="kw">head</span>(preds)</span></code></pre></div>
+<pre><code>## [1] 3.947149       NA       NA       NA 3.885926 3.915998</code></pre>
+<ul>
+<li><p>Multiple imputation thus doesn’t solve the major problem we often face with missing data, which is that although we may have successfully fit a model on the train set, the test set may also have missing observations, and our predictions using that data will also therefore be incomplete.</p></li>
+<li><p>We could use one of the imputed datasets produced by mice, but then we are not doing multiple imputation anymore but single imputation. At that point, the methods available in the mice package offer no special advantage over those in the caret and the missForest packages. Indeed, they might be worse since <code>mice()</code> was designed not to produce the single best imputation but rather a range of plausible imputations.</p></li>
+</ul>
+<p>Using caret, we can do single imputation using knnImpute, medianImpute, or bagImpute (random forest). While it is possible to impute inside the <code>train()</code> function using <code>preProcess()</code>, it is more straightforward to create a new dataset with imputed observatons. These methods only work for numeric variables, so we will create a custom function to turn the factors—Shelveloc, Urban and US—into integers. (When using the imputed dataset for regression we could leave these variables as integers, as long as the integer values correspond to the factor levels.)</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="model-fitting.html#cb119-1"></a>make_df_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(df){</span>
+<span id="cb119-2"><a href="model-fitting.html#cb119-2"></a>  <span class="kw">data.frame</span>(<span class="kw">sapply</span>(df, <span class="cf">function</span>(x) <span class="kw">as.numeric</span>(x)))</span>
+<span id="cb119-3"><a href="model-fitting.html#cb119-3"></a>  }</span>
+<span id="cb119-4"><a href="model-fitting.html#cb119-4"></a></span>
+<span id="cb119-5"><a href="model-fitting.html#cb119-5"></a>carseats_miss_num &lt;-<span class="st"> </span><span class="kw">make_df_numeric</span>(carseats_miss)</span>
+<span id="cb119-6"><a href="model-fitting.html#cb119-6"></a></span>
+<span id="cb119-7"><a href="model-fitting.html#cb119-7"></a>med_imp &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="kw">preProcess</span>(carseats_miss_num, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;medianImpute&quot;</span>)), carseats_miss_num)</span>
+<span id="cb119-8"><a href="model-fitting.html#cb119-8"></a></span>
+<span id="cb119-9"><a href="model-fitting.html#cb119-9"></a>knn_imp &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="kw">preProcess</span>(carseats_miss_num, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;knnImpute&quot;</span>)), carseats_miss_num)</span>
+<span id="cb119-10"><a href="model-fitting.html#cb119-10"></a></span>
+<span id="cb119-11"><a href="model-fitting.html#cb119-11"></a>bag_imp &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="kw">preProcess</span>(carseats_miss_num, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;bagImpute&quot;</span>)), carseats_miss_num)</span></code></pre></div>
+<p>The missForest package offers yet another single imputation solution, which is simpler than the caret functions because it handles categorical data automatically. While missForest works well for small datasets, and provides good quality imputations using multivariable random forest models, it will be very slow on large datasets. In fact, the same will be true for caret’s <code>bagImpute()</code> function, which also uses random forest. In such cases it might make sense to use caret’s <code>medianImpute()</code> function instead.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="model-fitting.html#cb120-1"></a>mf_imp &lt;-<span class="st"> </span><span class="kw">missForest</span>(carseats_miss, <span class="dt">verbose =</span> F)</span></code></pre></div>
+<pre><code>##   missForest iteration 1 in progress...done!
+##   missForest iteration 2 in progress...done!
+##   missForest iteration 3 in progress...done!
+##   missForest iteration 4 in progress...done!
+##   missForest iteration 5 in progress...done!</code></pre>
+<p>The imputed dataset is stored in a list object (under “ximp”).</p>
+<p>Let’s compare the errors associated with these different imputation methods. We can do this because, having created the missing observations in the first place, we can compare the imputed observations against the true observations by computing the sum of squares of the difference. For the imputations using <code>mice()</code> we calculate errors for each of the 5 imputed datasets. The results from <code>knnImpute()</code> are not comparable because the function automatically centers and scales variables; they have been omitted.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="model-fitting.html#cb122-1"></a>comparison &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Method =</span> <span class="kw">c</span>(<span class="st">&quot;mice 1&quot;</span>, </span>
+<span id="cb122-2"><a href="model-fitting.html#cb122-2"></a>                                    <span class="st">&quot;mice 2&quot;</span>, </span>
+<span id="cb122-3"><a href="model-fitting.html#cb122-3"></a>                                    <span class="st">&quot;mice 3&quot;</span>, </span>
+<span id="cb122-4"><a href="model-fitting.html#cb122-4"></a>                                    <span class="st">&quot;mice 4&quot;</span>, </span>
+<span id="cb122-5"><a href="model-fitting.html#cb122-5"></a>                                    <span class="st">&quot;mice 5&quot;</span>, </span>
+<span id="cb122-6"><a href="model-fitting.html#cb122-6"></a>                                    <span class="st">&quot;medianImpute&quot;</span>, </span>
+<span id="cb122-7"><a href="model-fitting.html#cb122-7"></a>                                    <span class="st">&quot;bagImpute&quot;</span>, </span>
+<span id="cb122-8"><a href="model-fitting.html#cb122-8"></a>                                    <span class="st">&quot;missForest&quot;</span>),</span>
+<span id="cb122-9"><a href="model-fitting.html#cb122-9"></a>                         <span class="dt">RSS =</span> <span class="kw">c</span>(<span class="kw">rss</span>(<span class="kw">make_df_numeric</span>(<span class="kw">complete</span>(mice_imp, <span class="dv">1</span>)), <span class="kw">make_df_numeric</span>(Carseats)),</span>
+<span id="cb122-10"><a href="model-fitting.html#cb122-10"></a>                                 <span class="kw">rss</span>(<span class="kw">make_df_numeric</span>(<span class="kw">complete</span>(mice_imp, <span class="dv">2</span>)), <span class="kw">make_df_numeric</span>(Carseats)),</span>
+<span id="cb122-11"><a href="model-fitting.html#cb122-11"></a>                                 <span class="kw">rss</span>(<span class="kw">make_df_numeric</span>(<span class="kw">complete</span>(mice_imp, <span class="dv">3</span>)), <span class="kw">make_df_numeric</span>(Carseats)),</span>
+<span id="cb122-12"><a href="model-fitting.html#cb122-12"></a>                                 <span class="kw">rss</span>(<span class="kw">make_df_numeric</span>(<span class="kw">complete</span>(mice_imp, <span class="dv">4</span>)), <span class="kw">make_df_numeric</span>(Carseats)),</span>
+<span id="cb122-13"><a href="model-fitting.html#cb122-13"></a>                                 <span class="kw">rss</span>(<span class="kw">make_df_numeric</span>(<span class="kw">complete</span>(mice_imp, <span class="dv">5</span>)), <span class="kw">make_df_numeric</span>(Carseats)),</span>
+<span id="cb122-14"><a href="model-fitting.html#cb122-14"></a>                                 <span class="kw">rss</span>(med_imp, <span class="kw">make_df_numeric</span>(Carseats)),</span>
+<span id="cb122-15"><a href="model-fitting.html#cb122-15"></a>                                 <span class="kw">rss</span>(bag_imp, <span class="kw">make_df_numeric</span>(Carseats)),</span>
+<span id="cb122-16"><a href="model-fitting.html#cb122-16"></a>                                 <span class="kw">rss</span>(<span class="kw">make_df_numeric</span>(mf_imp<span class="op">$</span>ximp), <span class="kw">make_df_numeric</span>(Carseats))))</span>
+<span id="cb122-17"><a href="model-fitting.html#cb122-17"></a>                         </span>
+<span id="cb122-18"><a href="model-fitting.html#cb122-18"></a>comparison <span class="op">%&gt;%</span></span>
+<span id="cb122-19"><a href="model-fitting.html#cb122-19"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RSS =</span> <span class="kw">round</span>(RSS)) <span class="op">%&gt;%</span></span>
+<span id="cb122-20"><a href="model-fitting.html#cb122-20"></a><span class="st">  </span><span class="kw">arrange</span>(RSS)</span></code></pre></div>
+<pre><code>##         Method     RSS
+## 1   missForest 2489418
+## 2 medianImpute 2538059
+## 3    bagImpute 2714857
+## 4       mice 4 3752513
+## 5       mice 5 4389532
+## 6       mice 2 4399586
+## 7       mice 1 4564721
+## 8       mice 3 4791521</code></pre>
+<p>Missforest does the best, though medianImpute compares very well! Mice does not do well, probably for the reasons mentioned above: it is designed for multiple, not single, imputation.</p>
+</div>
+<div id="regularization" class="section level2" number="3.10">
+<h2><span class="header-section-number">3.10</span> Regularization</h2>
+<p>Selecting variables using AIC or <span class="math inline">\(R^2\)</span> is a discrete process: a variable is either in or out of the model. By contrast, methods are available that regularize or <em>shrink</em> coefficients towards zero and thereby achieve the same objective as discrete variable selection but in a continuous manner. The method works particularly well when there are large numbers of predictors. (In the wrong conditions—small number of predictors, for example—regularized models will actually do worse than ordinary least squares regression or OLS regression.) We will discuss two methods: <em>ridge regression</em>, which shrinks coefficients towards each other and towards zero, and <em>lasso</em>, which does the same thing but shrinks some coefficients all the way to zero, effectively taking those predictors out of the model.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> Ridge regression never completely removes predictors.</p>
+<p>Why would we want to shrink coefficients? Large coefficients tend to be artifacts of chance—of the fact that we happened to get this sample rather than another one. The world is a complex place, with many intersecting influences; it does not abound in strong relationships. Shrinking large coefficients will generally produce a model with higher bias but lower variance. We select a <em>worse</em> model in-sample so as to have a <em>better</em> model out-of-sample. Regularized models are particularly well-suited, consequently, for prediction problems.</p>
+<p>Ridge regression shrinks regression coefficients towards each other and towards zero by constraining their size. Remember: the least squares line in OLS regression is defined by the <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_j\)</span> that minimize RSS:</p>
+<p><span class="math display">\[
+\min_{ \beta_0, \beta_j }\left\{  \frac{1}{N} \sum_{i=1}^N (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij} )^2 \right\} = \min_{ \beta_0, \beta_j }\left\{RSS\right\}
+\]</span></p>
+<p>We can think of the least squares algorithm as searching a large space of possibilities for the values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_j\)</span> that produce the lowest RSS. Ridge regression does the same thing thing but imposes a <em>shrinkage</em> penalty on RSS.</p>
+<p><span class="math display">\[
+\min_{ \beta_0, \beta_j }\left\{RSS + \lambda \sum_{j=1}^p \beta{_j^2} \right\}
+\]</span></p>
+<p>where <span class="math inline">\(\lambda\)</span> is a tuning parameter. From <em>Statistical Learning</em>:</p>
+<blockquote>
+<p>As with least squares, ridge regression seeks coefficient estimates that fit the data well, by making the <span class="math inline">\(RSS\)</span> small. However, the second term, <span class="math inline">\(\lambda \sum_j \beta{_j^2}\)</span>, called a shrinkage penalty,is small when <span class="math inline">\(\beta_1, ... , \beta_j\)</span> are close to zero, and so it has the effect of shrinking the estimates of <span class="math inline">\(\beta_j\)</span> towards zero. The tuning parameter <span class="math inline">\(\lambda\)</span> serves to control the relative impact of these two terms on the regression coefficient estimates. When <span class="math inline">\(\lambda\)</span> = 0, the penalty term has no effect, and ridge regression will produce the least squares estimates. However, as <span class="math inline">\(\lambda \rightarrow \infty\)</span>, the impact of the shrinkage penalty grows, and the ridge regression coefficient estimates will approach zero. Unlike least squares, which generates only one set of coefficient estimates, ridge regression will produce a different set of coefficient estimates, <span class="math inline">\(\hat\beta^r_\lambda\)</span>, for each value of <span class="math inline">\(\lambda\)</span>. Selecting a good value for <span class="math inline">\(\lambda\)</span> is critical. [For that we use cross- validation.] (215)</p>
+</blockquote>
+<p>Let’s examine how shrinkage works in practice. Consider a simple regression model with <span class="math inline">\(\beta_0\)</span> = -1 and <span class="math inline">\(\beta_1\)</span> = 2.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="model-fitting.html#cb124-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb124-2"><a href="model-fitting.html#cb124-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">8</span>)</span>
+<span id="cb124-3"><a href="model-fitting.html#cb124-3"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y), <span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb124-4"><a href="model-fitting.html#cb124-4"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb124-5"><a href="model-fitting.html#cb124-5"></a><span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F) <span class="op">+</span></span>
+<span id="cb124-6"><a href="model-fitting.html#cb124-6"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;OLS line: intercept = -1, slope = 2&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-58-1.png" width="672" /></p>
+<p>The following table relates <span class="math inline">\(\beta_1\)</span> to RSS for three models: the OLS model from above (column 2) and then two different ridge models of the same data with different <span class="math inline">\(\lambda\)</span> (columns 3 and 4):</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="model-fitting.html#cb125-1"></a>tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Slope =</span> <span class="kw">seq</span>(<span class="fl">1.75</span>,<span class="fl">2.25</span>,.<span class="dv">05</span>), <span class="dt">rss =</span> <span class="dv">0</span>, <span class="dt">rss2 =</span> <span class="dv">0</span>, <span class="dt">rss3 =</span> <span class="dv">0</span>)</span>
+<span id="cb125-2"><a href="model-fitting.html#cb125-2"></a></span>
+<span id="cb125-3"><a href="model-fitting.html#cb125-3"></a><span class="kw">names</span>(tab)[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;OLS RSS&quot;</span>, <span class="st">&quot;Ridge RSS (lambda = 1)&quot;</span>,  <span class="st">&quot;Ridge RSS (lambda = 2)&quot;</span>)</span>
+<span id="cb125-4"><a href="model-fitting.html#cb125-4"></a></span>
+<span id="cb125-5"><a href="model-fitting.html#cb125-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(tab)){tab[i,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">sum</span>((<span class="op">-</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>tab<span class="op">$</span>Slope[i]<span class="op">*</span>x <span class="op">-</span><span class="st"> </span>y)<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="dv">0</span><span class="op">*</span>tab<span class="op">$</span>Slope[i]<span class="op">^</span><span class="dv">2</span>, <span class="dv">2</span>)}</span>
+<span id="cb125-6"><a href="model-fitting.html#cb125-6"></a></span>
+<span id="cb125-7"><a href="model-fitting.html#cb125-7"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(tab)){tab[i,<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">sum</span>((<span class="op">-</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>tab<span class="op">$</span>Slope[i]<span class="op">*</span>x <span class="op">-</span><span class="st"> </span>y)<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">*</span>tab<span class="op">$</span>Slope[i]<span class="op">^</span><span class="dv">2</span>, <span class="dv">2</span>)}</span>
+<span id="cb125-8"><a href="model-fitting.html#cb125-8"></a></span>
+<span id="cb125-9"><a href="model-fitting.html#cb125-9"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(tab)){tab[i,<span class="dv">4</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">sum</span>((<span class="op">-</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>tab<span class="op">$</span>Slope[i]<span class="op">*</span>x <span class="op">-</span><span class="st"> </span>y)<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>tab<span class="op">$</span>Slope[i]<span class="op">^</span><span class="dv">2</span> , <span class="dv">2</span>)}</span>
+<span id="cb125-10"><a href="model-fitting.html#cb125-10"></a></span>
+<span id="cb125-11"><a href="model-fitting.html#cb125-11"></a></span>
+<span id="cb125-12"><a href="model-fitting.html#cb125-12"></a>tab</span></code></pre></div>
+<pre><code>##    Slope OLS RSS Ridge RSS (lambda = 1) Ridge RSS (lambda = 2)
+## 1   1.75    7.88                  10.94                  14.00
+## 2   1.80    7.20                  10.44                  13.68
+## 3   1.85    6.68                  10.10                  13.52
+## 4   1.90    6.30                   9.91                  13.52
+## 5   1.95    6.07                   9.88                  13.68
+## 6   2.00    6.00                  10.00                  14.00
+## 7   2.05    6.07                  10.28                  14.48
+## 8   2.10    6.30                  10.71                  15.12
+## 9   2.15    6.67                  11.30                  15.92
+## 10  2.20    7.20                  12.04                  16.88
+## 11  2.25    7.88                  12.94                  18.00</code></pre>
+<p>The <span class="math inline">\(\beta_1\)</span> that minimizes RSS for the OLS model is 2. (OLS is identical to a ridge model with <span class="math inline">\(\lambda\)</span> = 0.) For the ridge models we can see that as <span class="math inline">\(\lambda\)</span> increases from 1 to 2, the shrinkage penalty grows, which has the effect of selecting smaller <span class="math inline">\(\beta_1\)</span>s. When <span class="math inline">\(\lambda\)</span> = 1 the optimal <span class="math inline">\(\beta_1\)</span> is 1.95, and when <span class="math inline">\(\lambda\)</span> = 2 the optimal <span class="math inline">\(\beta_1\)</span> somewhere between 1.85 and 1.9.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="model-fitting.html#cb127-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb127-2"><a href="model-fitting.html#cb127-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">8</span>)</span>
+<span id="cb127-3"><a href="model-fitting.html#cb127-3"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y), <span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb127-4"><a href="model-fitting.html#cb127-4"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb127-5"><a href="model-fitting.html#cb127-5"></a><span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F) <span class="op">+</span></span>
+<span id="cb127-6"><a href="model-fitting.html#cb127-6"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="fl">1.95</span>, <span class="dt">intercept =</span> <span class="dv">-1</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb127-7"><a href="model-fitting.html#cb127-7"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="fl">1.9</span>, <span class="dt">intercept =</span> <span class="dv">-1</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb127-8"><a href="model-fitting.html#cb127-8"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;OLS line compared to ridge estimates for lambda = 1 and lambda = 2&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-60-1.png" width="672" /></p>
+<p>Another way to think about ridge regression is that it minimizes RSS subject to a constraint, <span class="math inline">\(t\)</span>, on the size of the square root of the squared and summed <span class="math inline">\(\beta\)</span> coefficients:</p>
+<p><span class="math display">\[
+\min_{ \beta_0, \beta_j }\left\{RSS \right\} \text{ subject to } \sum_{j=1}^p ||\beta_j||_2 \leq t
+\]</span></p>
+<p><span class="math inline">\(||\beta_j||_2\)</span> is the <span class="math inline">\(L_2\)</span> or Euclidean norm: <span class="math inline">\(\left\| \boldsymbol{x} \right\|_2 := \sqrt{x_1^2 + \cdots + x_n^2}\)</span>. The constraint is like a budget that ensures the <span class="math inline">\(\beta\)</span> coefficients never get larger than a certain size. We pick the optimal <span class="math inline">\(t\)</span>, just as we would the optimal <span class="math inline">\(\lambda\)</span>, through cross validation. We seek the value of <span class="math inline">\(t\)</span> that minimizes estimated out-of-sample penalized error.</p>
+<p>Lasso regression also shrinks regression coefficients by constraining their size, but uses absolute value of <span class="math inline">\(\beta_j\)</span> in the penalty term. In technical terms: lasso uses the <span class="math inline">\(L_1\)</span> norm instead of the <span class="math inline">\(L_2\)</span> norm. The <span class="math inline">\(L_1\)</span> norm is just the absolute value of the summed <span class="math inline">\(\beta_j\)</span>s rather than the squares.</p>
+<p><span class="math display">\[
+\min_{ \beta_0, \beta_j }\left\{  \frac{1}{N} \sum_{i=1}^N (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij} )^2 + \lambda \sum_{j=1}^p |\beta{_j}|_1 \right\} =
+\]</span></p>
+<p><span class="math display">\[
+\min_{ \beta_0, \beta_j }\left\{RSS + \lambda \sum_{j=1}^p|\beta{_j|_1} \right\}
+\]</span></p>
+<p>where <span class="math inline">\(\lambda \geq 0\)</span> is again a tuning parameter, which we choose using CV. Or, just as with ridge, we can think about lasso as minimizing RSS subject to a constraint, <span class="math inline">\(t\)</span>, on the size of the absolute value of the summed <span class="math inline">\(\beta\)</span> coefficients:</p>
+<p><span class="math display">\[
+\min_{ \beta_0, \beta_j }\left\{RSS \right\} \text{ subject to } \sum_{j=1}^p |\beta_j|_1 \leq t
+\]</span></p>
+<p>The difference between the <span class="math inline">\(L_2\)</span> norm (used for ridge regression) and the <span class="math inline">\(L_1\)</span> norm (used for lasso) may seem trivial but it accounts for the fact that lasso does not just shrink coefficients towards zero but actually sets some coefficients at zero. Say, for example, that the constraint on the coefficients for a model with two predictors is <span class="math inline">\(t =1\)</span>. For lasso this means that <span class="math inline">\(|\hat\beta_1|\)</span> + <span class="math inline">\(|\hat\beta_2| \leq\)</span> 1. Examples:</p>
+<ul>
+<li><span class="math inline">\(|1| + |0| = 1\)</span></li>
+<li><span class="math inline">\(|.5| + |.5| = 1\)</span></li>
+<li><span class="math inline">\(|0| + |1| = 1\)</span></li>
+</ul>
+<p>We can generalize and say that the shape of the lasso constraint for any <span class="math inline">\(\hat\beta_1\)</span> + <span class="math inline">\(\hat\beta_2\)</span> subject to <span class="math inline">\(t \leq 1\)</span> will be a square, whereas the shape of the ridge constraint will be a circle. Examples:</p>
+<ul>
+<li><span class="math inline">\(1^2 + 0 = 1\)</span></li>
+<li><span class="math inline">\(.71^2 + .71^2 = .5 + .5 = 1\)</span></li>
+<li><span class="math inline">\(0 + 1^2 = 1\)</span></li>
+</ul>
+<!-- This plot suggests the difference: -->
+<!-- ```{r } -->
+<!-- points_lasso <- data.frame(beta1 = c(0, .5, 1), -->
+<!--                      beta2 = c(1, .5, 0)) -->
+<!-- points_ridge <- data.frame(beta1 = c(0, .71, 1), -->
+<!--                      beta2 = c(1, .71, 0)) -->
+<!-- ggplot(points_lasso, aes(beta1, beta2)) + -->
+<!--   geom_path() + -->
+<!--   geom_point() + -->
+<!--   geom_path(data = points_ridge, mapping = aes(beta1, beta2), col = "red")+ -->
+<!--   geom_point(data = points_ridge, mapping = aes(beta1, beta2), col = "red")+ -->
+<!--   ggtitle("Shape of lasso constraint (black) vs. ridge constraint (red) when t = 1") -->
+<!-- ``` -->
+<p>Ridge coefficients will never equal 0 because, due to the circular shape of the constraint, they will always intersect the constraint at points where <span class="math inline">\(\hat\beta_1\)</span> and <span class="math inline">\(\hat\beta_2\)</span> are either greater than or less than 0. Not so for lasso. The following graphic from <em>Statistical Learning</em> shows the difference.</p>
+<p><img src="figures/reg.png" /></p>
+<p>The possible values for <span class="math inline">\(\hat\beta\)</span> will touch the corners of the square (will equal 0) in the case of lasso, but never for ridge: the constraint will always intersect the possibilities for <span class="math inline">\(\hat\beta\)</span> at some non-zero point.</p>
+<p>Both lasso and ridge regression models are simple to fit in caret using the <code>glmnet()</code> function. We must center and scale variables to use these methods.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="model-fitting.html#cb128-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb128-2"><a href="model-fitting.html#cb128-2"></a>(glmnet_model &lt;-<span class="st"> </span><span class="kw">train</span>(Salary <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb128-3"><a href="model-fitting.html#cb128-3"></a>                   <span class="dt">data =</span> train,</span>
+<span id="cb128-4"><a href="model-fitting.html#cb128-4"></a>                   <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb128-5"><a href="model-fitting.html#cb128-5"></a>                   <span class="dt">method =</span> <span class="st">&quot;glmnet&quot;</span>))</span></code></pre></div>
+<pre><code>## glmnet 
+## 
+## 184 samples
+##  19 predictor
+## 
+## Pre-processing: centered (19), scaled (19) 
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 184, 184, 184, 184, 184, 184, ... 
+## Resampling results across tuning parameters:
+## 
+##   alpha  lambda      RMSE      Rsquared   MAE     
+##   0.10    0.6140311  359.6662  0.4869600  256.2830
+##   0.10    6.1403108  355.4081  0.4943610  250.1483
+##   0.10   61.4031085  360.7901  0.4851299  243.6817
+##   0.55    0.6140311  359.6364  0.4869292  256.1222
+##   0.55    6.1403108  357.1621  0.4905829  249.5126
+##   0.55   61.4031085  369.6322  0.4709253  247.5932
+##   1.00    0.6140311  359.8132  0.4865187  256.1048
+##   1.00    6.1403108  360.2626  0.4846552  249.8920
+##   1.00   61.4031085  377.7654  0.4592662  253.8781
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final values used for the model were alpha = 0.1 and lambda = 6.140311.</code></pre>
+<p>There are two user-specified parameters that caret sets using CV: lambda and alpha. Lambda is the shrinkage penalty. Caret searches over a small set of possibilities in this case—.5, 5, and 50—to find the lambda associated with the best out-of-sample performance, here 48.44. (We can specify a wider grid search for optimal lambda.) Alpha represents the “mixing percentage” between ridge and lasso. By default, <code>glmnet()</code> combines ridge and lasso in optimal proportions. We can force <code>glmnet()</code> to fit a ridge or lasso regression by specifying alpha = 0 (ridge) or alpha = 1 (lasso).</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="model-fitting.html#cb130-1"></a><span class="kw">set.seed</span>(<span class="dv">156</span>)</span>
+<span id="cb130-2"><a href="model-fitting.html#cb130-2"></a>(ridge_model &lt;-<span class="st"> </span><span class="kw">train</span>(Salary <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb130-3"><a href="model-fitting.html#cb130-3"></a>                   <span class="dt">data =</span> train,</span>
+<span id="cb130-4"><a href="model-fitting.html#cb130-4"></a>                   <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb130-5"><a href="model-fitting.html#cb130-5"></a>                   <span class="dt">method =</span> <span class="st">&quot;glmnet&quot;</span>,</span>
+<span id="cb130-6"><a href="model-fitting.html#cb130-6"></a>                   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(</span>
+<span id="cb130-7"><a href="model-fitting.html#cb130-7"></a>                     <span class="dt">alpha =</span> <span class="dv">0</span>,</span>
+<span id="cb130-8"><a href="model-fitting.html#cb130-8"></a>                     <span class="dt">lambda =</span> <span class="kw">seq</span>(<span class="dv">150</span>,<span class="dv">200</span>, <span class="dv">10</span>))))</span></code></pre></div>
+<pre><code>## glmnet 
+## 
+## 184 samples
+##  19 predictor
+## 
+## Pre-processing: centered (19), scaled (19) 
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 184, 184, 184, 184, 184, 184, ... 
+## Resampling results across tuning parameters:
+## 
+##   lambda  RMSE      Rsquared   MAE     
+##   150     362.8204  0.4875400  241.9429
+##   160     362.9125  0.4874825  241.8245
+##   170     363.0041  0.4874261  241.7228
+##   180     363.0942  0.4873715  241.6314
+##   190     363.1854  0.4873158  241.5471
+##   200     363.2765  0.4872630  241.4777
+## 
+## Tuning parameter &#39;alpha&#39; was held constant at a value of 0
+## RMSE was used to select the optimal model using the smallest value.
+## The final values used for the model were alpha = 0 and lambda = 150.</code></pre>
+<p>Extracting the coefficients for a <code>glmnet()</code> model from caret is sort of a pain. We first need to find the optimal lambda selected through CV, and then use that to pick out the best final model object. Here is the code:</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="model-fitting.html#cb132-1"></a>glmnet_model<span class="op">$</span>finalModel<span class="op">$</span>tuneValue</span></code></pre></div>
+<pre><code>##   alpha   lambda
+## 2   0.1 6.140311</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="model-fitting.html#cb134-1"></a><span class="kw">coef</span>(glmnet_model<span class="op">$</span>finalModel, glmnet_model<span class="op">$</span>finalModel<span class="op">$</span>tuneValue<span class="op">$</span>lambda)</span></code></pre></div>
+<pre><code>## 20 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                       1
+## (Intercept)  545.463804
+## AtBat       -218.230018
+## Hits         181.460199
+## HmRun        -46.975785
+## Runs           5.316087
+## RBI           47.420469
+## Walks        134.468437
+## Years       -126.192296
+## CAtBat      -102.958094
+## CHits        125.279061
+## CHmRun       134.972795
+## CRuns        304.040262
+## CRBI          68.416918
+## CWalks      -162.590400
+## LeagueN        7.336835
+## DivisionW    -67.236684
+## PutOuts       54.635291
+## Assists       62.702663
+## Errors       -52.727974
+## NewLeagueN    34.938002</code></pre>
+<p>Two things are going on here. First, the coefficients for all predictors have been shrunk towards 0, and, second, some predictors have been completely removed from the model by having their coefficients shrunk to all the way to 0. Is this continuous version of automatic variable selection better than the discrete version we used earlier with <code>regsubsets()</code>? Let’s compare predictions on the test set.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="model-fitting.html#cb136-1"></a><span class="kw">rmse</span>(<span class="kw">predict</span>(select_model, <span class="dt">newdata =</span> test), test<span class="op">$</span>Salary)</span></code></pre></div>
+<pre><code>## [1] 306.4138</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="model-fitting.html#cb138-1"></a><span class="kw">rmse</span>(<span class="kw">predict</span>(glmnet_model, <span class="dt">newdata =</span> test), test<span class="op">$</span>Salary)</span></code></pre></div>
+<pre><code>## [1] 351.9049</code></pre>
+<p>Unfortunately, <code>glmnet()</code> did not live up to its billing in this case. Regularization tends to work best in high dimensional settings where manual variable selection is not possible, or where automatic discrete variable selection does not provide enough flexibility.</p>
+<p>Let’s try using <code>glmnet()</code> to predict on a more challenging, high-dimensional dataset, the <a href="http://archive.ics.uci.edu/ml/datasets/communities+and+crime">communities and crime dataset</a> from UC Irvine’s machine learning repository. The data dictionary notes, “the data combines socio-economic data from the 1990 US Census, law enforcement data from the 1990 US LEMAS survey, and crime data from the 1995 FBI UCR.” There are 147 variables in the dataset with 2215 rows. We won’t bother to add in predictor names. The final variable in the dataset, ViolentCrimesPerPop, is the outcome. We will exclude the first two columns which function as row names representing the cities and states with crime statistics in this dataset.</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="model-fitting.html#cb140-1"></a>crime_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/00211/CommViolPredUnnormalizedData.txt&quot;</span>, <span class="dt">header =</span> F, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">quote =</span> <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>, <span class="dt">dec =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">fill =</span> <span class="ot">TRUE</span>, <span class="dt">comment.char =</span> <span class="st">&quot;&quot;</span>, <span class="dt">na.strings =</span> <span class="st">&quot;?&quot;</span>, <span class="dt">strip.white=</span><span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> F)</span>
+<span id="cb140-2"><a href="model-fitting.html#cb140-2"></a></span>
+<span id="cb140-3"><a href="model-fitting.html#cb140-3"></a><span class="kw">any</span>(<span class="kw">is.na</span>(crime_data))</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>There are missing observations. We could use <code>missForest()</code> for imputation, but given the high dimensionality of the data, this method will be very slow, if it works at all. We will instead use caret’s <code>medianImpute()</code> function for speed.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="model-fitting.html#cb142-1"></a>crime_data &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="kw">preProcess</span>(crime_data[, <span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)], <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;medianImpute&quot;</span>)), crime_data[, <span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)])</span>
+<span id="cb142-2"><a href="model-fitting.html#cb142-2"></a></span>
+<span id="cb142-3"><a href="model-fitting.html#cb142-3"></a><span class="kw">all</span>(<span class="kw">complete.cases</span>(crime_data))</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="model-fitting.html#cb144-1"></a><span class="kw">set.seed</span>(<span class="dv">512</span>)</span>
+<span id="cb144-2"><a href="model-fitting.html#cb144-2"></a>rows &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(crime_data), <span class="fl">.7</span><span class="op">*</span><span class="kw">nrow</span>(crime_data), <span class="dt">replace =</span> F)</span>
+<span id="cb144-3"><a href="model-fitting.html#cb144-3"></a>crime_train &lt;-<span class="st"> </span>crime_data[rows,]</span>
+<span id="cb144-4"><a href="model-fitting.html#cb144-4"></a>crime_test &lt;-<span class="st"> </span>crime_data[<span class="op">-</span>rows,]</span>
+<span id="cb144-5"><a href="model-fitting.html#cb144-5"></a></span>
+<span id="cb144-6"><a href="model-fitting.html#cb144-6"></a>crime_lm &lt;-<span class="st"> </span><span class="kw">lm</span>(V147 <span class="op">~</span>., <span class="dt">data =</span> crime_train)</span>
+<span id="cb144-7"><a href="model-fitting.html#cb144-7"></a></span>
+<span id="cb144-8"><a href="model-fitting.html#cb144-8"></a>crime_glmnet &lt;-<span class="st"> </span><span class="kw">train</span>(V147 <span class="op">~</span>.,</span>
+<span id="cb144-9"><a href="model-fitting.html#cb144-9"></a>                      <span class="dt">data =</span> crime_train,</span>
+<span id="cb144-10"><a href="model-fitting.html#cb144-10"></a>                      <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb144-11"><a href="model-fitting.html#cb144-11"></a>                      <span class="dt">method =</span> <span class="st">&quot;glmnet&quot;</span>)</span>
+<span id="cb144-12"><a href="model-fitting.html#cb144-12"></a></span>
+<span id="cb144-13"><a href="model-fitting.html#cb144-13"></a><span class="kw">rmse</span>(<span class="kw">predict</span>(crime_lm, <span class="dt">newdata =</span> crime_test), crime_test<span class="op">$</span>V147)</span></code></pre></div>
+<pre><code>## [1] 542.0005</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="model-fitting.html#cb146-1"></a><span class="kw">rmse</span>(<span class="kw">predict</span>(crime_glmnet, <span class="dt">newdata =</span> crime_test), crime_test<span class="op">$</span>V147)</span></code></pre></div>
+<pre><code>## [1] 306.5808</code></pre>
+<p>In this case the regularized model outperforms the linear model. But does it outperform a model with discrete automatic variable selection? Exhaustive search using <code>regsubsets()</code> would not be computationally feasible. The model space consists in <span class="math inline">\(2^{145}\)</span> models. From that perspective, lasso and ridge regression seem like pretty good alternatives. Using the <code>step()</code> function, however, remains possible.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="model-fitting.html#cb148-1"></a>step_selection &lt;-<span class="st"> </span><span class="kw">step</span>(crime_lm, <span class="dt">data =</span> crime_train, <span class="dt">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb148-2"><a href="model-fitting.html#cb148-2"></a><span class="kw">rmse</span>(<span class="kw">predict</span>(step_selection, <span class="dt">newdata =</span> crime_test), crime_test<span class="op">$</span>V147)</span></code></pre></div>
+<pre><code>## [1] 489.2709</code></pre>
+<p>In this instance, regularized regression outperforms step selection also, which in this case is worse than the linear model with all predictors. How, additionally, does the regularized model compare to other popular machine learning algorithms like gradient boosting?</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="model-fitting.html#cb150-1"></a>crime_gbm &lt;-<span class="st"> </span><span class="kw">train</span>(V147 <span class="op">~</span>.,</span>
+<span id="cb150-2"><a href="model-fitting.html#cb150-2"></a>                   <span class="dt">data =</span> crime_train,</span>
+<span id="cb150-3"><a href="model-fitting.html#cb150-3"></a>                   <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,</span>
+<span id="cb150-4"><a href="model-fitting.html#cb150-4"></a>                   <span class="dt">verbose =</span> F)</span>
+<span id="cb150-5"><a href="model-fitting.html#cb150-5"></a></span>
+<span id="cb150-6"><a href="model-fitting.html#cb150-6"></a><span class="kw">rmse</span>(<span class="kw">predict</span>(crime_gbm, <span class="dt">newdata =</span> crime_test), crime_test<span class="op">$</span>V147)</span></code></pre></div>
+<pre><code>## [1] 854.6857</code></pre>
+<p>It does better. In high dimensional settings, then, regularization is a good choice.</p>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>For further discussion, see Gelman chapter 4, page 69.<a href="model-fitting.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><span class="math inline">\(\mathrm{BIC} = {\ln(n)k - 2\ln({L})},\)</span> where <span class="math inline">\(L\)</span> is the maximum likelihood value, <span class="math inline">\(n\)</span> is the number of observations, <span class="math inline">\(k\)</span> is the number of parameters, and <span class="math inline">\(ln\)</span> is the natural log.<a href="model-fitting.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Practically speaking, though, imputing a few missing observations may not be worth the trouble since removing them will not usually change the fit at all.<a href="model-fitting.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Specifically, <span class="math inline">\(\hat\beta_{j} = \frac{1}{m} \sum_{i} \hat\beta_{ij}\)</span> and <span class="math inline">\(s^2_j = \frac{1}{m} \sum_{i} s^2_{ij} + var \hat\beta_{ij} (1 + 1/m)\)</span>, where <span class="math inline">\(\hat\beta_{ij}\)</span> and <span class="math inline">\(s_{ij}\)</span> are the estimates of and standard errors for the <span class="math inline">\(i^{th}\)</span> imputed result for <span class="math inline">\(i = 1,..., m\)</span> and for the <span class="math inline">\(j^{th}\)</span> parameter.<a href="model-fitting.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Lasso stands for Least Absolute Selection and Shrinkage Operator.<a href="model-fitting.html#fnref5" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dealing-with-big-data-in-r.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/isglobal-brge/Aprendizaje_Automatico_1/tree/master/docs02-model_fitting.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
