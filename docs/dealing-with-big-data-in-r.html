@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-10-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -308,7 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-18"><a href="dealing-with-big-data-in-r.html#cb11-18"></a></span>
 <span id="cb11-19"><a href="dealing-with-big-data-in-r.html#cb11-19"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
 <span id="cb11-20"><a href="dealing-with-big-data-in-r.html#cb11-20"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> replications, <span class="dt">y =</span> elapsed, <span class="dt">colour =</span> test), <span class="dt">data =</span> testdata1)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="fig/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Another example could be to compare the performance of the five methods for matrix multiplication</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="dealing-with-big-data-in-r.html#cb12-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb12-2"><a href="dealing-with-big-data-in-r.html#cb12-2"></a>A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">20</span>), <span class="dt">nrow=</span><span class="dv">4</span>, <span class="dt">ncol=</span><span class="dv">5</span>)</span>
@@ -330,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-18"><a href="dealing-with-big-data-in-r.html#cb12-18"></a></span>
 <span id="cb12-19"><a href="dealing-with-big-data-in-r.html#cb12-19"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
 <span id="cb12-20"><a href="dealing-with-big-data-in-r.html#cb12-20"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> replications, <span class="dt">y =</span> elapsed, <span class="dt">colour =</span> test), <span class="dt">data =</span> testdata2)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="fig/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Finally, we could also compare the performance of the five methods for fitting generalized linear model</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="dealing-with-big-data-in-r.html#cb13-1"></a>FUN &lt;-<span class="st"> </span><span class="cf">function</span>(i) {</span>
 <span id="cb13-2"><a href="dealing-with-big-data-in-r.html#cb13-2"></a>  ind &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">100</span>, <span class="dv">100</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>)</span>
@@ -350,7 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-16"><a href="dealing-with-big-data-in-r.html#cb13-16"></a></span>
 <span id="cb13-17"><a href="dealing-with-big-data-in-r.html#cb13-17"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
 <span id="cb13-18"><a href="dealing-with-big-data-in-r.html#cb13-18"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> replications, <span class="dt">y =</span> elapsed, <span class="dt">colour =</span> test), <span class="dt">data =</span> testdata3)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="fig/unnamed-chunk-5-1.png" width="672" /></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="dealing-with-big-data-in-r.html#cb14-1"></a><span class="kw">stopCluster</span>(cl)</span></code></pre></div>
 <p>To sum up, generally, <code>parLapply ()</code> perform better than <code>foreach ()</code>. However, for all parallel implementation methods, the increase in terms of efficiency is not proportional to the number of cores being used (Theoretical efficiency).</p>
 </div>
@@ -368,8 +368,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 The MapReduce paradigm has long been a staple of big data computational strategies. However, properly leveraging MapReduce in R can be a challenge, even for experienced users. To get the most out of MapReduce, it is helpful to understand its relationship to functional programming. Functional programming, in a broad sense, is the one that some functions allows to have another function in one of its arguments. For instance, the function <code>sapply()</code>:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="dealing-with-big-data-in-r.html#cb15-1"></a>ff &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="cf">if</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="kw">log</span>(x) <span class="cf">else</span> <span class="kw">log</span>(<span class="op">-</span>x)<span class="op">^</span><span class="dv">2</span></span>
 <span id="cb15-2"><a href="dealing-with-big-data-in-r.html#cb15-2"></a><span class="kw">sapply</span>(<span class="op">-</span><span class="dv">4</span><span class="op">:</span><span class="dv">10</span>, ff)</span></code></pre></div>
-<pre><code>##  [1] 1.9218121 1.2069490 0.4804530 0.0000000       Inf 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
-## [13] 2.0794415 2.1972246 2.3025851</code></pre>
+<pre><code>##  [1] 1.9218121 1.2069490 0.4804530 0.0000000       Inf 0.0000000 0.6931472
+##  [8] 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101 2.0794415 2.1972246
+## [15] 2.3025851</code></pre>
 <p>Functional programming is a very powerful tool that allows you to program in the following way:</p>
 <ul>
 <li>Create small and simple functions that solve a small and bounded problem</li>
@@ -407,8 +408,9 @@ The MapReduce paradigm has long been a staple of big data computational strategi
 <span id="cb21-2"><a href="dealing-with-big-data-in-r.html#cb21-2"></a>  <span class="cf">if</span>(x <span class="op">&gt;</span><span class="st"> </span>s) <span class="kw">log</span>(x) <span class="cf">else</span> <span class="kw">log</span>(<span class="op">-</span>x)<span class="op">^</span><span class="dv">2</span></span>
 <span id="cb21-3"><a href="dealing-with-big-data-in-r.html#cb21-3"></a>}</span>
 <span id="cb21-4"><a href="dealing-with-big-data-in-r.html#cb21-4"></a><span class="kw">sapply</span>(<span class="op">-</span><span class="dv">4</span><span class="op">:</span><span class="dv">10</span>, ff2, <span class="dt">s=</span><span class="dv">0</span>)</span></code></pre></div>
-<pre><code>##  [1] 1.9218121 1.2069490 0.4804530 0.0000000       Inf 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
-## [13] 2.0794415 2.1972246 2.3025851</code></pre>
+<pre><code>##  [1] 1.9218121 1.2069490 0.4804530 0.0000000       Inf 0.0000000 0.6931472
+##  [8] 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101 2.0794415 2.1972246
+## [15] 2.3025851</code></pre>
 <div id="map" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Map</h3>
 <p>The MapReduce methodology is also implemented in base R (<code>Map ()</code> and <code>Reduce ()</code> functions) as well as in <code>tidyverse</code>. Function <code>Map ()</code> applies one function to all elements from a list o vector:</p>

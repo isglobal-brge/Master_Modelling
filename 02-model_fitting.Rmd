@@ -539,6 +539,42 @@ comparison %>%
 
 Missforest does the best, though medianImpute compares very well!  Mice does not do well, probably for the reasons mentioned above:  it is designed for multiple, not single, imputation.
 
+
+-----------------------------------------------------
+**EXERCISE** (Deliver Moodle: Exercise-create model):
+
+Load Boston data set (from MASS package) in R by executing
+
+```
+data("Boston", package = "MASS")
+```
+
+Our aim is to create a model to predict the median house value (mdev), in Boston Suburbs, using the following predictor variables:
+
+crim: per capita crime rate by town.
+zn: proportion of residential land zoned for lots over 25,000 sq.ft.
+indus: proportion of non-retail business acres per town.
+chas: Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
+nox: nitrogen oxides concentration (parts per 10 million).
+rm: average number of rooms per dwelling.
+age: proportion of owner-occupied units built prior to 1940.
+dis: weighted mean of distances to five Boston employment centres.
+rad: index of accessibility to radial highways.
+tax: full-value property-tax rate per \$10,000.
+ptratio: pupil-teacher ratio by town.
+black: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.
+lstat: lower status of the population (percent).
+medv: median value of owner-occupied homes in \$1000s.
+
+- Split the data in 70% (train) and 30% (test)
+- Create a predictive model using a stepwise procedure
+- Provide a goodness-of-fit value of the model using cross-validation in the train set
+- Validate the model in the test dataset and compare model performance with the value obtained in the previous step
+
+TO DELIVER: Do the analyses using R Markdonw and upload the pdf (html file is also possible if you have problems with LaTeX installation)
+-----------------------------------------------------
+
+
 ## Regularization
 
 Selecting variables using AIC or $R^2$ is a discrete process: a variable is either in or out of the model. By contrast, methods are available that regularize or  *shrink*  coefficients towards zero and thereby achieve the same objective as discrete variable selection but in a continuous manner. The method  works particularly well when there are large numbers of predictors. (In the wrong conditions---small number of predictors, for example---regularized models will actually do worse than ordinary least squares regression or OLS regression.)   We will discuss two  methods:  *ridge regression*, which  shrinks coefficients towards each other and towards zero, and *lasso*, which does the same thing but shrinks some coefficients all the way to  zero, effectively taking those predictors out of the model.^[Lasso stands for Least Absolute Selection and Shrinkage Operator.] Ridge regression never completely removes predictors.
@@ -765,3 +801,16 @@ rmse(predict(crime_gbm, newdata = crime_test), crime_test$V147)
 ```
 
 It does better.  In high dimensional settings, then, regularization is a good choice.
+
+
+-----------------------------------------------------
+**EXERCISE** (Deliver Moodle: Exercise-lasso):
+
+DNA methylation (DNAm) is a biological process by which methyl groups are added to the DNA molecule. Methylation can change the activity of a DNA segment without changing the sequence. In mammals, DNAm is almost exclusively found in CpG dinucleotides, with the cytosines on both strands being usually methylated. There are arrays that can measure 27K CpG sites for a given individual (current methods can obtain information up to 450K or 1M). The CpG variables are continuous variables with values between 0 (hypo-methylation) and 1 (hyper-methylation).
+
+Horvath hypothesized that DNAm age measures the cumulative effect of an epigenetic maintenance system and that it can predict all-cause mortality in later life. 
+
+Using healthy individuals we can create a model to estimate age from DNAm data. Then, this model can be used to predict DNAm age in another individual and use the difference of this value with the biological age (i.e. age acceleration) as a biomarker of death. This task aims to illustrate how to perform such data modelling.
+
+The file `methy_train.txt` (espace delimited) contains information of 261 healthy individuals, their biological age and DNAm data corresponding to 25,978 CpG sites (variables starting by "cg"). Use this data to train a model to predict the age using DNAm data. You can use whatever technique you think is appropriate. You also have access to another file called `methy_test.txt` having the same information for 172 independent individuals.
+-----------------------------------------------------

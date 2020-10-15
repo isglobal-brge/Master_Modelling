@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-10-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -450,7 +450,7 @@ where <span class="math inline">\(\ln(L_{c})\)</span> is the log likelihood of t
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="model-fitting.html#cb96-1"></a><span class="kw">library</span>(leaps)</span>
 <span id="cb96-2"><a href="model-fitting.html#cb96-2"></a></span>
 <span id="cb96-3"><a href="model-fitting.html#cb96-3"></a><span class="kw">plot</span>(<span class="kw">regsubsets</span>(Salary <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Hitters, <span class="dt">method =</span> <span class="st">&quot;exhaustive&quot;</span>, <span class="dt">nbest =</span> <span class="dv">1</span>))</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="fig/unnamed-chunk-34-1.png" width="672" /></p>
 <p>The plot presents multiple candidate models organized by BIC on the y-axis. Like AIC, BIC penalizes for model complexity.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Lower BIC is better. The model with the lowest BIC is the rather simple one at the top of the plot: Intercept, AtBat, Hits, Walks, CRBI, DivisionW and PutOuts. If we refit a model with these predictors using <code>lm()</code> we find it has an <span class="math inline">\(R^2\)</span> of .51.</p>
 <!-- ```{r} -->
 <!-- display(lm(Salary ~ AtBat + Hits + Walks + CRBI + Division + PutOuts, data = Hitters)) -->
@@ -673,17 +673,17 @@ where <span class="math inline">\(\ln(L_{c})\)</span> is the log likelihood of t
 <span id="cb105-7"><a href="model-fitting.html#cb105-7"></a><span class="kw">glimpse</span>(carseats_miss)</span></code></pre></div>
 <pre><code>## Rows: 400
 ## Columns: 11
-## $ Sales       &lt;dbl&gt; 9.50, 11.22, 10.06, 7.40, 4.15, 10.81, 6.63, 11.85, 6.54, 4.69, 9.01, 11.96, 3.98, 10.96, 11.17, 8.71, ...
-## $ CompPrice   &lt;dbl&gt; 138, 111, 113, 117, 141, 124, 115, NA, NA, NA, 121, 117, NA, 115, 107, NA, 118, NA, 110, 129, 125, 134,...
-## $ Income      &lt;dbl&gt; 73, 48, 35, 100, 64, 113, NA, 81, 110, 113, 78, 94, NA, 28, 117, 95, 32, 74, 110, 76, NA, NA, 46, NA, 1...
-## $ Advertising &lt;dbl&gt; 11, 16, NA, 4, 3, 13, NA, 15, 0, 0, 9, 4, 2, NA, 11, 5, NA, 13, 0, 16, 2, 12, 6, 0, 16, 0, 11, 0, NA, 1...
-## $ Population  &lt;dbl&gt; 276, 260, 269, NA, 340, 501, 45, 425, 108, 131, 150, 503, NA, 29, 148, 400, 284, 251, 408, 58, 367, 239...
-## $ Price       &lt;dbl&gt; 120, NA, NA, 97, 128, 72, 108, 120, NA, 124, 100, NA, NA, NA, 118, 144, 110, 131, 68, 121, NA, 109, 138...
-## $ ShelveLoc   &lt;fct&gt; Bad, NA, Good, NA, Bad, Bad, Good, NA, Good, Good, Bad, Medium, NA, Medium, Medium, Good, Medium, Mediu...
-## $ Age         &lt;dbl&gt; 42, 65, NA, 55, 38, NA, 71, 67, 76, 76, 26, 50, NA, 53, 52, 76, 63, 52, 46, 69, NA, NA, NA, 79, 42, 54,...
-## $ Education   &lt;dbl&gt; NA, 10, 12, NA, 13, 16, 15, 10, 10, 17, 10, 13, NA, NA, NA, 18, 13, 10, 17, 12, 18, NA, NA, NA, 12, 11,...
-## $ Urban       &lt;fct&gt; NA, Yes, Yes, Yes, Yes, NA, NA, Yes, No, NA, NA, Yes, Yes, Yes, Yes, No, Yes, Yes, No, NA, Yes, No, Yes...
-## $ US          &lt;fct&gt; Yes, Yes, Yes, Yes, No, Yes, No, Yes, NA, Yes, Yes, Yes, No, Yes, Yes, No, No, NA, Yes, Yes, NA, Yes, N...</code></pre>
+## $ Sales       [3m[38;5;246m&lt;dbl&gt;[39m[23m 9.50, 11.22, 10.06, 7.40, 4.15, 10.81, 6.63, 11.85, 6.5...
+## $ CompPrice   [3m[38;5;246m&lt;dbl&gt;[39m[23m 138, 111, 113, 117, 141, 124, 115, NA, NA, NA, 121, 117...
+## $ Income      [3m[38;5;246m&lt;dbl&gt;[39m[23m 73, 48, 35, 100, 64, 113, NA, 81, 110, 113, 78, 94, NA,...
+## $ Advertising [3m[38;5;246m&lt;dbl&gt;[39m[23m 11, 16, NA, 4, 3, 13, NA, 15, 0, 0, 9, 4, 2, NA, 11, 5,...
+## $ Population  [3m[38;5;246m&lt;dbl&gt;[39m[23m 276, 260, 269, NA, 340, 501, 45, 425, 108, 131, 150, 50...
+## $ Price       [3m[38;5;246m&lt;dbl&gt;[39m[23m 120, NA, NA, 97, 128, 72, 108, 120, NA, 124, 100, NA, N...
+## $ ShelveLoc   [3m[38;5;246m&lt;fct&gt;[39m[23m Bad, NA, Good, NA, Bad, Bad, Good, NA, Good, Good, Bad,...
+## $ Age         [3m[38;5;246m&lt;dbl&gt;[39m[23m 42, 65, NA, 55, 38, NA, 71, 67, 76, 76, 26, 50, NA, 53,...
+## $ Education   [3m[38;5;246m&lt;dbl&gt;[39m[23m NA, 10, 12, NA, 13, 16, 15, 10, 10, 17, 10, 13, NA, NA,...
+## $ Urban       [3m[38;5;246m&lt;fct&gt;[39m[23m NA, Yes, Yes, Yes, Yes, NA, NA, Yes, No, NA, NA, Yes, Y...
+## $ US          [3m[38;5;246m&lt;fct&gt;[39m[23m Yes, Yes, Yes, Yes, No, Yes, No, Yes, NA, Yes, Yes, Yes...</code></pre>
 <p>There are now many missing observations. When we fit a regression model of Sales, notice that <code>lm()</code> silently removes the rows with NAs, producing a model based on a very small subset of the data.</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="model-fitting.html#cb107-1"></a><span class="kw">display</span>(<span class="kw">lm</span>(Sales <span class="op">~</span><span class="st"> </span>CompPrice <span class="op">+</span><span class="st"> </span>Income <span class="op">+</span><span class="st"> </span>Advertising <span class="op">+</span><span class="st"> </span>Population <span class="op">+</span><span class="st"> </span>Price, <span class="dt">data =</span> carseats_miss))</span></code></pre></div>
 <pre><code>## lm(formula = Sales ~ CompPrice + Income + Advertising + Population + 
@@ -702,13 +702,14 @@ where <span class="math inline">\(\ln(L_{c})\)</span> is the log likelihood of t
 <p>We will demonstrate multiple imputation using the <code>mice()</code> function from the mice package. (mice stands for “multiple imputation using chained equations.”)</p>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="model-fitting.html#cb109-1"></a><span class="kw">library</span>(mice)</span>
 <span id="cb109-2"><a href="model-fitting.html#cb109-2"></a><span class="kw">names</span>(Carseats)</span></code></pre></div>
-<pre><code>##  [1] &quot;Sales&quot;       &quot;CompPrice&quot;   &quot;Income&quot;      &quot;Advertising&quot; &quot;Population&quot;  &quot;Price&quot;       &quot;ShelveLoc&quot;   &quot;Age&quot;        
-##  [9] &quot;Education&quot;   &quot;Urban&quot;       &quot;US&quot;</code></pre>
+<pre><code>##  [1] &quot;Sales&quot;       &quot;CompPrice&quot;   &quot;Income&quot;      &quot;Advertising&quot; &quot;Population&quot; 
+##  [6] &quot;Price&quot;       &quot;ShelveLoc&quot;   &quot;Age&quot;         &quot;Education&quot;   &quot;Urban&quot;      
+## [11] &quot;US&quot;</code></pre>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="model-fitting.html#cb111-1"></a>mice_imp &lt;-<span class="st"> </span><span class="kw">mice</span>(carseats_miss, <span class="dt">printFlag =</span> F)</span></code></pre></div>
 <p>The <code>carseats_imp</code> object created by <code>mice()</code> includes (among many other things) <span class="math inline">\(m\)</span> imputed datasets (the default setting in mice is m = 5). The imputed datasets differ because the imputations are randomly drawn from distributions of plausible values. We can visualize the variability of the predictors in these imputed datasets using the <code>densityplot()</code> function.</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="model-fitting.html#cb112-1"></a><span class="kw">library</span>(lattice)</span>
 <span id="cb112-2"><a href="model-fitting.html#cb112-2"></a><span class="kw">densityplot</span>(mice_imp)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="fig/unnamed-chunk-43-1.png" width="672" /></p>
 <p>The solid blue lines depict the actual distribution of the predictors, while the red lines show the imputed distributions. The next step is to use these imputed datasets to average the <span class="math inline">\(\hat\beta\)</span>s and SEs using mice’s <code>pool()</code> function.</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="model-fitting.html#cb113-1"></a>mice_model_imp &lt;-<span class="st"> </span><span class="kw">with</span>(<span class="dt">data =</span> mice_imp, </span>
 <span id="cb113-2"><a href="model-fitting.html#cb113-2"></a>     <span class="dt">exp =</span> <span class="kw">lm</span>(Sales <span class="op">~</span><span class="st"> </span>CompPrice <span class="op">+</span><span class="st"> </span>Income <span class="op">+</span><span class="st"> </span>Advertising <span class="op">+</span><span class="st"> </span>Population <span class="op">+</span><span class="st"> </span>Price))</span>
@@ -803,6 +804,50 @@ where <span class="math inline">\(\ln(L_{c})\)</span> is the log likelihood of t
 ## 7       mice 1 4564721
 ## 8       mice 3 4791521</code></pre>
 <p>Missforest does the best, though medianImpute compares very well! Mice does not do well, probably for the reasons mentioned above: it is designed for multiple, not single, imputation.</p>
+<table style="width:75%;">
+<colgroup>
+<col width="75%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>EXERCISE</strong> (Deliver Moodle: Exercise-create model):</td>
+</tr>
+<tr class="even">
+<td>Load Boston data set (from MASS package) in R by executing</td>
+</tr>
+<tr class="odd">
+<td><code>data("Boston", package = "MASS")</code></td>
+</tr>
+<tr class="even">
+<td>Our aim is to create a model to predict the median house value (mdev), in Boston Suburbs, using the following predictor variables:</td>
+</tr>
+<tr class="odd">
+<td>crim: per capita crime rate by town.
+zn: proportion of residential land zoned for lots over 25,000 sq.ft.
+indus: proportion of non-retail business acres per town.
+chas: Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
+nox: nitrogen oxides concentration (parts per 10 million).
+rm: average number of rooms per dwelling.
+age: proportion of owner-occupied units built prior to 1940.
+dis: weighted mean of distances to five Boston employment centres.
+rad: index of accessibility to radial highways.
+tax: full-value property-tax rate per $10,000.
+ptratio: pupil-teacher ratio by town.
+black: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.
+lstat: lower status of the population (percent).
+medv: median value of owner-occupied homes in $1000s.</td>
+</tr>
+<tr class="even">
+<td>- Split the data in 70% (train) and 30% (test)
+- Create a predictive model using a stepwise procedure
+- Provide a goodness-of-fit value of the model using cross-validation in the train set
+- Validate the model in the test dataset and compare model performance with the value obtained in the previous step</td>
+</tr>
+<tr class="odd">
+<td>TO DELIVER: Do the analyses using R Markdonw and upload the pdf (html file is also possible if you have problems with LaTeX installation)</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="regularization" class="section level2" number="3.10">
 <h2><span class="header-section-number">3.10</span> Regularization</h2>
@@ -827,7 +872,7 @@ where <span class="math inline">\(\ln(L_{c})\)</span> is the log likelihood of t
 <span id="cb124-4"><a href="model-fitting.html#cb124-4"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
 <span id="cb124-5"><a href="model-fitting.html#cb124-5"></a><span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F) <span class="op">+</span></span>
 <span id="cb124-6"><a href="model-fitting.html#cb124-6"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;OLS line: intercept = -1, slope = 2&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-58-1.png" width="672" /></p>
+<p><img src="fig/unnamed-chunk-50-1.png" width="672" /></p>
 <p>The following table relates <span class="math inline">\(\beta_1\)</span> to RSS for three models: the OLS model from above (column 2) and then two different ridge models of the same data with different <span class="math inline">\(\lambda\)</span> (columns 3 and 4):</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="model-fitting.html#cb125-1"></a>tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Slope =</span> <span class="kw">seq</span>(<span class="fl">1.75</span>,<span class="fl">2.25</span>,.<span class="dv">05</span>), <span class="dt">rss =</span> <span class="dv">0</span>, <span class="dt">rss2 =</span> <span class="dv">0</span>, <span class="dt">rss3 =</span> <span class="dv">0</span>)</span>
 <span id="cb125-2"><a href="model-fitting.html#cb125-2"></a></span>
@@ -862,7 +907,7 @@ where <span class="math inline">\(\ln(L_{c})\)</span> is the log likelihood of t
 <span id="cb127-6"><a href="model-fitting.html#cb127-6"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="fl">1.95</span>, <span class="dt">intercept =</span> <span class="dv">-1</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span></span>
 <span id="cb127-7"><a href="model-fitting.html#cb127-7"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="fl">1.9</span>, <span class="dt">intercept =</span> <span class="dv">-1</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span></span>
 <span id="cb127-8"><a href="model-fitting.html#cb127-8"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;OLS line compared to ridge estimates for lambda = 1 and lambda = 2&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-60-1.png" width="672" /></p>
+<p><img src="fig/unnamed-chunk-52-1.png" width="672" /></p>
 <p>Another way to think about ridge regression is that it minimizes RSS subject to a constraint, <span class="math inline">\(t\)</span>, on the size of the square root of the squared and summed <span class="math inline">\(\beta\)</span> coefficients:</p>
 <p><span class="math display">\[
 \min_{ \beta_0, \beta_j }\left\{RSS \right\} \text{ subject to } \sum_{j=1}^p ||\beta_j||_2 \leq t
@@ -1038,6 +1083,28 @@ where <span class="math inline">\(\ln(L_{c})\)</span> is the log likelihood of t
 <span id="cb150-6"><a href="model-fitting.html#cb150-6"></a><span class="kw">rmse</span>(<span class="kw">predict</span>(crime_gbm, <span class="dt">newdata =</span> crime_test), crime_test<span class="op">$</span>V147)</span></code></pre></div>
 <pre><code>## [1] 854.6857</code></pre>
 <p>It does better. In high dimensional settings, then, regularization is a good choice.</p>
+<table style="width:75%;">
+<colgroup>
+<col width="75%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>EXERCISE</strong> (Deliver Moodle: Exercise-lasso):</td>
+</tr>
+<tr class="even">
+<td align="left">DNA methylation (DNAm) is a biological process by which methyl groups are added to the DNA molecule. Methylation can change the activity of a DNA segment without changing the sequence. In mammals, DNAm is almost exclusively found in CpG dinucleotides, with the cytosines on both strands being usually methylated. There are arrays that can measure 27K CpG sites for a given individual (current methods can obtain information up to 450K or 1M). The CpG variables are continuous variables with values between 0 (hypo-methylation) and 1 (hyper-methylation).</td>
+</tr>
+<tr class="odd">
+<td align="left">Horvath hypothesized that DNAm age measures the cumulative effect of an epigenetic maintenance system and that it can predict all-cause mortality in later life.</td>
+</tr>
+<tr class="even">
+<td align="left">Using healthy individuals we can create a model to estimate age from DNAm data. Then, this model can be used to predict DNAm age in another individual and use the difference of this value with the biological age (i.e. age acceleration) as a biomarker of death. This task aims to illustrate how to perform such data modelling.</td>
+</tr>
+<tr class="odd">
+<td align="left">The file <code>methy_train.txt</code> (espace delimited) contains information of 261 healthy individuals, their biological age and DNAm data corresponding to 25,978 CpG sites (variables starting by “cg”). Use this data to train a model to predict the age using DNAm data. You can use whatever technique you think is appropriate. You also have access to another file called <code>methy_test.txt</code> having the same information for 172 independent individuals.</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
