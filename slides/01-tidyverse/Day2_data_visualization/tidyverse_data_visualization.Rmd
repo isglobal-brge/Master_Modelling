@@ -451,7 +451,7 @@ https://ggplot2.tidyverse.org/reference/
 
 -----
 
-6. Download genome data (https://github.com/isglobal-brge/TeachingMaterials/blob/master/Master_Modelling/data/genome.txt) into your computer and load it into RStudio by using `read_delim` function (NOTE: data are tab-delimited). 
+6. Download genome data (https://raw.githubusercontent.com/isglobal-brge/Master_Modelling/main/data/genome.txt) into your computer and load it into RStudio by using `read_delim` function (NOTE: data are tab-delimited). 
 
 The file is containing information about
 
