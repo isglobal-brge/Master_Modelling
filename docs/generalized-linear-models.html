@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Data Visualisation and Modelling</title>
-  <meta name="description" content="Data Visualisation and Modelling" />
+  <title>4 Generalized linear models | Data Visualisation and Modelling</title>
+  <meta name="description" content="4 Generalized linear models | Data Visualisation and Modelling" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Data Visualisation and Modelling" />
+  <meta property="og:title" content="4 Generalized linear models | Data Visualisation and Modelling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Data Visualisation and Modelling" />
+  <meta name="twitter:title" content="4 Generalized linear models | Data Visualisation and Modelling" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="dealing-with-big-data-in-r.html"/>
+<link rel="prev" href="linear-models.html"/>
+<link rel="next" href="model-fitting.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -199,46 +199,141 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Data Visualisation and Modelling</h1>
-<p class="author"><em>Juan R González</em></p>
-<p class="date"><em>2021-09-30</em></p>
-</div>
-<div id="introducción" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Introducción</h1>
-<p>This bookdown is written as a supporting material for some of the lectures belonging to the subject <a href="https://guies.uab.cat/guies_docents/public/portal/html/2020/assignatura/43482/en">Data Visualisation and Modelling</a> given at <a href="https://www.uab.cat/web/estudiar/official-master-s-degrees/general-information/modelling-for-science-and-engineering-1096480962610.html?param1=1307112830469">Master for Modelling in Science and Engineering</a> from <a href="https://www.uab.cat/web/universitat-autonoma-de-barcelona-1345467954774.html">Autonomous University of Barelona</a> (UAB).</p>
-<p>The contents are:</p>
-<ul>
-<li>Dealing with big data analysis in R
-<ul>
-<li>Parallelization in R</li>
-<li>MapReduce</li>
-<li>Linear regression for Big Data</li>
-</ul></li>
-<li>Model fitting
-<ul>
-<li>Multivariate linear regression</li>
-<li>General rules for variable selection</li>
-<li>Stepwise variable selection</li>
-<li>Comparing models</li>
-<li>Automatic variable selection</li>
-<li>Cross validation</li>
-<li>K-fold and bootstrap cross validation</li>
-<li>Missing data imputation</li>
-<li>Regularization (Lasso and Elastic Net)</li>
-</ul></li>
-</ul>
-<p>Some parts of this material are inspired in vignettes that are referenced at each chapter. Examples corresponding to model fitting are based on material from <a href="https://github.com/jefftwebb">Jeff Webb</a>. This material is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAEZ0FNQQAAsY58+1GTAAAAAXNSR0IB2cksfwAAAW5QTFRF////////////////7+/v39/f1tXV09bS0tXS0tXR0dTR0dTQ0NTQ0NPPz9PPztLOztHNzdHNzdHMz8/PzdDMzNDMzNDLzM/Ly8/Ly8/Ky87Kys3Jyc3Jyc3IyMzIyMzHx8vHxsrGxsrFxcnFxcnExMnExMjDw8jDxMfDw8fCwsfCwcXAwMXAwMW/wMS/v8S+v8O+vsO+vsK9vcK9vcK8v7+/vMG8vMG7vMC8u8C7u8C6ur+6ur+5ub65ub64uL23t7y2tru1tbq0tLqztLmzs7iysrixsrexsbewsbawsLavsLWvr7Wur7SusLOvrrStrrOtr7KvrbOsrLKrr6+vq7Gqn6OenqCdn5+flpmWk5iTkZSRkZORj4+PiYyJhIaEhIWEgoWCgICAfX98fH98eXx5cHJvcHBwYGBgXV5dUFFQUFBQQ0RDQEBAPj8+NTY1MjMxMDAwKSkpKCkoICAgGxsbEBAQDg4ODQ4NAAAAlzoSDQAAAAN0Uk5TAAoO5yEBUwAAAvhJREFUeNq1lutX2kAQxWmXFDVGYy1EIjQ2VZDiu1CsRQQURYvV+qSKj6II8rANYOT+9z0JqIASo9Y5ydkP2f2d2Ts7d2N4jRcJgwEIBwO+SbdTFGw8ZzZz1n5BdLgnfLPBcCT6fW1jY3P78QEYEA76PWMu0W5lGbrNZGrrYNg+u+ga9fgVcmxtY/NJZAOCfs+IY4Bn6eN8RdlEJX9Ed1uFIfdnfzC8uBJbv5tyqqhMLKa0wQHPiEOwMInLW4Eu9xmzfdDtmQ0uLK3cSXmvBBTS6QJQ2tMC+8YcgpnOApAzSa83mZEBZIff2odGfYFQJNqc8s4VchQhhFA5XO1pgCddAxaFKyeNpBpxGSgNmwXXxMxcWE25fkkJGUIIoExESQPsFnkmC0gUuQmjBGQZq+j2BEKR5dUGLVLIvbkGkxxSrcHO92wCkIyENJL3u+2O8Zng/FJsvR5cRF0GFIqtwaKVvoTcSxrCKOOS7hPdXwLhxUYtUFC+Z6AKQgpoDRZ6joEkaYo4cMQKril/KLLcCE4TVYmqFmkNsK0rD9lIiDdXKCSrwwEhREae6Ve0WIiuPg3M0xVlW171BBe21CGjbLbSYR0c/To3H409TQquHTggREKZ8pbjEiRqqxxXtWjjRLdvLrzUAK4Vr5qwZvEsJsCrzExWF9Tk9gIm84e74BRyRN9xeyS4vkHSmg1yK4Wxt5yUIClDayn0t3SteLWq3RQvjQrN31O87e2dEiBl0tJDJmTrykImN8dtq6AOpIw8Y3OMf2s+bvptU+hJqFrc1yCfpmZDkWYX0mv0H9WWpvS2tH6w8z27e58JJVi7c2ImuNBkQvrBOOWZc0CqsyFKtU3+97OuaQBnXGe90RuTMvCHtpziuWCcmDvPm64m+t2vlmuq/YHqqwnGCcfs1l+mCcbSmgtSe8iDGQNnPEsnrq//fZrltXS4tk3oAOPvT2tPF91uMrXTDNv340JrjQ4hbsHAxeE0z1ksHD99eKFdl0dl/P//Cl+9EPcfS+yBAoqk3eUAAAAASUVORK5CYII=" /></p>
+<div id="generalized-linear-models" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Generalized linear models</h1>
+<p>Let us consider other real data problems.</p>
+<p><strong>Problem 1</strong>: Consider the relation between cigarettes smoked, and the occurrence of lung cancer. Do we expect the probability of cancer to be linear in the number of cigarettes? I do not think so. In those situations, mainly when the outcome variable does not follow a Normal distribution, generalized linear models (GLMs) are required.</p>
+<p><strong>Problem 2</strong>: Consider the relation between the travel times to the distance traveled. Do you agree that the longer the distance traveled, then not only the travel times get longer, but they also get more variable?</p>
+<p>In the linear models, we assumed the generative process to be linear in the effects of the predictors. Let us now write that same linear model, slightly differently in order to facilitate its extension:</p>
+<p><span class="math display">\[
+y|x \sim \mathcal{N}(x&#39;\beta, \sigma^2).
+\]</span>
+This model not allow for the non-linear relations of Problem 1, nor does it allow for the distribution of <span class="math inline">\(\epsilon\)</span> to change with <span class="math inline">\(x\)</span> as in the Problem 2. This is how GLMs works by generalizing linear models to address these two limitations.</p>
+<p>For Problem 1, we would like something like</p>
+<p><span class="math display">\[
+y|x \sim Binom(1,p(x))
+\]</span></p>
+<p>and for Problem 2</p>
+<p><span class="math display">\[
+y|x \sim \mathcal{N}(x&#39;\beta,\sigma^2(x)),
+\]</span></p>
+<p>or more generally</p>
+<p><span class="math display">\[
+y|x \sim \mathcal{N}(\mu(x),\sigma^2(x)),
+\]</span></p>
+<p>or maybe not Gaussian</p>
+<p><span class="math display">\[
+y|x \sim Pois(\lambda(x)).
+\]</span></p>
+<p>Even more generally, for some distribution <span class="math inline">\(F(\theta)\)</span>, with a parameter <span class="math inline">\(\theta\)</span>, we would like to assume that the data is generated via</p>
+<p><span class="math display">\[
+\begin{align}
+  \tag{8.1}
+  y|x \sim F(\theta(x))
+\end{align}
+\]</span></p>
+<p>GLMs assume the data distribution <span class="math inline">\(F\)</span> to be in a “well-behaved” family known as the <a href="https://en.wikipedia.org/wiki/Natural_exponential_family">Natural Exponential Family</a> of distributions. This family includes the Gaussian, Gamma, Binomial, Poisson, and Negative Binomial distributions. These five include as special cases the exponential, chi-squared, Rayleigh, Weibull, Bernoulli, and geometric distributions.</p>
+<p>GLMs also assume that the distribution’s parameter, <span class="math inline">\(\theta\)</span>, is some simple function of a linear combination of the effects. In our cigarettes example this amounts to assuming that each cigarette has an additive effect, but not on the probability of cancer, but rather, on some simple function of it. Formally</p>
+<p><span class="math display">\[
+g(\theta(x))=x&#39;\beta,
+\]</span></p>
+<p>and we recall that</p>
+<p><span class="math display">\[
+x&#39;\beta=\beta_0 + \sum_j x_j \beta_j.
+\]</span></p>
+<p>that corresponds to the linear predictor, and <span class="math inline">\(g\)</span> function is known as the <strong>link</strong> function that for Normal data is the identity, for binomial data (i.e. binary) is the logistic function and for count data (Poisson) is the logarithm function.</p>
+<div id="logistic-regression-with-r" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Logistic regression with R</h2>
+<p>The <code>predimed</code> data set provides information on the PREDIMED trial (Prevención con Dieta Mediterránea) which is a randomized, parallel and multicentric cohort with more than 7,000 participants who were randomly assigned to three diet groups (olive oil + mediterranean diet, nuts + mediterranean diet, and low-fat diet -control group-). It also includes information about whether the individual suffered from different adverse events (stroke, cardiovascular, myocardial infarction) after a 7 years follow-up.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="generalized-linear-models.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(compareGroups)</span>
+<span id="cb66-2"><a href="generalized-linear-models.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(predimed)</span>
+<span id="cb66-3"><a href="generalized-linear-models.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predimed)</span></code></pre></div>
+<pre><code>##            group    sex age   smoke   bmi waist       wth htn diab hyperchol famhist hormo p14
+## 1        Control   Male  58  Former 33.53   122 0.7530864  No   No       Yes      No    No  10
+## 2        Control   Male  77 Current 31.05   119 0.7300614 Yes  Yes        No      No    No  10
+## 4  MedDiet + VOO Female  72  Former 30.86   106 0.6543210  No  Yes        No     Yes    No   8
+## 5 MedDiet + Nuts   Male  71  Former 27.68   118 0.6941177 Yes   No       Yes      No    No   8
+## 6  MedDiet + VOO Female  79   Never 35.94   129 0.8062500 Yes   No       Yes      No    No   9
+## 8        Control   Male  63  Former 41.66   143 0.8033708 Yes  Yes       Yes      No  &lt;NA&gt;   9
+##    toevent event
+## 1 5.374401   Yes
+## 2 6.097194    No
+## 4 5.946612    No
+## 5 2.907598   Yes
+## 6 4.761123    No
+## 8 3.148528   Yes</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="generalized-linear-models.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(predimed<span class="sc">$</span>group)</span></code></pre></div>
+<pre><code>## 
+##        Control MedDiet + Nuts  MedDiet + VOO 
+##           2042           2100           2182</code></pre>
+<p>Let us fit a logistic regression model to investigate whether mediterranean diet (variable <code>group</code>) is associated with the risk of having and adverse event (variable <code>event</code>)</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="generalized-linear-models.html#cb70-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(event <span class="sc">~</span> group, <span class="at">data=</span>predimed, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb70-2"><a href="generalized-linear-models.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = event ~ group, family = &quot;binomial&quot;, data = predimed)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.3120  -0.3120  -0.2819  -0.2604   2.6081  
+## 
+## Coefficients:
+##                     Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)          -2.9983     0.1040 -28.820   &lt;2e-16 ***
+## groupMedDiet + Nuts  -0.3690     0.1600  -2.306   0.0211 *  
+## groupMedDiet + VOO   -0.2073     0.1519  -1.365   0.1723    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2118.1  on 6323  degrees of freedom
+## Residual deviance: 2112.6  on 6321  degrees of freedom
+## AIC: 2118.6
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>Let us see how the results change after adjusting by other covariates</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="generalized-linear-models.html#cb72-1" aria-hidden="true" tabindex="-1"></a>mod.adj <span class="ot">&lt;-</span> <span class="fu">glm</span>(event <span class="sc">~</span> group <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> smoke,</span>
+<span id="cb72-2"><a href="generalized-linear-models.html#cb72-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>predimed, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb72-3"><a href="generalized-linear-models.html#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod.adj)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = event ~ group + sex + age + smoke, family = &quot;binomial&quot;, 
+##     data = predimed)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.6351  -0.3138  -0.2526  -0.2012   2.9984  
+## 
+## Coefficients:
+##                     Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)         -8.01858    0.76810 -10.439  &lt; 2e-16 ***
+## groupMedDiet + Nuts -0.37122    0.16170  -2.296  0.02169 *  
+## groupMedDiet + VOO  -0.19791    0.15327  -1.291  0.19662    
+## sexFemale           -0.54522    0.17079  -3.192  0.00141 ** 
+## age                  0.07418    0.01058   7.010 2.39e-12 ***
+## smokeCurrent         0.63066    0.20707   3.046  0.00232 ** 
+## smokeFormer          0.43680    0.18237   2.395  0.01662 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2118.1  on 6323  degrees of freedom
+## Residual deviance: 2023.0  on 6317  degrees of freedom
+## AIC: 2037
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="dealing-with-big-data-in-r.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-fitting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -270,7 +365,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/isglobal-brge/Aprendizaje_Automatico_1/tree/master/docsindex.Rmd",
+"link": "https://github.com/isglobal-brge/Aprendizaje_Automatico_1/tree/master/docs02-glm.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Data Visualisation and Modelling</title>
-  <meta name="description" content="Data Visualisation and Modelling" />
+  <title>3 Linear models | Data Visualisation and Modelling</title>
+  <meta name="description" content="3 Linear models | Data Visualisation and Modelling" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Data Visualisation and Modelling" />
+  <meta property="og:title" content="3 Linear models | Data Visualisation and Modelling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Data Visualisation and Modelling" />
+  <meta name="twitter:title" content="3 Linear models | Data Visualisation and Modelling" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="dealing-with-big-data-in-r.html"/>
+<link rel="prev" href="dealing-with-big-data-in-r.html"/>
+<link rel="next" href="generalized-linear-models.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -199,46 +199,108 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Data Visualisation and Modelling</h1>
-<p class="author"><em>Juan R González</em></p>
-<p class="date"><em>2021-09-30</em></p>
+<div id="linear-models" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Linear models</h1>
+<p>Consider the study of the effect of a new drug for hemophilia, by analyzing the level of blood coagulation after the administration of various amounts of the new drug. Researchers may be interested in knowing whether the drug affects on the level of blood coagulation. The simplest statistical model to address this scientific question is the linear regression model</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1x_i + \epsilon_i,
+\]</span></p>
+<p>where <span class="math inline">\(i = 1, \ldots, n\)</span> and <span class="math inline">\(i\)</span> denotes the <span class="math inline">\(i\)</span>-th observation.</p>
+<p>However, the response variable (<span class="math inline">\(y\)</span>) can be explained by a different independent variables (<span class="math inline">\(x\)</span>). In other words, the response variable can be the sum of effects of some independent factors (<span class="math inline">\(x=(x_1,\dots,x_p)\)</span>).</p>
+<p>The model assumption implies that the expected response is the sum of the factors effects:</p>
+<p><span class="math display">\[
+\begin{align}
+  E[y]=x_1 \beta_1 + \dots + x_p \beta_p = \sum_{j=1}^p x_j \beta_j = x&#39;\beta .
+  \tag{7.1}
+\end{align}
+\]</span></p>
+<p>Clearly, there may be other factors that affect the the level of blood coagulation. We thus introduce an error term, denoted by <span class="math inline">\(\epsilon\)</span>, to capture the effects of all unmodeled factors and measurement error. The implied generative process of a sample of <span class="math inline">\(i = 1, \ldots, n\)</span> observations is thus:</p>
+<p><span class="math display">\[
+\begin{align}
+  y_i = x_i&#39;\beta + \varepsilon_i = \sum_j x_{i,j} \beta_j + \varepsilon_i , i=1,\dots,n .
+  \tag{7.2}
+\end{align}
+\]</span></p>
+<p>or in matrix notation</p>
+<p><span class="math display">\[
+\begin{align}
+  y = X \beta + \varepsilon .
+  \tag{7.3}
+\end{align}
+\]</span></p>
+<p>This figure illustrates the linear regression fit of our problem</p>
+<p><img src="fig/unnamed-chunk-27-1.png" width="672" /></p>
+<pre><code>## $title
+## [1] &quot;Blood coagulation as a function of drug doses&quot;
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;labels&quot;</code></pre>
+<p>Model parameters can be estimated by solving the Ordinary Least Squares (OLS) problem</p>
+<p><span class="math display">\[
+\begin{align}
+  \hat \beta= \text{argmin}_\beta \{ \sum_i (y_i-x_i&#39;\beta)^2 \},
+  \tag{7.4}
+\end{align}
+\]</span></p>
+<p>and in matrix notation</p>
+<p><span class="math display">\[
+\begin{align}
+  \hat \beta= \text{argmin}_\beta \{ \Vert y-X\beta \Vert^2_2 \}.
+  \tag{7.5}
+\end{align}
+\]</span></p>
+<p>This minimization problem has an unique solution given by:</p>
+<p><span class="math display">\[\widehat{\mathbf{\beta}}=[\mathbf{X}^T\mathbf{X}]^{-1}\mathbf{X}^T\mathbf{y}=\mathbf{R}^{-1}\mathbf{Q}^T\mathbf{y}\]</span></p>
+<div id="ols-estimation-in-r" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> OLS estimation in R</h2>
+<p>We are now ready to estimate some linear models with R. We will use the <code>airquality</code> data from the <code>datasets</code> package (installed by default), that contains daily air quality measurements in New York, May to September 1973.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="linear-models.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(airquality)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    NA      NA 14.3   56     5   5
+## 6    28      NA 14.9   66     5   6</code></pre>
+<p>We carry out the OLS estimation to investigate whether temperature has any influence on ozone levels</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="linear-models.html#cb63-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Temp, <span class="at">data=</span>airquality)</span>
+<span id="cb63-2"><a href="linear-models.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Ozone ~ Temp, data = airquality)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -40.729 -17.409  -0.587  11.306 118.271 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -146.9955    18.2872  -8.038 9.37e-13 ***
+## Temp           2.4287     0.2331  10.418  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 23.71 on 114 degrees of freedom
+##   (37 observations deleted due to missingness)
+## Multiple R-squared:  0.4877, Adjusted R-squared:  0.4832 
+## F-statistic: 108.5 on 1 and 114 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We can visualize our results using <code>ggplot2</code> as follows:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="linear-models.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb65-2"><a href="linear-models.html#cb65-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> airquality, <span class="fu">aes</span>(<span class="at">x =</span> Temp, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
+<span id="cb65-3"><a href="linear-models.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">&quot;darkred&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-4"><a href="linear-models.html#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Temperature&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Ozone&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-5"><a href="linear-models.html#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb65-6"><a href="linear-models.html#cb65-6" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-30-1.png" width="672" /></p>
 </div>
-<div id="introducción" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Introducción</h1>
-<p>This bookdown is written as a supporting material for some of the lectures belonging to the subject <a href="https://guies.uab.cat/guies_docents/public/portal/html/2020/assignatura/43482/en">Data Visualisation and Modelling</a> given at <a href="https://www.uab.cat/web/estudiar/official-master-s-degrees/general-information/modelling-for-science-and-engineering-1096480962610.html?param1=1307112830469">Master for Modelling in Science and Engineering</a> from <a href="https://www.uab.cat/web/universitat-autonoma-de-barcelona-1345467954774.html">Autonomous University of Barelona</a> (UAB).</p>
-<p>The contents are:</p>
-<ul>
-<li>Dealing with big data analysis in R
-<ul>
-<li>Parallelization in R</li>
-<li>MapReduce</li>
-<li>Linear regression for Big Data</li>
-</ul></li>
-<li>Model fitting
-<ul>
-<li>Multivariate linear regression</li>
-<li>General rules for variable selection</li>
-<li>Stepwise variable selection</li>
-<li>Comparing models</li>
-<li>Automatic variable selection</li>
-<li>Cross validation</li>
-<li>K-fold and bootstrap cross validation</li>
-<li>Missing data imputation</li>
-<li>Regularization (Lasso and Elastic Net)</li>
-</ul></li>
-</ul>
-<p>Some parts of this material are inspired in vignettes that are referenced at each chapter. Examples corresponding to model fitting are based on material from <a href="https://github.com/jefftwebb">Jeff Webb</a>. This material is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAEZ0FNQQAAsY58+1GTAAAAAXNSR0IB2cksfwAAAW5QTFRF////////////////7+/v39/f1tXV09bS0tXS0tXR0dTR0dTQ0NTQ0NPPz9PPztLOztHNzdHNzdHMz8/PzdDMzNDMzNDLzM/Ly8/Ly8/Ky87Kys3Jyc3Jyc3IyMzIyMzHx8vHxsrGxsrFxcnFxcnExMnExMjDw8jDxMfDw8fCwsfCwcXAwMXAwMW/wMS/v8S+v8O+vsO+vsK9vcK9vcK8v7+/vMG8vMG7vMC8u8C7u8C6ur+6ur+5ub65ub64uL23t7y2tru1tbq0tLqztLmzs7iysrixsrexsbewsbawsLavsLWvr7Wur7SusLOvrrStrrOtr7KvrbOsrLKrr6+vq7Gqn6OenqCdn5+flpmWk5iTkZSRkZORj4+PiYyJhIaEhIWEgoWCgICAfX98fH98eXx5cHJvcHBwYGBgXV5dUFFQUFBQQ0RDQEBAPj8+NTY1MjMxMDAwKSkpKCkoICAgGxsbEBAQDg4ODQ4NAAAAlzoSDQAAAAN0Uk5TAAoO5yEBUwAAAvhJREFUeNq1lutX2kAQxWmXFDVGYy1EIjQ2VZDiu1CsRQQURYvV+qSKj6II8rANYOT+9z0JqIASo9Y5ydkP2f2d2Ts7d2N4jRcJgwEIBwO+SbdTFGw8ZzZz1n5BdLgnfLPBcCT6fW1jY3P78QEYEA76PWMu0W5lGbrNZGrrYNg+u+ga9fgVcmxtY/NJZAOCfs+IY4Bn6eN8RdlEJX9Ed1uFIfdnfzC8uBJbv5tyqqhMLKa0wQHPiEOwMInLW4Eu9xmzfdDtmQ0uLK3cSXmvBBTS6QJQ2tMC+8YcgpnOApAzSa83mZEBZIff2odGfYFQJNqc8s4VchQhhFA5XO1pgCddAxaFKyeNpBpxGSgNmwXXxMxcWE25fkkJGUIIoExESQPsFnkmC0gUuQmjBGQZq+j2BEKR5dUGLVLIvbkGkxxSrcHO92wCkIyENJL3u+2O8Zng/FJsvR5cRF0GFIqtwaKVvoTcSxrCKOOS7hPdXwLhxUYtUFC+Z6AKQgpoDRZ6joEkaYo4cMQKril/KLLcCE4TVYmqFmkNsK0rD9lIiDdXKCSrwwEhREae6Ve0WIiuPg3M0xVlW171BBe21CGjbLbSYR0c/To3H409TQquHTggREKZ8pbjEiRqqxxXtWjjRLdvLrzUAK4Vr5qwZvEsJsCrzExWF9Tk9gIm84e74BRyRN9xeyS4vkHSmg1yK4Wxt5yUIClDayn0t3SteLWq3RQvjQrN31O87e2dEiBl0tJDJmTrykImN8dtq6AOpIw8Y3OMf2s+bvptU+hJqFrc1yCfpmZDkWYX0mv0H9WWpvS2tH6w8z27e58JJVi7c2ImuNBkQvrBOOWZc0CqsyFKtU3+97OuaQBnXGe90RuTMvCHtpziuWCcmDvPm64m+t2vlmuq/YHqqwnGCcfs1l+mCcbSmgtSe8iDGQNnPEsnrq//fZrltXS4tk3oAOPvT2tPF91uMrXTDNv340JrjQ4hbsHAxeE0z1ksHD99eKFdl0dl/P//Cl+9EPcfS+yBAoqk3eUAAAAASUVORK5CYII=" /></p>
-
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="dealing-with-big-data-in-r.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dealing-with-big-data-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generalized-linear-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -270,7 +332,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/isglobal-brge/Aprendizaje_Automatico_1/tree/master/docsindex.Rmd",
+"link": "https://github.com/isglobal-brge/Aprendizaje_Automatico_1/tree/master/docs02-glm.Rmd",
 "text": "Edit"
 },
 "history": {

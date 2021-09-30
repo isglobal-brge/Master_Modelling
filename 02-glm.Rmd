@@ -1,0 +1,204 @@
+# Linear models
+
+Consider the study of the effect of a new drug for hemophilia, by analyzing the level of blood coagulation after the administration of various amounts of the new drug. Researchers  may be interested in knowing whether the drug affects on the level of blood coagulation. The simplest statistical model to address this scientific question is the linear regression model
+
+$$
+y_i = \beta_0 + \beta_1x_i + \epsilon_i,
+$$
+
+where $i = 1, \ldots, n$ and $i$ denotes the $i$-th observation. 
+
+However, the response variable ($y$) can be explained by a different independent variables ($x$). In other words, the response variable can be the sum of effects of some independent factors ($x=(x_1,\dots,x_p)$). 
+
+The model assumption implies that the expected response is the sum of the factors effects:
+
+$$
+\begin{align}
+  E[y]=x_1 \beta_1 + \dots + x_p \beta_p = \sum_{j=1}^p x_j \beta_j = x'\beta .
+  \tag{7.1}
+\end{align}
+$$
+
+Clearly, there may be other factors that affect the the level of blood coagulation. We thus introduce an error term, denoted by $\epsilon$, to capture the effects of all unmodeled factors and measurement error. The implied generative process of a sample of $i = 1, \ldots, n$ observations is thus:
+
+$$
+\begin{align}
+  y_i = x_i'\beta + \varepsilon_i = \sum_j x_{i,j} \beta_j + \varepsilon_i , i=1,\dots,n .
+  \tag{7.2}
+\end{align}
+$$
+
+or in matrix notation
+
+$$
+\begin{align}
+  y = X \beta + \varepsilon .
+  \tag{7.3}
+\end{align}
+$$
+
+This figure illustrates the linear regression fit of our problem 
+
+```{r, echo=FALSE}
+data(mtcars)
+mtcars <- mtcars %>% mutate(mpg=mpg*10)
+simple_model <- lm(mpg ~ wt, data = mtcars)
+mtcars_new <- mtcars %>% 
+  mutate(cars = rownames(mtcars),
+         fitted = fitted(simple_model),
+         residuals = residuals(simple_model)) %>%
+  dplyr::select(cars, mpg, wt, fitted, residuals)
+ggplot(mtcars_new, aes(x = wt, y = mpg)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +   
+  geom_segment(aes(xend = wt, yend = fitted), alpha = .2) + 
+  geom_point() +
+  geom_point(aes(y = fitted), shape = 1) +
+  xlab("Drug dose (mg)") + ylab("Blood coagulation level (IU/mL)")
+  ggtitle("Blood coagulation as a function of drug doses")
+
+```
+
+Model parameters can be estimated by solving the Ordinary Least Squares (OLS) problem 
+
+
+$$
+\begin{align}
+  \hat \beta= \text{argmin}_\beta \{ \sum_i (y_i-x_i'\beta)^2 \},
+  \tag{7.4}
+\end{align}
+$$
+
+
+and in matrix notation
+
+
+$$
+\begin{align}
+  \hat \beta= \text{argmin}_\beta \{ \Vert y-X\beta \Vert^2_2 \}.
+  \tag{7.5}
+\end{align}
+$$
+
+This minimization problem has an unique solution given by:
+
+
+$$\widehat{\mathbf{\beta}}=[\mathbf{X}^T\mathbf{X}]^{-1}\mathbf{X}^T\mathbf{y}=\mathbf{R}^{-1}\mathbf{Q}^T\mathbf{y}$$
+
+## OLS estimation in R
+
+We are now ready to estimate some linear models with R. We will use the `airquality` data from the `datasets` package (installed by default), that contains daily air quality measurements in New York, May to September 1973.
+
+```{r}
+head(airquality)
+``` 
+
+We carry out the OLS estimation to investigate whether temperature has any influence on ozone levels
+
+```{r}
+mod <- lm(Ozone ~ Temp, data=airquality)
+summary(mod)
+```
+
+We can visualize our results using `ggplot2` as follows:
+
+```{r}
+library(ggplot2)
+p <- ggplot(data = airquality, aes(x = Temp, y = Ozone)) +
+  geom_smooth(method = "lm", se=FALSE, color="darkred") +
+  xlab("Temperature") + ylab("Ozone") +
+  geom_point()
+p
+```
+
+
+# Generalized linear models
+
+Let us consider other real data problems. 
+
+**Problem 1**: Consider the relation between cigarettes smoked, and the occurrence of lung cancer. Do we expect the probability of cancer to be linear in the number of cigarettes? I do not think so. In those situations, mainly when the outcome variable does not follow a Normal distribution, generalized linear models (GLMs) are required. 
+
+**Problem 2**: Consider the relation between the travel times to the distance traveled. Do you agree that the longer the distance traveled, then not only the travel times get longer, but they also get more variable?
+
+In the linear models, we assumed the generative process to be linear in the effects of the predictors. Let us now write that same linear model, slightly differently in order to facilitate its extension:
+
+$$
+y|x \sim \mathcal{N}(x'\beta, \sigma^2).
+$$
+This model not allow for the non-linear relations of Problem 1, nor does it allow for the distribution of $\epsilon$ to change with $x$ as in the Problem 2. This is how GLMs works by generalizing linear models to address these two limitations. 
+
+For Problem 1, we would like something like
+
+$$
+y|x \sim Binom(1,p(x))
+$$
+
+and for Problem 2
+
+$$
+y|x \sim \mathcal{N}(x'\beta,\sigma^2(x)),
+$$
+
+or more generally
+
+$$
+y|x \sim \mathcal{N}(\mu(x),\sigma^2(x)),
+$$
+
+or maybe not Gaussian
+
+$$
+y|x \sim Pois(\lambda(x)).
+$$
+
+Even more generally, for some distribution $F(\theta)$, with a parameter $\theta$, we would like to assume that the data is generated via
+
+$$
+\begin{align}
+  \tag{8.1}
+  y|x \sim F(\theta(x))
+\end{align}
+$$
+
+GLMs assume the data distribution $F$ to be in a “well-behaved” family known as the [Natural Exponential Family](https://en.wikipedia.org/wiki/Natural_exponential_family) of distributions. This family includes the Gaussian, Gamma, Binomial, Poisson, and Negative Binomial distributions. These five include as special cases the exponential, chi-squared, Rayleigh, Weibull, Bernoulli, and geometric distributions.
+
+GLMs also assume that the distribution’s parameter, $\theta$, is some simple function of a linear combination of the effects. In our cigarettes example this amounts to assuming that each cigarette has an additive effect, but not on the probability of cancer, but rather, on some simple function of it. Formally
+
+$$
+g(\theta(x))=x'\beta,
+$$
+
+and we recall that
+
+$$
+x'\beta=\beta_0 + \sum_j x_j \beta_j.
+$$
+
+that corresponds to the linear predictor, and $g$ function is known as the **link** function that for Normal data is the identity, for binomial data (i.e. binary) is the logistic function and for count data (Poisson) is the logarithm function. 
+
+
+## Logistic regression with R
+
+The `predimed` data set provides information on the PREDIMED trial (Prevención con Dieta Mediterránea) which is a randomized, parallel and multicentric cohort with more than 7,000 participants who were randomly assigned to three diet groups (olive oil + mediterranean  diet, nuts + mediterranean diet, and low-fat diet -control group-). It also includes information about whether the individual suffered from different adverse events (stroke, cardiovascular, myocardial infarction) after a 7 years follow-up.
+
+```{r}
+library(compareGroups)
+data(predimed)
+head(predimed)
+
+table(predimed$group)
+```
+
+Let us fit a logistic regression model to investigate whether mediterranean diet (variable `group`) is associated with the risk of having and adverse event (variable `event`)
+
+```{r}
+mod <- glm(event ~ group, data=predimed, family="binomial")
+summary(mod)
+```
+Let us see how the results change after adjusting by other covariates
+
+```{r}
+mod.adj <- glm(event ~ group + sex + age + smoke,
+               data=predimed, family="binomial")
+summary(mod.adj)
+```
+

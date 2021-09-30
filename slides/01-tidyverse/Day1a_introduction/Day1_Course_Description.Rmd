@@ -1,24 +1,27 @@
 ---
 title: "Introduction"
-subtitle: "R for Data Science"
 author: |
   | Juan R Gonzalez
   | juanr.gonzalez@isglobal.org
+subtitle: R for Data Science
+output:
+  beamer_presentation:
+    toc: no
+    slide_level: 2
+    includes:
+      in_header: header.tex
+  slidy_presentation: default
 institute: |
   | BRGE - Bioinformatics Research Group in Epidemiology
   | ISGlobal - Barcelona Institute for Global Health
   | http://brge.isglobal.org
-output:
-  beamer_presentation:
-    toc: false
-    slide_level: 2
-    includes:
-      in_header: header.tex  
 ---
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment="", message=FALSE, warning=FALSE, cache=FALSE, fig.width = 4, fig.height = 4)
+knitr::opts_chunk$set(echo = TRUE, comment="", 
+                      message=FALSE, warning=FALSE, 
+                      cache=FALSE, fig.width = 4, fig.height = 4)
 options(width=80)
 ```
 
@@ -29,7 +32,7 @@ options(width=80)
 
 ## Outline of the course
 
-* Day 1: Reproducible Research (1h)
+* Day 1: Reproducible Research (30 min)
      - knitr
      - R markdown 
 
@@ -42,33 +45,33 @@ options(width=80)
      - Add columns
      - Grouped summaries
 
-* Day 1: Tidyverse - Data visualization (1h)
+* Day 1: Tidyverse - Data visualization (Online)
      - Exploratory data analysis 
      - Advanced graphics
 
 -----
 
-
-* Day 2: Big data analysis (1h)
-     - Parallelization in R
-     - MapReduce
-     - Linear regression for Big Data
-
 * Day 2: Model fitting (1h)
-     - Multivariate linear regression
+     - Linear regression
+     - Generalized linear models
+     - Multivariate regression
      - General rules for variable selection
      - Stepwise variable selection
      - Comparing models
      - Automatic variable selection
+     
+* Day 2: DataSHIELD (1h)
+     - Introduction
+     - Opal demo server
 
 -----
 
 
-* Day 3: Model fitting (2h)
-     - Cross validation
-     - K-fold and bootstrap cross validation
-     - Missing data imputation
-     - Regularization (Lasso and Elastic Net)
+* Day 3: DataSHIELD (2h)
+     - Creating tables in Opal
+     - Creating resources in Opal
+     - Descriptive statistics
+     - Generalized linear models
      
      
 -----
@@ -76,7 +79,7 @@ options(width=80)
 ## Course Material and tasks
 
 * Slides, pdf, supplementary info at Moodle
-* Material available at [https://github.com/isglobal-brge/TeachingMaterials/tree/master/Master_Modelling](https://github.com/isglobal-brge/TeachingMaterials/tree/master/Master_Modelling)
+* Material available at [https://isglobal-brge.github.io/Master_Modelling/](https://isglobal-brge.github.io/Master_Modelling/)
 * Tasks
      - Daily exercises (Slides + Moodle)
      - Final exercise (Moodle) 
@@ -85,6 +88,39 @@ options(width=80)
 
 ## Evaluation
 
-- Tasks (50%)
-- Final real data analysis (model building) (50%)
+- 5 Tasks
+     - R Markdown (10%)
+     - Tidyverse (20%)
+     - Data visualization (20%)
+     - Data modelling (20%)
+     - DataSHIELD (30%)
      
+     
+-----
+
+## Final Master project proposal (+ internship)
+
+- Radiomics (Radiogenomics)
+     - COVID lung CT scans + GWAS
+     - Neurobiology brain MRI scans + GWAS
+     - COPD lung CT scans + GWAS
+
+
+```{r, fig.align='right', echo=FALSE}
+knitr::include_graphics("figs/radiomic.jpg")
+```
+
+
+
+## Final Master project proposal (+ internship)
+
+![](figs/radiomic_preduct.jpg) 
+
+
+## Final Master project proposal (+ internship)
+
+![](figs/clinical.png)
+
+## Final Master project proposal (+ internship)
+
+![](figs/radgen4permed.png)     
