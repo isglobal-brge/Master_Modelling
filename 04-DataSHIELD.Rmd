@@ -1,0 +1,41 @@
+# DataSHIELD
+
+```{r include = FALSE, eval=FALSE}
+download.file("https://github.com/isglobal-brge/resource_bookdown/raw/master/02-DataSHIELD.Rmd", "rmd_datashield/DataSHIELD.Rmd")
+```
+
+```{r child='rmd_datashield/DataSHIELD.Rmd', include=TRUE}
+```
+
+
+```{r include = FALSE, eval=FALSE}
+download.file("https://github.com/isglobal-brge/resource_bookdown/raw/master/01-Opal.Rmd", "rmd_datashield/opal.Rmd")
+```
+
+```{r child='rmd_datashield/opal.Rmd', include=TRUE}
+```
+
+
+
+```{r include = FALSE, eval=FALSE}
+download.file("https://github.com/isglobal-brge/resource_bookdown/raw/master/04-resources.Rmd", "rmd_datashield/resources.Rmd")
+```
+
+```{r child='rmd_datashield/resources.Rmd', include=TRUE}
+```
+
+
+
+```{r include = FALSE, eval=FALSE}
+download.file("https://github.com/isglobal-brge/resource_bookdown/raw/master/07-workflow2_simple_analyses.Rmd", "rmd_datashield/analyses.Rmd")
+```
+
+```{r child='rmd_datashield/analyses.Rmd', include=TRUE}
+```
+
+```{r include = FALSE, eval=FALSE}
+download.file("https://github.com/isglobal-brge/resource_bookdown/raw/master/13-Useful_information.Rmd", "rmd_datashield/info.Rmd")
+```
+
+```{r child='rmd_datashield/info.Rmd', include=TRUE}
+```

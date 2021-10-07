@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,6 +179,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.9" data-path="model-fitting.html"><a href="model-fitting.html#missing-data-imputation"><i class="fa fa-check"></i><b>5.9</b> Missing data imputation</a></li>
 <li class="chapter" data-level="5.10" data-path="model-fitting.html"><a href="model-fitting.html#regularization"><i class="fa fa-check"></i><b>5.10</b> Regularization</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="datashield.html"><a href="datashield.html"><i class="fa fa-check"></i><b>6</b> DataSHIELD</a></li>
+<li class="chapter" data-level="7" data-path="opal.html"><a href="opal.html"><i class="fa fa-check"></i><b>7</b> Opal</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="opal.html"><a href="opal.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="opal.html"><a href="opal.html#data-management"><i class="fa fa-check"></i><b>7.2</b> Data Management</a></li>
+<li class="chapter" data-level="7.3" data-path="opal.html"><a href="opal.html#security"><i class="fa fa-check"></i><b>7.3</b> Security</a></li>
+<li class="chapter" data-level="7.4" data-path="opal.html"><a href="opal.html#r-integration"><i class="fa fa-check"></i><b>7.4</b> R Integration</a></li>
+<li class="chapter" data-level="7.5" data-path="opal.html"><a href="opal.html#opal-demo-site"><i class="fa fa-check"></i><b>7.5</b> Opal demo site</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -248,82 +257,82 @@ x&#39;\beta=\beta_0 + \sum_j x_j \beta_j.
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="generalized-linear-models.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(compareGroups)</span>
 <span id="cb66-2"><a href="generalized-linear-models.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(predimed)</span>
 <span id="cb66-3"><a href="generalized-linear-models.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predimed)</span></code></pre></div>
-<pre><code>##            group    sex age   smoke   bmi waist       wth htn diab hyperchol famhist hormo p14
-## 1        Control   Male  58  Former 33.53   122 0.7530864  No   No       Yes      No    No  10
-## 2        Control   Male  77 Current 31.05   119 0.7300614 Yes  Yes        No      No    No  10
-## 4  MedDiet + VOO Female  72  Former 30.86   106 0.6543210  No  Yes        No     Yes    No   8
-## 5 MedDiet + Nuts   Male  71  Former 27.68   118 0.6941177 Yes   No       Yes      No    No   8
-## 6  MedDiet + VOO Female  79   Never 35.94   129 0.8062500 Yes   No       Yes      No    No   9
-## 8        Control   Male  63  Former 41.66   143 0.8033708 Yes  Yes       Yes      No  &lt;NA&gt;   9
-##    toevent event
-## 1 5.374401   Yes
-## 2 6.097194    No
-## 4 5.946612    No
-## 5 2.907598   Yes
-## 6 4.761123    No
-## 8 3.148528   Yes</code></pre>
+<pre><code>           group    sex age   smoke   bmi waist       wth htn diab hyperchol famhist hormo p14  toevent
+1        Control   Male  58  Former 33.53   122 0.7530864  No   No       Yes      No    No  10 5.374401
+2        Control   Male  77 Current 31.05   119 0.7300614 Yes  Yes        No      No    No  10 6.097194
+4  MedDiet + VOO Female  72  Former 30.86   106 0.6543210  No  Yes        No     Yes    No   8 5.946612
+5 MedDiet + Nuts   Male  71  Former 27.68   118 0.6941177 Yes   No       Yes      No    No   8 2.907598
+6  MedDiet + VOO Female  79   Never 35.94   129 0.8062500 Yes   No       Yes      No    No   9 4.761123
+8        Control   Male  63  Former 41.66   143 0.8033708 Yes  Yes       Yes      No  &lt;NA&gt;   9 3.148528
+  event
+1   Yes
+2    No
+4    No
+5   Yes
+6    No
+8   Yes</code></pre>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="generalized-linear-models.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(predimed<span class="sc">$</span>group)</span></code></pre></div>
-<pre><code>## 
-##        Control MedDiet + Nuts  MedDiet + VOO 
-##           2042           2100           2182</code></pre>
+<pre><code>
+       Control MedDiet + Nuts  MedDiet + VOO 
+          2042           2100           2182 </code></pre>
 <p>Let us fit a logistic regression model to investigate whether mediterranean diet (variable <code>group</code>) is associated with the risk of having and adverse event (variable <code>event</code>)</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="generalized-linear-models.html#cb70-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(event <span class="sc">~</span> group, <span class="at">data=</span>predimed, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
 <span id="cb70-2"><a href="generalized-linear-models.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = event ~ group, family = &quot;binomial&quot;, data = predimed)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -0.3120  -0.3120  -0.2819  -0.2604   2.6081  
-## 
-## Coefficients:
-##                     Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)          -2.9983     0.1040 -28.820   &lt;2e-16 ***
-## groupMedDiet + Nuts  -0.3690     0.1600  -2.306   0.0211 *  
-## groupMedDiet + VOO   -0.2073     0.1519  -1.365   0.1723    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 2118.1  on 6323  degrees of freedom
-## Residual deviance: 2112.6  on 6321  degrees of freedom
-## AIC: 2118.6
-## 
-## Number of Fisher Scoring iterations: 6</code></pre>
+<pre><code>
+Call:
+glm(formula = event ~ group, family = &quot;binomial&quot;, data = predimed)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.3120  -0.3120  -0.2819  -0.2604   2.6081  
+
+Coefficients:
+                    Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)          -2.9983     0.1040 -28.820   &lt;2e-16 ***
+groupMedDiet + Nuts  -0.3690     0.1600  -2.306   0.0211 *  
+groupMedDiet + VOO   -0.2073     0.1519  -1.365   0.1723    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2118.1  on 6323  degrees of freedom
+Residual deviance: 2112.6  on 6321  degrees of freedom
+AIC: 2118.6
+
+Number of Fisher Scoring iterations: 6</code></pre>
 <p>Let us see how the results change after adjusting by other covariates</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="generalized-linear-models.html#cb72-1" aria-hidden="true" tabindex="-1"></a>mod.adj <span class="ot">&lt;-</span> <span class="fu">glm</span>(event <span class="sc">~</span> group <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> smoke,</span>
 <span id="cb72-2"><a href="generalized-linear-models.html#cb72-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>predimed, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
 <span id="cb72-3"><a href="generalized-linear-models.html#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod.adj)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = event ~ group + sex + age + smoke, family = &quot;binomial&quot;, 
-##     data = predimed)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -0.6351  -0.3138  -0.2526  -0.2012   2.9984  
-## 
-## Coefficients:
-##                     Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)         -8.01858    0.76810 -10.439  &lt; 2e-16 ***
-## groupMedDiet + Nuts -0.37122    0.16170  -2.296  0.02169 *  
-## groupMedDiet + VOO  -0.19791    0.15327  -1.291  0.19662    
-## sexFemale           -0.54522    0.17079  -3.192  0.00141 ** 
-## age                  0.07418    0.01058   7.010 2.39e-12 ***
-## smokeCurrent         0.63066    0.20707   3.046  0.00232 ** 
-## smokeFormer          0.43680    0.18237   2.395  0.01662 *  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 2118.1  on 6323  degrees of freedom
-## Residual deviance: 2023.0  on 6317  degrees of freedom
-## AIC: 2037
-## 
-## Number of Fisher Scoring iterations: 6</code></pre>
+<pre><code>
+Call:
+glm(formula = event ~ group + sex + age + smoke, family = &quot;binomial&quot;, 
+    data = predimed)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.6351  -0.3138  -0.2526  -0.2012   2.9984  
+
+Coefficients:
+                    Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)         -8.01858    0.76810 -10.439  &lt; 2e-16 ***
+groupMedDiet + Nuts -0.37122    0.16170  -2.296  0.02169 *  
+groupMedDiet + VOO  -0.19791    0.15327  -1.291  0.19662    
+sexFemale           -0.54522    0.17079  -3.192  0.00141 ** 
+age                  0.07418    0.01058   7.010 2.39e-12 ***
+smokeCurrent         0.63066    0.20707   3.046  0.00232 ** 
+smokeFormer          0.43680    0.18237   2.395  0.01662 *  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2118.1  on 6323  degrees of freedom
+Residual deviance: 2023.0  on 6317  degrees of freedom
+AIC: 2037
+
+Number of Fisher Scoring iterations: 6</code></pre>
 
 </div>
 </div>

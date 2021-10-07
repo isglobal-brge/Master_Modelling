@@ -31,6 +31,8 @@ The contents are:
      - K-fold and bootstrap cross validation
      - Missing data imputation
      - Regularization (Lasso and Elastic Net)
+     
+* DataSHIELD     
 
 Some parts of this material are inspired in vignettes that are referenced at each chapter. Examples corresponding to model fitting are based on material from [Jeff Webb](https://github.com/jefftwebb). This material is licensed under [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
 
@@ -39,7 +41,8 @@ Some parts of this material are inspired in vignettes that are referenced at eac
 
  
 ```{r include=FALSE}
-knitr::opts_chunk$set(cache=T, warning=FALSE, message=FALSE, fig.path = "fig/")
+knitr::opts_chunk$set(cache=TRUE, warning=FALSE, message=FALSE, 
+                      fig.path = "fig/", comment="")
 library(arm)
 library(ggplot2)
 library(tidyr)

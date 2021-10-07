@@ -207,10 +207,6 @@ plot(regsubsets(Salary ~ ., data = Hitters, method = "exhaustive", nbest = 1))
 
 The plot presents multiple candidate models organized by BIC on the y-axis.  Like AIC, BIC penalizes for model complexity.^[$\mathrm{BIC} = {\ln(n)k - 2\ln({L})},$ where $L$ is the maximum likelihood value, $n$ is the number of observations, $k$ is the number of parameters, and $ln$ is the natural log.]  Lower BIC is better.  The model with the lowest BIC is the rather simple one at the top of the plot:  Intercept, AtBat, Hits, Walks, CRBI, DivisionW and PutOuts.  If we refit a model with these predictors using `lm()` we find it has an $R^2$ of .51.  
 
-<!-- ```{r} -->
-<!-- display(lm(Salary ~ AtBat + Hits + Walks + CRBI + Division + PutOuts, data = Hitters)) -->
-<!-- ``` -->
-
 Is this model really better?  The algorithm did an exhaustive search of the model space yet returned a model with lower $R^2$!  How could that be better?  But it probably is better.   While the bias in this model will be higher than in the larger model selected by the `step()` function, the variance is likely lower.  Remember:  bias refers to in-sample model performance and variance refers to the out-of-sample model performance---how the model does when it encounters new data.  If the model performs poorly on new data, with a big discrepancy between  in-sample and out-of-sample performance, then it is overfitting.  AIC, BIC, and adjusted R-squared all penalize for model complexity in order to avoid overfitting and will tend to select models with higher bias and lower variance.
 
 ## Cross validation 
@@ -284,13 +280,13 @@ This method works as follows:
 
 We will see later how to do these calculations with a specific library. For now, for you to learn how this methodology works, you must perform the following exercise
 
------------------------------------------------------
+>
 **EXERCISE** (Deliver at Moodle: Exercise-LOOCV): Upload the R function.
-
+>
 Create an R function that performs the LOOCV procedure and estimates the LOOCV value for the full model (e.g object `full_model`) and the selected model (e.g. object `select_model`) in the train data.
-
+>
 HINT: use the function `update ()` to re-evaluate the model in a new dataset.
------------------------------------------------------
+>
 
 
 ### K-fold cross validation (K-fold CV)
@@ -311,13 +307,13 @@ A typical question is how to choose the optimal value of K. Small values of K gi
 As in the previous case, we will see an R package to perform these analyzes efficiently. For now, do the following exercise:
 
 
------------------------------------------------------
+>
 **EXERECISE** (Deliver at Moodle: Exercise-Kfold): Upload the R function.
-
+>
 Create an R function that performs the K-fold CV procedure and estimates the value of value K-fold CV for the full model (e.g object `full_model`) and the selected model (e.g. object `select_model`) in the train data. The function should have a parameter that depends on K. Give the results for K = 5 and K = 10. 
-
+>
 HINT: use the function `update ()` to re-evaluate the model in a new dataset.
------------------------------------------------------
+>
 
 
 ### Bootstrap 
@@ -339,13 +335,13 @@ The *bootstrap* procedure applied to regression would be:
    - Repeat the process $ B $ times
    - Calculate the average of the $ B $ errors that have been saved. This value is the * bootstrap * error and it helps us to evaluate the behavior of our model.
 
------------------------------------------------------
+>
 **EXERCISE** (Deliver at Moodle: Exercise-bootstrap): Upload the R function.
-
+>
 Create a function R that implements the *bootstrap* procedure and estimate the value of this method for  the full model (e.g object `full_model`) and the selected model (e.g. object `select_model`) in the train data.  The function should have a parameter that depends on $B$. Provide the the results for B = 25, B = 50, and B = 100. 
-
+>
 HINT: use the function `update ()` to re-evaluate the model in a new dataset.
------------------------------------------------------
+>
 
 
 
@@ -374,6 +370,39 @@ train(Salary ~ AtBat + Hits + Walks + CRBI + Division + PutOuts,
 
 Estimated out-of-sample RMSE for the select model is 362.17, which roughly agrees with the result we obtained using the validation set method:  the simpler model has lower variance.  And why do we care about lower variance?  Because models that perform better on new data are less yoked to the idiosyncrasies of sample data and presumably doing a better job of describing the characteristics of the population.  Such models are better at both inference and prediction.
 
+>
+**EXERCISE** (Deliver Moodle: Exercise-create model):
+>
+Load Boston data set (from MASS package) in R by executing
+
+```
+data("Boston", package = "MASS")
+```
+>
+Our aim is to create a model to predict the median house value (mdev), in Boston Suburbs, using the following predictor variables:
+>
+* crim: per capita crime rate by town.
+* zn: proportion of residential land zoned for lots over 25,000 sq.ft.
+* indus: proportion of non-retail business acres per town.
+* chas: Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
+* nox: nitrogen oxides concentration (parts per 10 million).
+* rm: average number of rooms per dwelling.
+* age: proportion of owner-occupied units built prior to 1940.
+* dis: weighted mean of distances to five Boston employment centres.
+* rad: index of accessibility to radial highways.
+* tax: full-value property-tax rate per \$10,000.
+* ptratio: pupil-teacher ratio by town.
+* black: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.
+* lstat: lower status of the population (percent).
+* medv: median value of owner-occupied homes in \$1000s.
+>
+- Split the data in 70% (train) and 30% (test)
+- Create a predictive model using a stepwise procedure
+- Provide a goodness-of-fit value of the model using cross-validation in the train set
+- Validate the model in the test dataset and compare model performance with the value obtained in the previous step
+>
+**TO DELIVER**: Do the analyses using R Markdonw and upload the pdf (note: if you can only create the html file, use a web browser to export it to pdf.)
+>
 
 
 ## Missing data imputation
@@ -538,42 +567,6 @@ comparison %>%
 ```
 
 Missforest does the best, though medianImpute compares very well!  Mice does not do well, probably for the reasons mentioned above:  it is designed for multiple, not single, imputation.
-
-
------------------------------------------------------
-**EXERCISE** (Deliver Moodle: Exercise-create model):
-
-Load Boston data set (from MASS package) in R by executing
-
-```
-data("Boston", package = "MASS")
-```
-
-Our aim is to create a model to predict the median house value (mdev), in Boston Suburbs, using the following predictor variables:
-
-crim: per capita crime rate by town.
-zn: proportion of residential land zoned for lots over 25,000 sq.ft.
-indus: proportion of non-retail business acres per town.
-chas: Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
-nox: nitrogen oxides concentration (parts per 10 million).
-rm: average number of rooms per dwelling.
-age: proportion of owner-occupied units built prior to 1940.
-dis: weighted mean of distances to five Boston employment centres.
-rad: index of accessibility to radial highways.
-tax: full-value property-tax rate per \$10,000.
-ptratio: pupil-teacher ratio by town.
-black: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.
-lstat: lower status of the population (percent).
-medv: median value of owner-occupied homes in \$1000s.
-
-- Split the data in 70% (train) and 30% (test)
-- Create a predictive model using a stepwise procedure
-- Provide a goodness-of-fit value of the model using cross-validation in the train set
-- Validate the model in the test dataset and compare model performance with the value obtained in the previous step
-
-TO DELIVER: Do the analyses using R Markdonw and upload the pdf (html file is also possible if you have problems with LaTeX installation)
------------------------------------------------------
-
 
 ## Regularization
 
