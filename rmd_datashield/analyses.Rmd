@@ -66,7 +66,7 @@ datashield.logout(conns)
 ```
 
 
-### Analysis from a multiple studies
+### Analysis from multiple studies
 
 Now, let us illustrate a similar analysis with multiple studies. In this case we see results aggregated across all three studies.
 
@@ -94,7 +94,8 @@ conns <- datashield.login(logins = logindata, assign = TRUE, symbol = "res")
 ds.class("res")
 
 # coerce ResourceClient objects to data.frames
-# (DataSHIELD config allows as.resource.data.frame() assignment function for the purpose of the demo)
+# (DataSHIELD config allows as.resource.data.frame() assignment function 
+# for the purpose of the demo)
 datashield.assign.expr(conns, symbol = "D", 
                        expr = quote(as.resource.data.frame(res, strict = TRUE)))
 ds.class("D")
@@ -109,7 +110,31 @@ ds.summary('GENDER')
 
 mod <- ds.glm("DIS_DIAB ~ LAB_TRIG + GENDER", data = "D" , family="binomial")
 mod$coeff
+```
 
+*NOTE*: the outcome variable must be a 0/1 or a factor variable with two categories. The DataSHIELD function `ds.asFactor()` can be used to solve problems when having character variables. You can create a new object in the server that is a factor variable that can be passed in the left side of the formula indicated by `~ `.
+
+
+We can also perform a meta-analysis approach
+
+```{r}
+mod.meta <- ds.glmSLMA("DIS_DIAB ~ LAB_TRIG + GENDER", 
+                       dataName = "D" , family="binomial")
+mod.meta
 
 datashield.logout(conns)
+```
+
+
+and visualize the results using some R packages
+
+```{r}
+library(meta)
+betas <- mod.meta$output.summary$input.beta.matrix.for.SLMA
+ses <- mod.meta$output.summary$input.se.matrix.for.SLMA
+betas
+ses
+
+res <- metagen(betas["LAB_TRIG",], ses["LAB_TRIG",])
+forest(res, layout="JAMA")
 ```

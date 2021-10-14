@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="datashield.html"><a href="datashield.html#demo-basic-statistical-analyses"><i class="fa fa-check"></i><b>6.6</b> Demo: Basic statistical analyses</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="datashield.html"><a href="datashield.html#analysis-from-a-single-study"><i class="fa fa-check"></i><b>6.6.1</b> Analysis from a single study</a></li>
-<li class="chapter" data-level="6.6.2" data-path="datashield.html"><a href="datashield.html#analysis-from-a-multiple-studies"><i class="fa fa-check"></i><b>6.6.2</b> Analysis from a multiple studies</a></li>
+<li class="chapter" data-level="6.6.2" data-path="datashield.html"><a href="datashield.html#analysis-from-multiple-studies"><i class="fa fa-check"></i><b>6.6.2</b> Analysis from multiple studies</a></li>
 </ul></li>
 <li class="chapter" data-level="6.7" data-path="datashield.html"><a href="datashield.html#tips-and-tricks"><i class="fa fa-check"></i><b>6.7</b> Tips and tricks</a>
 <ul>
@@ -824,8 +824,8 @@ GENDER         0.338328242      1.88055787</code></pre>
 <p>As usual the connection must be closed</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="datashield.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datashield.logout</span>(conns)</span></code></pre></div>
 </div>
-<div id="analysis-from-a-multiple-studies" class="section level3" number="6.6.2">
-<h3><span class="header-section-number">6.6.2</span> Analysis from a multiple studies</h3>
+<div id="analysis-from-multiple-studies" class="section level3" number="6.6.2">
+<h3><span class="header-section-number">6.6.2</span> Analysis from multiple studies</h3>
 <p>Now, let us illustrate a similar analysis with multiple studies. In this case we see results aggregated across all three studies.</p>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="datashield.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DSOpal)</span>
 <span id="cb181-2"><a href="datashield.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dsBaseClient)</span>
@@ -857,10 +857,11 @@ $study2
 $study3
 [1] &quot;TidyFileResourceClient&quot; &quot;FileResourceClient&quot;     &quot;ResourceClient&quot;         &quot;R6&quot;                    </code></pre>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="datashield.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># coerce ResourceClient objects to data.frames</span></span>
-<span id="cb183-2"><a href="datashield.html#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (DataSHIELD config allows as.resource.data.frame() assignment function for the purpose of the demo)</span></span>
-<span id="cb183-3"><a href="datashield.html#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="fu">datashield.assign.expr</span>(conns, <span class="at">symbol =</span> <span class="st">&quot;D&quot;</span>, </span>
-<span id="cb183-4"><a href="datashield.html#cb183-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">expr =</span> <span class="fu">quote</span>(<span class="fu">as.resource.data.frame</span>(res, <span class="at">strict =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb183-5"><a href="datashield.html#cb183-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ds.class</span>(<span class="st">&quot;D&quot;</span>)</span></code></pre></div>
+<span id="cb183-2"><a href="datashield.html#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (DataSHIELD config allows as.resource.data.frame() assignment function </span></span>
+<span id="cb183-3"><a href="datashield.html#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="co"># for the purpose of the demo)</span></span>
+<span id="cb183-4"><a href="datashield.html#cb183-4" aria-hidden="true" tabindex="-1"></a><span class="fu">datashield.assign.expr</span>(conns, <span class="at">symbol =</span> <span class="st">&quot;D&quot;</span>, </span>
+<span id="cb183-5"><a href="datashield.html#cb183-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">expr =</span> <span class="fu">quote</span>(<span class="fu">as.resource.data.frame</span>(res, <span class="at">strict =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb183-6"><a href="datashield.html#cb183-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ds.class</span>(<span class="st">&quot;D&quot;</span>)</span></code></pre></div>
 <pre><code>$study1
 [1] &quot;data.frame&quot;
 
@@ -981,7 +982,480 @@ GENDER      -0.4455989 0.20797931  -2.142516  3.215202e-02   -0.8532309   -0.037
 (Intercept)    0.005527953      0.01254229
 LAB_TRIG       1.216577226      1.50854390
 GENDER         0.426036242      0.96274475</code></pre>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="datashield.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datashield.logout</span>(conns)</span></code></pre></div>
+<p><em>NOTE</em>: the outcome variable must be a 0/1 or a factor variable with two categories. The DataSHIELD function <code>ds.asFactor()</code> can be used to solve problems when having character variables. You can create a new object in the server that is a factor variable that can be passed in the left side of the formula indicated by <code>~</code>.</p>
+<p>We can also perform a meta-analysis approach</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="datashield.html#cb195-1" aria-hidden="true" tabindex="-1"></a>mod.meta <span class="ot">&lt;-</span> <span class="fu">ds.glmSLMA</span>(<span class="st">&quot;DIS_DIAB ~ LAB_TRIG + GENDER&quot;</span>, </span>
+<span id="cb195-2"><a href="datashield.html#cb195-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">dataName =</span> <span class="st">&quot;D&quot;</span> , <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span></code></pre></div>
+<pre><code>
+
+SAVING SERVERSIDE glm OBJECT AS: &lt; new.glm.obj &gt;</code></pre>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="datashield.html#cb197-1" aria-hidden="true" tabindex="-1"></a>mod.meta</span></code></pre></div>
+<pre><code>$output.summary
+$output.summary$study1
+$output.summary$study1$rank
+[1] 3
+
+$output.summary$study1$aic
+[1] 256.0324
+
+$output.summary$study1$iter
+[1] 7
+
+$output.summary$study1$converged
+[1] TRUE
+
+$output.summary$study1$boundary
+[1] FALSE
+
+$output.summary$study1$na.action
+$output.summary$study1$na.action$na.action
+[1] &quot;na.omit&quot;
+
+
+$output.summary$study1$call
+glm(formula = formula, family = binomial, data = D, x = TRUE)
+
+$output.summary$study1$terms
+DIS_DIAB ~ LAB_TRIG + GENDER
+attr(,&quot;variables&quot;)
+list(DIS_DIAB, LAB_TRIG, GENDER)
+attr(,&quot;factors&quot;)
+         LAB_TRIG GENDER
+DIS_DIAB        0      0
+LAB_TRIG        1      0
+GENDER          0      1
+attr(,&quot;term.labels&quot;)
+[1] &quot;LAB_TRIG&quot; &quot;GENDER&quot;  
+attr(,&quot;order&quot;)
+[1] 1 1
+attr(,&quot;intercept&quot;)
+[1] 1
+attr(,&quot;response&quot;)
+[1] 1
+attr(,&quot;.Environment&quot;)
+&lt;environment: R_GlobalEnv&gt;
+attr(,&quot;predvars&quot;)
+list(DIS_DIAB, LAB_TRIG, GENDER)
+attr(,&quot;dataClasses&quot;)
+ DIS_DIAB  LAB_TRIG    GENDER 
+&quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; 
+
+$output.summary$study1$contrasts
+NULL
+
+$output.summary$study1$aliased
+(Intercept)    LAB_TRIG      GENDER 
+      FALSE       FALSE       FALSE 
+
+$output.summary$study1$dispersion
+[1] 1
+
+$output.summary$study1$data
+[1] &quot;D&quot;
+
+$output.summary$study1$df
+[1]    3 1798    3
+
+$output.summary$study1$Ntotal
+[1] 2163
+
+$output.summary$study1$Nvalid
+[1] 1801
+
+$output.summary$study1$Nmissing
+[1] 362
+
+$output.summary$study1$cov.unscaled
+            (Intercept)    LAB_TRIG      GENDER
+(Intercept)   0.2069613 -0.03908510 -0.10930695
+LAB_TRIG     -0.0390851  0.01076627  0.01218552
+GENDER       -0.1093069  0.01218552  0.19147673
+
+$output.summary$study1$cov.scaled
+            (Intercept)    LAB_TRIG      GENDER
+(Intercept)   0.2069613 -0.03908510 -0.10930695
+LAB_TRIG     -0.0390851  0.01076627  0.01218552
+GENDER       -0.1093069  0.01218552  0.19147673
+
+$output.summary$study1$offset
+NULL
+
+$output.summary$study1$weights
+NULL
+
+$output.summary$study1$VarCovMatrix
+            (Intercept)    LAB_TRIG      GENDER
+(Intercept)   0.2069613 -0.03908510 -0.10930695
+LAB_TRIG     -0.0390851  0.01076627  0.01218552
+GENDER       -0.1093069  0.01218552  0.19147673
+
+$output.summary$study1$CorrMatrix
+           [,1]       [,2]       [,3]
+[1,]  1.0000000 -0.8280071 -0.5490922
+[2,] -0.8280071  1.0000000  0.2683820
+[3,] -0.5490922  0.2683820  1.0000000
+
+$output.summary$study1$deviance.null
+[1] 263.5124
+
+$output.summary$study1$df.null
+[1] 1800
+
+$output.summary$study1$deviance.resid
+[1] 250.0324
+
+$output.summary$study1$df.resid
+[1] 1798
+
+$output.summary$study1$formula
+DIS_DIAB ~ LAB_TRIG + GENDER
+
+$output.summary$study1$family
+
+Family: binomial 
+Link function: logit 
+
+
+$output.summary$study1$coefficients
+              Estimate Std. Error     z value     Pr(&gt;|z|)
+(Intercept) -5.1696619  0.4549299 -11.3636438 6.344210e-30
+LAB_TRIG     0.3813891  0.1037606   3.6756625 2.372330e-04
+GENDER      -0.2260851  0.4375805  -0.5166709 6.053859e-01
+
+
+$output.summary$study2
+$output.summary$study2$rank
+[1] 3
+
+$output.summary$study2$aic
+[1] 342.4653
+
+$output.summary$study2$iter
+[1] 7
+
+$output.summary$study2$converged
+[1] TRUE
+
+$output.summary$study2$boundary
+[1] FALSE
+
+$output.summary$study2$na.action
+$output.summary$study2$na.action$na.action
+[1] &quot;na.omit&quot;
+
+
+$output.summary$study2$call
+glm(formula = formula, family = binomial, data = D, x = TRUE)
+
+$output.summary$study2$terms
+DIS_DIAB ~ LAB_TRIG + GENDER
+attr(,&quot;variables&quot;)
+list(DIS_DIAB, LAB_TRIG, GENDER)
+attr(,&quot;factors&quot;)
+         LAB_TRIG GENDER
+DIS_DIAB        0      0
+LAB_TRIG        1      0
+GENDER          0      1
+attr(,&quot;term.labels&quot;)
+[1] &quot;LAB_TRIG&quot; &quot;GENDER&quot;  
+attr(,&quot;order&quot;)
+[1] 1 1
+attr(,&quot;intercept&quot;)
+[1] 1
+attr(,&quot;response&quot;)
+[1] 1
+attr(,&quot;.Environment&quot;)
+&lt;environment: R_GlobalEnv&gt;
+attr(,&quot;predvars&quot;)
+list(DIS_DIAB, LAB_TRIG, GENDER)
+attr(,&quot;dataClasses&quot;)
+ DIS_DIAB  LAB_TRIG    GENDER 
+&quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; 
+
+$output.summary$study2$contrasts
+NULL
+
+$output.summary$study2$aliased
+(Intercept)    LAB_TRIG      GENDER 
+      FALSE       FALSE       FALSE 
+
+$output.summary$study2$dispersion
+[1] 1
+
+$output.summary$study2$data
+[1] &quot;D&quot;
+
+$output.summary$study2$df
+[1]    3 2523    3
+
+$output.summary$study2$Ntotal
+[1] 3088
+
+$output.summary$study2$Nvalid
+[1] 2526
+
+$output.summary$study2$Nmissing
+[1] 562
+
+$output.summary$study2$cov.unscaled
+            (Intercept)     LAB_TRIG       GENDER
+(Intercept)  0.15592059 -0.032943895 -0.078409244
+LAB_TRIG    -0.03294390  0.009761457  0.009976858
+GENDER      -0.07840924  0.009976858  0.155990467
+
+$output.summary$study2$cov.scaled
+            (Intercept)     LAB_TRIG       GENDER
+(Intercept)  0.15592059 -0.032943895 -0.078409244
+LAB_TRIG    -0.03294390  0.009761457  0.009976858
+GENDER      -0.07840924  0.009976858  0.155990467
+
+$output.summary$study2$offset
+NULL
+
+$output.summary$study2$weights
+NULL
+
+$output.summary$study2$VarCovMatrix
+            (Intercept)     LAB_TRIG       GENDER
+(Intercept)  0.15592059 -0.032943895 -0.078409244
+LAB_TRIG    -0.03294390  0.009761457  0.009976858
+GENDER      -0.07840924  0.009976858  0.155990467
+
+$output.summary$study2$CorrMatrix
+           [,1]       [,2]       [,3]
+[1,]  1.0000000 -0.8444344 -0.5027667
+[2,] -0.8444344  1.0000000  0.2556745
+[3,] -0.5027667  0.2556745  1.0000000
+
+$output.summary$study2$deviance.null
+[1] 351.8674
+
+$output.summary$study2$df.null
+[1] 2525
+
+$output.summary$study2$deviance.resid
+[1] 336.4653
+
+$output.summary$study2$df.resid
+[1] 2523
+
+$output.summary$study2$formula
+DIS_DIAB ~ LAB_TRIG + GENDER
+
+$output.summary$study2$family
+
+Family: binomial 
+Link function: logit 
+
+
+$output.summary$study2$coefficients
+              Estimate Std. Error    z value     Pr(&gt;|z|)
+(Intercept) -5.0254035 0.39486781 -12.726800 4.196922e-37
+LAB_TRIG     0.3462886 0.09880009   3.504943 4.567058e-04
+GENDER      -0.4550068 0.39495629  -1.152043 2.493032e-01
+
+
+$output.summary$study3
+$output.summary$study3$rank
+[1] 3
+
+$output.summary$study3$aic
+[1] 565.7245
+
+$output.summary$study3$iter
+[1] 7
+
+$output.summary$study3$converged
+[1] TRUE
+
+$output.summary$study3$boundary
+[1] FALSE
+
+$output.summary$study3$na.action
+$output.summary$study3$na.action$na.action
+[1] &quot;na.omit&quot;
+
+
+$output.summary$study3$call
+glm(formula = formula, family = binomial, data = D, x = TRUE)
+
+$output.summary$study3$terms
+DIS_DIAB ~ LAB_TRIG + GENDER
+attr(,&quot;variables&quot;)
+list(DIS_DIAB, LAB_TRIG, GENDER)
+attr(,&quot;factors&quot;)
+         LAB_TRIG GENDER
+DIS_DIAB        0      0
+LAB_TRIG        1      0
+GENDER          0      1
+attr(,&quot;term.labels&quot;)
+[1] &quot;LAB_TRIG&quot; &quot;GENDER&quot;  
+attr(,&quot;order&quot;)
+[1] 1 1
+attr(,&quot;intercept&quot;)
+[1] 1
+attr(,&quot;response&quot;)
+[1] 1
+attr(,&quot;.Environment&quot;)
+&lt;environment: R_GlobalEnv&gt;
+attr(,&quot;predvars&quot;)
+list(DIS_DIAB, LAB_TRIG, GENDER)
+attr(,&quot;dataClasses&quot;)
+ DIS_DIAB  LAB_TRIG    GENDER 
+&quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; 
+
+$output.summary$study3$contrasts
+NULL
+
+$output.summary$study3$aliased
+(Intercept)    LAB_TRIG      GENDER 
+      FALSE       FALSE       FALSE 
+
+$output.summary$study3$dispersion
+[1] 1
+
+$output.summary$study3$data
+[1] &quot;D&quot;
+
+$output.summary$study3$df
+[1]    3 3470    3
+
+$output.summary$study3$Ntotal
+[1] 4128
+
+$output.summary$study3$Nvalid
+[1] 3473
+
+$output.summary$study3$Nmissing
+[1] 655
+
+$output.summary$study3$cov.unscaled
+            (Intercept)     LAB_TRIG       GENDER
+(Intercept)  0.08830240 -0.020976682 -0.043516621
+LAB_TRIG    -0.02097668  0.007175979  0.005655775
+GENDER      -0.04351662  0.005655775  0.087660938
+
+$output.summary$study3$cov.scaled
+            (Intercept)     LAB_TRIG       GENDER
+(Intercept)  0.08830240 -0.020976682 -0.043516621
+LAB_TRIG    -0.02097668  0.007175979  0.005655775
+GENDER      -0.04351662  0.005655775  0.087660938
+
+$output.summary$study3$offset
+NULL
+
+$output.summary$study3$weights
+NULL
+
+$output.summary$study3$VarCovMatrix
+            (Intercept)     LAB_TRIG       GENDER
+(Intercept)  0.08830240 -0.020976682 -0.043516621
+LAB_TRIG    -0.02097668  0.007175979  0.005655775
+GENDER      -0.04351662  0.005655775  0.087660938
+
+$output.summary$study3$CorrMatrix
+           [,1]       [,2]       [,3]
+[1,]  1.0000000 -0.8333165 -0.4946134
+[2,] -0.8333165  1.0000000  0.2255010
+[3,] -0.4946134  0.2255010  1.0000000
+
+$output.summary$study3$deviance.null
+[1] 573.3634
+
+$output.summary$study3$df.null
+[1] 3472
+
+$output.summary$study3$deviance.resid
+[1] 559.7245
+
+$output.summary$study3$df.resid
+[1] 3470
+
+$output.summary$study3$formula
+DIS_DIAB ~ LAB_TRIG + GENDER
+
+$output.summary$study3$family
+
+Family: binomial 
+Link function: logit 
+
+
+$output.summary$study3$coefficients
+              Estimate Std. Error    z value     Pr(&gt;|z|)
+(Intercept) -4.4316966 0.29715719 -14.913644 2.686808e-50
+LAB_TRIG     0.2304324 0.08471115   2.720213 6.523986e-03
+GENDER      -0.5416610 0.29607590  -1.829467 6.732971e-02
+
+
+$output.summary$input.beta.matrix.for.SLMA
+            betas study 1 betas study 2 betas study 3
+(Intercept)    -5.1696619    -5.0254035    -4.4316966
+LAB_TRIG        0.3813891     0.3462886     0.2304324
+GENDER         -0.2260851    -0.4550068    -0.5416610
+
+$output.summary$input.se.matrix.for.SLMA
+            ses study 1 ses study 2 ses study 3
+(Intercept)   0.4549299  0.39486781  0.29715719
+LAB_TRIG      0.1037606  0.09880009  0.08471115
+GENDER        0.4375805  0.39495629  0.29607590
+
+
+$num.valid.studies
+[1] 3
+
+$betamatrix.all
+            betas study 1 betas study 2 betas study 3
+(Intercept)    -5.1696619    -5.0254035    -4.4316966
+LAB_TRIG        0.3813891     0.3462886     0.2304324
+GENDER         -0.2260851    -0.4550068    -0.5416610
+
+$sematrix.all
+            ses study 1 ses study 2 ses study 3
+(Intercept)   0.4549299  0.39486781  0.29715719
+LAB_TRIG      0.1037606  0.09880009  0.08471115
+GENDER        0.4375805  0.39495629  0.29607590
+
+$betamatrix.valid
+            betas study 1 betas study 2 betas study 3
+(Intercept)    -5.1696619    -5.0254035    -4.4316966
+LAB_TRIG        0.3813891     0.3462886     0.2304324
+GENDER         -0.2260851    -0.4550068    -0.5416610
+
+$sematrix.valid
+            ses study 1 ses study 2 ses study 3
+(Intercept)   0.4549299  0.39486781  0.29715719
+LAB_TRIG      0.1037606  0.09880009  0.08471115
+GENDER        0.4375805  0.39495629  0.29607590
+
+$SLMA.pooled.ests.matrix
+             pooled.ML      se.ML pooled.REML    se.REML  pooled.FE      se.FE
+(Intercept) -4.7583891 0.21049116  -4.7914954 0.24960238 -4.7583890 0.21049103
+LAB_TRIG     0.3077898 0.05466193   0.3077898 0.05466193  0.3077898 0.05466193
+GENDER      -0.4460209 0.20832970  -0.4460209 0.20832970 -0.4460209 0.20832970
+
+$is.object.created
+[1] &quot;A data object &lt;new.glm.obj&gt; has been created in all specified data sources&quot;
+
+$validity.check
+[1] &quot;&lt;new.glm.obj&gt; appears valid in all sources&quot;</code></pre>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="datashield.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datashield.logout</span>(conns)</span></code></pre></div>
+<p>and visualize the results using some R packages</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="datashield.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(meta)</span>
+<span id="cb200-2"><a href="datashield.html#cb200-2" aria-hidden="true" tabindex="-1"></a>betas <span class="ot">&lt;-</span> mod.meta<span class="sc">$</span>output.summary<span class="sc">$</span>input.beta.matrix.for.SLMA</span>
+<span id="cb200-3"><a href="datashield.html#cb200-3" aria-hidden="true" tabindex="-1"></a>ses <span class="ot">&lt;-</span> mod.meta<span class="sc">$</span>output.summary<span class="sc">$</span>input.se.matrix.for.SLMA</span>
+<span id="cb200-4"><a href="datashield.html#cb200-4" aria-hidden="true" tabindex="-1"></a>betas</span></code></pre></div>
+<pre><code>            betas study 1 betas study 2 betas study 3
+(Intercept)    -5.1696619    -5.0254035    -4.4316966
+LAB_TRIG        0.3813891     0.3462886     0.2304324
+GENDER         -0.2260851    -0.4550068    -0.5416610</code></pre>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="datashield.html#cb202-1" aria-hidden="true" tabindex="-1"></a>ses</span></code></pre></div>
+<pre><code>            ses study 1 ses study 2 ses study 3
+(Intercept)   0.4549299  0.39486781  0.29715719
+LAB_TRIG      0.1037606  0.09880009  0.08471115
+GENDER        0.4375805  0.39495629  0.29607590</code></pre>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="datashield.html#cb204-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">metagen</span>(betas[<span class="st">&quot;LAB_TRIG&quot;</span>,], ses[<span class="st">&quot;LAB_TRIG&quot;</span>,])</span>
+<span id="cb204-2"><a href="datashield.html#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="fu">forest</span>(res, <span class="at">layout=</span><span class="st">&quot;JAMA&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-80-1.png" width="672" /></p>
 </div>
 </div>
 <div id="tips-and-tricks" class="section level2" number="6.7">
@@ -1015,17 +1489,17 @@ GENDER         0.426036242      0.96274475</code></pre>
 <div id="using-r" class="section level4" number="6.7.1.2">
 <h4><span class="header-section-number">6.7.1.2</span> Using R</h4>
 <p>A project can be created using the following R code:</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="datashield.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb196-2"><a href="datashield.html#cb196-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
-<span id="cb196-3"><a href="datashield.html#cb196-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb196-4"><a href="datashield.html#cb196-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb196-5"><a href="datashield.html#cb196-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A general purpose project, with a data storage</span></span>
-<span id="cb196-6"><a href="datashield.html#cb196-6" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.project_create</span>(o, <span class="st">&quot;projectName&quot;</span>, <span class="at">database=</span><span class="cn">TRUE</span>)</span>
-<span id="cb196-7"><a href="datashield.html#cb196-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb196-8"><a href="datashield.html#cb196-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A project that can hold only resources and views (no persisted data)</span></span>
-<span id="cb196-9"><a href="datashield.html#cb196-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.project_create</span>(o, <span class="st">&quot;projectName&quot;</span>)</span>
-<span id="cb196-10"><a href="datashield.html#cb196-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb196-11"><a href="datashield.html#cb196-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="datashield.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb205-2"><a href="datashield.html#cb205-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
+<span id="cb205-3"><a href="datashield.html#cb205-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb205-4"><a href="datashield.html#cb205-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-5"><a href="datashield.html#cb205-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A general purpose project, with a data storage</span></span>
+<span id="cb205-6"><a href="datashield.html#cb205-6" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.project_create</span>(o, <span class="st">&quot;projectName&quot;</span>, <span class="at">database=</span><span class="cn">TRUE</span>)</span>
+<span id="cb205-7"><a href="datashield.html#cb205-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-8"><a href="datashield.html#cb205-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A project that can hold only resources and views (no persisted data)</span></span>
+<span id="cb205-9"><a href="datashield.html#cb205-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.project_create</span>(o, <span class="st">&quot;projectName&quot;</span>)</span>
+<span id="cb205-10"><a href="datashield.html#cb205-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-11"><a href="datashield.html#cb205-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 <p>See also the other <code>opal.project_*</code> functions.</p>
 </div>
 </div>
@@ -1058,19 +1532,19 @@ GENDER         0.426036242      0.96274475</code></pre>
 <div id="using-r-1" class="section level4" number="6.7.2.2">
 <h4><span class="header-section-number">6.7.2.2</span> Using R</h4>
 <p>A resource can be added to a project by a simple function call, assuming that you know how to express the URL to the resource:</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="datashield.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb197-2"><a href="datashield.html#cb197-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="st">&quot;administrator&quot;</span>,<span class="st">&quot;password&quot;</span>, </span>
-<span id="cb197-3"><a href="datashield.html#cb197-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb197-4"><a href="datashield.html#cb197-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb197-5"><a href="datashield.html#cb197-5" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.resource_create</span>(o, <span class="st">&quot;RSRC&quot;</span>, <span class="st">&quot;CNSIM3&quot;</span>, </span>
-<span id="cb197-6"><a href="datashield.html#cb197-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">&quot;opal+https://opal-demo.obiba.org/ws/files/projects/RSRC/CNSIM3.zip&quot;</span>, </span>
-<span id="cb197-7"><a href="datashield.html#cb197-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">&quot;csv&quot;</span>, <span class="at">secret =</span> <span class="st">&quot;EeTtQGIob6haio5bx6FUfVvIGkeZJfGq&quot;</span>)</span>
-<span id="cb197-8"><a href="datashield.html#cb197-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb197-9"><a href="datashield.html#cb197-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to test the resource assignment</span></span>
-<span id="cb197-10"><a href="datashield.html#cb197-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.assign.resource</span>(o, <span class="st">&quot;client&quot;</span>, <span class="st">&quot;RSRC.CNSIM3&quot;</span>)</span>
-<span id="cb197-11"><a href="datashield.html#cb197-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.execute</span>(o, <span class="st">&quot;class(client)&quot;</span>)</span>
-<span id="cb197-12"><a href="datashield.html#cb197-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb197-13"><a href="datashield.html#cb197-13" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="datashield.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb206-2"><a href="datashield.html#cb206-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="st">&quot;administrator&quot;</span>,<span class="st">&quot;password&quot;</span>, </span>
+<span id="cb206-3"><a href="datashield.html#cb206-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb206-4"><a href="datashield.html#cb206-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-5"><a href="datashield.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.resource_create</span>(o, <span class="st">&quot;RSRC&quot;</span>, <span class="st">&quot;CNSIM3&quot;</span>, </span>
+<span id="cb206-6"><a href="datashield.html#cb206-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">&quot;opal+https://opal-demo.obiba.org/ws/files/projects/RSRC/CNSIM3.zip&quot;</span>, </span>
+<span id="cb206-7"><a href="datashield.html#cb206-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">&quot;csv&quot;</span>, <span class="at">secret =</span> <span class="st">&quot;EeTtQGIob6haio5bx6FUfVvIGkeZJfGq&quot;</span>)</span>
+<span id="cb206-8"><a href="datashield.html#cb206-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-9"><a href="datashield.html#cb206-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to test the resource assignment</span></span>
+<span id="cb206-10"><a href="datashield.html#cb206-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.assign.resource</span>(o, <span class="st">&quot;client&quot;</span>, <span class="st">&quot;RSRC.CNSIM3&quot;</span>)</span>
+<span id="cb206-11"><a href="datashield.html#cb206-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.execute</span>(o, <span class="st">&quot;class(client)&quot;</span>)</span>
+<span id="cb206-12"><a href="datashield.html#cb206-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-13"><a href="datashield.html#cb206-13" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 <p>See also the other <code>opal.resource_*</code>functions.</p>
 </div>
 </div>
@@ -1101,26 +1575,26 @@ GENDER         0.426036242      0.96274475</code></pre>
 <div id="using-r-2" class="section level4" number="6.7.3.2">
 <h4><span class="header-section-number">6.7.3.2</span> Using R</h4>
 <p>The user can install DataSHIELD R packages from CRAN or GitHub using the following R code:</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="datashield.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb198-2"><a href="datashield.html#cb198-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
-<span id="cb198-3"><a href="datashield.html#cb198-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb198-4"><a href="datashield.html#cb198-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb198-5"><a href="datashield.html#cb198-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CRAN</span></span>
-<span id="cb198-6"><a href="datashield.html#cb198-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_package</span>(o, <span class="st">&quot;dsBase&quot;</span>)</span>
-<span id="cb198-7"><a href="datashield.html#cb198-7" aria-hidden="true" tabindex="-1"></a><span class="co"># GitHub</span></span>
-<span id="cb198-8"><a href="datashield.html#cb198-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_github_package</span>(o, <span class="st">&quot;packageName&quot;</span>, <span class="at">username=</span><span class="st">&quot;orgOrUserName&quot;</span>)</span>
-<span id="cb198-9"><a href="datashield.html#cb198-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb198-10"><a href="datashield.html#cb198-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="datashield.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb207-2"><a href="datashield.html#cb207-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
+<span id="cb207-3"><a href="datashield.html#cb207-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb207-4"><a href="datashield.html#cb207-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-5"><a href="datashield.html#cb207-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CRAN</span></span>
+<span id="cb207-6"><a href="datashield.html#cb207-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_package</span>(o, <span class="st">&quot;dsBase&quot;</span>)</span>
+<span id="cb207-7"><a href="datashield.html#cb207-7" aria-hidden="true" tabindex="-1"></a><span class="co"># GitHub</span></span>
+<span id="cb207-8"><a href="datashield.html#cb207-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_github_package</span>(o, <span class="st">&quot;packageName&quot;</span>, <span class="at">username=</span><span class="st">&quot;orgOrUserName&quot;</span>)</span>
+<span id="cb207-9"><a href="datashield.html#cb207-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-10"><a href="datashield.html#cb207-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 <p>When developing a new DataSHIELD package, it can be convenient to directly upload the built package archive for being installed on the R server side. This can be done as follow:</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="datashield.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb199-2"><a href="datashield.html#cb199-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
-<span id="cb199-3"><a href="datashield.html#cb199-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb199-4"><a href="datashield.html#cb199-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb199-5"><a href="datashield.html#cb199-5" aria-hidden="true" tabindex="-1"></a><span class="co"># build and install the package archive</span></span>
-<span id="cb199-6"><a href="datashield.html#cb199-6" aria-hidden="true" tabindex="-1"></a>packageArchivePath <span class="ot">&lt;-</span> devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg=</span><span class="st">&quot;/path/to/the/packageName&quot;</span>)</span>
-<span id="cb199-7"><a href="datashield.html#cb199-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_local_package</span>(o, <span class="at">path=</span>packageArchivePath)</span>
-<span id="cb199-8"><a href="datashield.html#cb199-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb199-9"><a href="datashield.html#cb199-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="datashield.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb208-2"><a href="datashield.html#cb208-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
+<span id="cb208-3"><a href="datashield.html#cb208-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb208-4"><a href="datashield.html#cb208-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb208-5"><a href="datashield.html#cb208-5" aria-hidden="true" tabindex="-1"></a><span class="co"># build and install the package archive</span></span>
+<span id="cb208-6"><a href="datashield.html#cb208-6" aria-hidden="true" tabindex="-1"></a>packageArchivePath <span class="ot">&lt;-</span> devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg=</span><span class="st">&quot;/path/to/the/packageName&quot;</span>)</span>
+<span id="cb208-7"><a href="datashield.html#cb208-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_local_package</span>(o, <span class="at">path=</span>packageArchivePath)</span>
+<span id="cb208-8"><a href="datashield.html#cb208-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb208-9"><a href="datashield.html#cb208-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 </div>
 </div>
 <div id="how-to-install-r-packages-into-opal-server" class="section level3" number="6.7.4">
@@ -1136,18 +1610,18 @@ GENDER         0.426036242      0.96274475</code></pre>
 <div id="using-r-3" class="section level4" number="6.7.4.2">
 <h4><span class="header-section-number">6.7.4.2</span> Using R</h4>
 <p>The user can install R packages from CRAN, Bioconductor or GitHub using the following R code:</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="datashield.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb200-2"><a href="datashield.html#cb200-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
-<span id="cb200-3"><a href="datashield.html#cb200-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb200-4"><a href="datashield.html#cb200-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb200-5"><a href="datashield.html#cb200-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CRAN</span></span>
-<span id="cb200-6"><a href="datashield.html#cb200-6" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_package</span>(o, <span class="st">&quot;cranPackageName&quot;</span>)</span>
-<span id="cb200-7"><a href="datashield.html#cb200-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bioconductor</span></span>
-<span id="cb200-8"><a href="datashield.html#cb200-8" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_bioconductor_package</span>(o, <span class="st">&quot;biocPackageName&quot;</span>)</span>
-<span id="cb200-9"><a href="datashield.html#cb200-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GitHub</span></span>
-<span id="cb200-10"><a href="datashield.html#cb200-10" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_github_package</span>(o, <span class="st">&quot;packageName&quot;</span>, <span class="at">username=</span><span class="st">&quot;orgOrUserName&quot;</span>, <span class="at">ref =</span> <span class="st">&quot;branchOrTagName&quot;</span>)</span>
-<span id="cb200-11"><a href="datashield.html#cb200-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb200-12"><a href="datashield.html#cb200-12" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="datashield.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb209-2"><a href="datashield.html#cb209-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
+<span id="cb209-3"><a href="datashield.html#cb209-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb209-4"><a href="datashield.html#cb209-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-5"><a href="datashield.html#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CRAN</span></span>
+<span id="cb209-6"><a href="datashield.html#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_package</span>(o, <span class="st">&quot;cranPackageName&quot;</span>)</span>
+<span id="cb209-7"><a href="datashield.html#cb209-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bioconductor</span></span>
+<span id="cb209-8"><a href="datashield.html#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_bioconductor_package</span>(o, <span class="st">&quot;biocPackageName&quot;</span>)</span>
+<span id="cb209-9"><a href="datashield.html#cb209-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GitHub</span></span>
+<span id="cb209-10"><a href="datashield.html#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_github_package</span>(o, <span class="st">&quot;packageName&quot;</span>, <span class="at">username=</span><span class="st">&quot;orgOrUserName&quot;</span>, <span class="at">ref =</span> <span class="st">&quot;branchOrTagName&quot;</span>)</span>
+<span id="cb209-11"><a href="datashield.html#cb209-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-12"><a href="datashield.html#cb209-12" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 
 </div>
 </div>
