@@ -34,7 +34,7 @@ Detailed concepts and tutorials for tables can be found here:
 
 All Opal operations are accessible through web services that require authentication and proper authorization. The permissions can be granted to a specific user or a group of users, can be applied to a project or to a table and have different levels: *read-only meta-data* (access to the data dictionary without access to the individual-level data), *read-only*, or *write* permissions. The programmatic authentication can make use of *username/password* credentials, *token* or *2-way SSL* authentication methods. Opal can also integrate with the hosting institution's users registry using the [OpenID Connect](https://openid.net/connect/) standard.
 
-## R Integration
+### R Integration
 
 Opal connects to a R server to perform different kind of operations:
 
@@ -45,7 +45,7 @@ The R server is based on the [Rserve](https://cran.r-project.org/package=Rserve)
 
 This Opal/R integration works well for small to mid-size datasets (usually less than 10M data points). For bigger datasets, extracting and transferring data from the database to the R server is time, CPU and memory intensive. In this work, we will present a more flexible data description paradigm called [resources](#resources) that enables Opal to manage access to Big Data sets, complex data structures and computation units for analysis purpose, while still having the security and the analysis features provided by Opal.
 
-### Opal demo site
+#### Opal demo site
 
 We have set up an [Opal demo site](http://opal-demo.obiba.org/) to illustrate how to perform some basic analyses using DataSHIELD as well as how to deal with different *resources* for 'omic data. The Opal server can be accessed with the credentials:
 

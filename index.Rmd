@@ -49,4 +49,7 @@ library(tidyr)
 library(dplyr)
 options(scipen = 0)
 ```
- 
+
+```{r echo=FALSE}
+library(knitr)
+```

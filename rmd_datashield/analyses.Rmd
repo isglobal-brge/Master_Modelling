@@ -1,4 +1,4 @@
-## Basic statistical analyses
+## Demo: Basic statistical analyses
 
 
 Let us start by illustrating how to peform simple statistical data analyses using different resources. Here, we will use data from three studies that are available in our Opal demo repository. The three databases are called CNSIM1, CNSIM2, CNSIM3 and are available as three different resources: mySQL database, SPSS file and CSV file (see Figure \@ref(fig:testResources)). This example mimics real situations where different hospitals or research centers manage their own databases containing harmonized data. Data correspond to three simulated datasets with different numbers of observations of 11 harmonized variables. They contain synthetic data based on a model derived from the participants of the 1958 Birth Cohort, as part of an obesity methodological development project. This dataset does contain some NA values. The available variables are:
