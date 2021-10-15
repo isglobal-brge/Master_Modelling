@@ -142,7 +142,17 @@ forest(res, layout="JAMA")
 ## Practical exercise
 
 >
-*EXERCISE*: We have access to 3 datasets corresponding to simulated data from UKBiobank available through CINECA study. This data reproduces the exact associations found at UKBiobank. Next table shows the data dictionary of XX selected variables. The three datasets are accessed in this Opal server (https://opal-demo.obiba.org/) in a project called **GWAS** as three different resources (named **ega_phenotypes_1**, **ega_phenotypes_2** and **ega_phenotypes_3**). Load the three resources in R as `data.frame`'s using the functions available in the `dsOpal` library and answer the next questions using the functions available at `dsBaseClient` package.
+*EXERCISE*: We have access to 3 datasets corresponding to simulated data from UKBiobank available through CINECA study. This data reproduces the exact associations found at UKBiobank. Next table shows the data dictionary of XX selected variables. The three datasets are accessed in this Opal server (https://opal-demo.obiba.org/) in a project called **GWAS** as three different resources (named **ega_phenotypes_1**, **ega_phenotypes_2** and **ega_phenotypes_3**). 
+>
+Start by installing the required R packages by typing 
+>
+```
+library(devtools)
+install.packages("DSI")
+install_github("datashield/dsBaseClient")
+```
+>
+Then, looad the three resources in R as `data.frame`'s using the functions available in the `DSI` library and answer the next questions using the functions available at `dsBaseClient` package.
 >
 * Check that your loaded objects are of class `data.frame`
 * How many individuals have been diagnosed with diabetes by doctor (variable `diabetes_diagnosed_doctor`)?

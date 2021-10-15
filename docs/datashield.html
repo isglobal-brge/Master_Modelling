@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-10-14" />
+<meta name="date" content="2021-10-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1462,7 +1462,14 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <div id="practical-exercise" class="section level2" number="6.7">
 <h2><span class="header-section-number">6.7</span> Practical exercise</h2>
 <blockquote>
-<p><em>EXERCISE</em>: We have access to 3 datasets corresponding to simulated data from UKBiobank available through CINECA study. This data reproduces the exact associations found at UKBiobank. Next table shows the data dictionary of XX selected variables. The three datasets are accessed in this Opal server (<a href="https://opal-demo.obiba.org/" class="uri">https://opal-demo.obiba.org/</a>) in a project called <strong>GWAS</strong> as three different resources (named <strong>ega_phenotypes_1</strong>, <strong>ega_phenotypes_2</strong> and <strong>ega_phenotypes_3</strong>). Load the three resources in R as <code>data.frame</code>’s using the functions available in the <code>dsOpal</code> library and answer the next questions using the functions available at <code>dsBaseClient</code> package.</p>
+<p><em>EXERCISE</em>: We have access to 3 datasets corresponding to simulated data from UKBiobank available through CINECA study. This data reproduces the exact associations found at UKBiobank. Next table shows the data dictionary of XX selected variables. The three datasets are accessed in this Opal server (<a href="https://opal-demo.obiba.org/" class="uri">https://opal-demo.obiba.org/</a>) in a project called <strong>GWAS</strong> as three different resources (named <strong>ega_phenotypes_1</strong>, <strong>ega_phenotypes_2</strong> and <strong>ega_phenotypes_3</strong>).</p>
+<p>Start by installing the required R packages by typing</p>
+</blockquote>
+<pre><code>library(devtools)
+install.packages(&quot;DSI&quot;)
+install_github(&quot;datashield/dsBaseClient&quot;)</code></pre>
+<blockquote>
+<p>Then, looad the three resources in R as <code>data.frame</code>’s using the functions available in the <code>DSI</code> library and answer the next questions using the functions available at <code>dsBaseClient</code> package.</p>
 <ul>
 <li>Check that your loaded objects are of class <code>data.frame</code></li>
 <li>How many individuals have been diagnosed with diabetes by doctor (variable <code>diabetes_diagnosed_doctor</code>)?</li>
@@ -1508,17 +1515,17 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <div id="using-r" class="section level4" number="6.8.1.2">
 <h4><span class="header-section-number">6.8.1.2</span> Using R</h4>
 <p>A project can be created using the following R code:</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="datashield.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb205-2"><a href="datashield.html#cb205-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
-<span id="cb205-3"><a href="datashield.html#cb205-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb205-4"><a href="datashield.html#cb205-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-5"><a href="datashield.html#cb205-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A general purpose project, with a data storage</span></span>
-<span id="cb205-6"><a href="datashield.html#cb205-6" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.project_create</span>(o, <span class="st">&quot;projectName&quot;</span>, <span class="at">database=</span><span class="cn">TRUE</span>)</span>
-<span id="cb205-7"><a href="datashield.html#cb205-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-8"><a href="datashield.html#cb205-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A project that can hold only resources and views (no persisted data)</span></span>
-<span id="cb205-9"><a href="datashield.html#cb205-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.project_create</span>(o, <span class="st">&quot;projectName&quot;</span>)</span>
-<span id="cb205-10"><a href="datashield.html#cb205-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-11"><a href="datashield.html#cb205-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="datashield.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb206-2"><a href="datashield.html#cb206-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
+<span id="cb206-3"><a href="datashield.html#cb206-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb206-4"><a href="datashield.html#cb206-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-5"><a href="datashield.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A general purpose project, with a data storage</span></span>
+<span id="cb206-6"><a href="datashield.html#cb206-6" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.project_create</span>(o, <span class="st">&quot;projectName&quot;</span>, <span class="at">database=</span><span class="cn">TRUE</span>)</span>
+<span id="cb206-7"><a href="datashield.html#cb206-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-8"><a href="datashield.html#cb206-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A project that can hold only resources and views (no persisted data)</span></span>
+<span id="cb206-9"><a href="datashield.html#cb206-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.project_create</span>(o, <span class="st">&quot;projectName&quot;</span>)</span>
+<span id="cb206-10"><a href="datashield.html#cb206-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-11"><a href="datashield.html#cb206-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 <p>See also the other <code>opal.project_*</code> functions.</p>
 </div>
 </div>
@@ -1551,19 +1558,19 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <div id="using-r-1" class="section level4" number="6.8.2.2">
 <h4><span class="header-section-number">6.8.2.2</span> Using R</h4>
 <p>A resource can be added to a project by a simple function call, assuming that you know how to express the URL to the resource:</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="datashield.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb206-2"><a href="datashield.html#cb206-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="st">&quot;administrator&quot;</span>,<span class="st">&quot;password&quot;</span>, </span>
-<span id="cb206-3"><a href="datashield.html#cb206-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb206-4"><a href="datashield.html#cb206-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb206-5"><a href="datashield.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.resource_create</span>(o, <span class="st">&quot;RSRC&quot;</span>, <span class="st">&quot;CNSIM3&quot;</span>, </span>
-<span id="cb206-6"><a href="datashield.html#cb206-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">&quot;opal+https://opal-demo.obiba.org/ws/files/projects/RSRC/CNSIM3.zip&quot;</span>, </span>
-<span id="cb206-7"><a href="datashield.html#cb206-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">&quot;csv&quot;</span>, <span class="at">secret =</span> <span class="st">&quot;EeTtQGIob6haio5bx6FUfVvIGkeZJfGq&quot;</span>)</span>
-<span id="cb206-8"><a href="datashield.html#cb206-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb206-9"><a href="datashield.html#cb206-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to test the resource assignment</span></span>
-<span id="cb206-10"><a href="datashield.html#cb206-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.assign.resource</span>(o, <span class="st">&quot;client&quot;</span>, <span class="st">&quot;RSRC.CNSIM3&quot;</span>)</span>
-<span id="cb206-11"><a href="datashield.html#cb206-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.execute</span>(o, <span class="st">&quot;class(client)&quot;</span>)</span>
-<span id="cb206-12"><a href="datashield.html#cb206-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb206-13"><a href="datashield.html#cb206-13" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="datashield.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb207-2"><a href="datashield.html#cb207-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="st">&quot;administrator&quot;</span>,<span class="st">&quot;password&quot;</span>, </span>
+<span id="cb207-3"><a href="datashield.html#cb207-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb207-4"><a href="datashield.html#cb207-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-5"><a href="datashield.html#cb207-5" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.resource_create</span>(o, <span class="st">&quot;RSRC&quot;</span>, <span class="st">&quot;CNSIM3&quot;</span>, </span>
+<span id="cb207-6"><a href="datashield.html#cb207-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">&quot;opal+https://opal-demo.obiba.org/ws/files/projects/RSRC/CNSIM3.zip&quot;</span>, </span>
+<span id="cb207-7"><a href="datashield.html#cb207-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">&quot;csv&quot;</span>, <span class="at">secret =</span> <span class="st">&quot;EeTtQGIob6haio5bx6FUfVvIGkeZJfGq&quot;</span>)</span>
+<span id="cb207-8"><a href="datashield.html#cb207-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-9"><a href="datashield.html#cb207-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to test the resource assignment</span></span>
+<span id="cb207-10"><a href="datashield.html#cb207-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.assign.resource</span>(o, <span class="st">&quot;client&quot;</span>, <span class="st">&quot;RSRC.CNSIM3&quot;</span>)</span>
+<span id="cb207-11"><a href="datashield.html#cb207-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.execute</span>(o, <span class="st">&quot;class(client)&quot;</span>)</span>
+<span id="cb207-12"><a href="datashield.html#cb207-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-13"><a href="datashield.html#cb207-13" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 <p>See also the other <code>opal.resource_*</code>functions.</p>
 </div>
 </div>
@@ -1594,26 +1601,26 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <div id="using-r-2" class="section level4" number="6.8.3.2">
 <h4><span class="header-section-number">6.8.3.2</span> Using R</h4>
 <p>The user can install DataSHIELD R packages from CRAN or GitHub using the following R code:</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="datashield.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb207-2"><a href="datashield.html#cb207-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
-<span id="cb207-3"><a href="datashield.html#cb207-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb207-4"><a href="datashield.html#cb207-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb207-5"><a href="datashield.html#cb207-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CRAN</span></span>
-<span id="cb207-6"><a href="datashield.html#cb207-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_package</span>(o, <span class="st">&quot;dsBase&quot;</span>)</span>
-<span id="cb207-7"><a href="datashield.html#cb207-7" aria-hidden="true" tabindex="-1"></a><span class="co"># GitHub</span></span>
-<span id="cb207-8"><a href="datashield.html#cb207-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_github_package</span>(o, <span class="st">&quot;packageName&quot;</span>, <span class="at">username=</span><span class="st">&quot;orgOrUserName&quot;</span>)</span>
-<span id="cb207-9"><a href="datashield.html#cb207-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb207-10"><a href="datashield.html#cb207-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
-<p>When developing a new DataSHIELD package, it can be convenient to directly upload the built package archive for being installed on the R server side. This can be done as follow:</p>
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="datashield.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
 <span id="cb208-2"><a href="datashield.html#cb208-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
 <span id="cb208-3"><a href="datashield.html#cb208-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
 <span id="cb208-4"><a href="datashield.html#cb208-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb208-5"><a href="datashield.html#cb208-5" aria-hidden="true" tabindex="-1"></a><span class="co"># build and install the package archive</span></span>
-<span id="cb208-6"><a href="datashield.html#cb208-6" aria-hidden="true" tabindex="-1"></a>packageArchivePath <span class="ot">&lt;-</span> devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg=</span><span class="st">&quot;/path/to/the/packageName&quot;</span>)</span>
-<span id="cb208-7"><a href="datashield.html#cb208-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_local_package</span>(o, <span class="at">path=</span>packageArchivePath)</span>
-<span id="cb208-8"><a href="datashield.html#cb208-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb208-9"><a href="datashield.html#cb208-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<span id="cb208-5"><a href="datashield.html#cb208-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CRAN</span></span>
+<span id="cb208-6"><a href="datashield.html#cb208-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_package</span>(o, <span class="st">&quot;dsBase&quot;</span>)</span>
+<span id="cb208-7"><a href="datashield.html#cb208-7" aria-hidden="true" tabindex="-1"></a><span class="co"># GitHub</span></span>
+<span id="cb208-8"><a href="datashield.html#cb208-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_github_package</span>(o, <span class="st">&quot;packageName&quot;</span>, <span class="at">username=</span><span class="st">&quot;orgOrUserName&quot;</span>)</span>
+<span id="cb208-9"><a href="datashield.html#cb208-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb208-10"><a href="datashield.html#cb208-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<p>When developing a new DataSHIELD package, it can be convenient to directly upload the built package archive for being installed on the R server side. This can be done as follow:</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="datashield.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb209-2"><a href="datashield.html#cb209-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
+<span id="cb209-3"><a href="datashield.html#cb209-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb209-4"><a href="datashield.html#cb209-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-5"><a href="datashield.html#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="co"># build and install the package archive</span></span>
+<span id="cb209-6"><a href="datashield.html#cb209-6" aria-hidden="true" tabindex="-1"></a>packageArchivePath <span class="ot">&lt;-</span> devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg=</span><span class="st">&quot;/path/to/the/packageName&quot;</span>)</span>
+<span id="cb209-7"><a href="datashield.html#cb209-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dsadmin.install_local_package</span>(o, <span class="at">path=</span>packageArchivePath)</span>
+<span id="cb209-8"><a href="datashield.html#cb209-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-9"><a href="datashield.html#cb209-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 </div>
 </div>
 <div id="how-to-install-r-packages-into-opal-server" class="section level3" number="6.8.4">
@@ -1629,18 +1636,18 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <div id="using-r-3" class="section level4" number="6.8.4.2">
 <h4><span class="header-section-number">6.8.4.2</span> Using R</h4>
 <p>The user can install R packages from CRAN, Bioconductor or GitHub using the following R code:</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="datashield.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
-<span id="cb209-2"><a href="datashield.html#cb209-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
-<span id="cb209-3"><a href="datashield.html#cb209-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
-<span id="cb209-4"><a href="datashield.html#cb209-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb209-5"><a href="datashield.html#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CRAN</span></span>
-<span id="cb209-6"><a href="datashield.html#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_package</span>(o, <span class="st">&quot;cranPackageName&quot;</span>)</span>
-<span id="cb209-7"><a href="datashield.html#cb209-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bioconductor</span></span>
-<span id="cb209-8"><a href="datashield.html#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_bioconductor_package</span>(o, <span class="st">&quot;biocPackageName&quot;</span>)</span>
-<span id="cb209-9"><a href="datashield.html#cb209-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GitHub</span></span>
-<span id="cb209-10"><a href="datashield.html#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_github_package</span>(o, <span class="st">&quot;packageName&quot;</span>, <span class="at">username=</span><span class="st">&quot;orgOrUserName&quot;</span>, <span class="at">ref =</span> <span class="st">&quot;branchOrTagName&quot;</span>)</span>
-<span id="cb209-11"><a href="datashield.html#cb209-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb209-12"><a href="datashield.html#cb209-12" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="datashield.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
+<span id="cb210-2"><a href="datashield.html#cb210-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
+<span id="cb210-3"><a href="datashield.html#cb210-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">url=</span><span class="st">&quot;https://opal-demo.obiba.org&quot;</span>)</span>
+<span id="cb210-4"><a href="datashield.html#cb210-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-5"><a href="datashield.html#cb210-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CRAN</span></span>
+<span id="cb210-6"><a href="datashield.html#cb210-6" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_package</span>(o, <span class="st">&quot;cranPackageName&quot;</span>)</span>
+<span id="cb210-7"><a href="datashield.html#cb210-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bioconductor</span></span>
+<span id="cb210-8"><a href="datashield.html#cb210-8" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_bioconductor_package</span>(o, <span class="st">&quot;biocPackageName&quot;</span>)</span>
+<span id="cb210-9"><a href="datashield.html#cb210-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GitHub</span></span>
+<span id="cb210-10"><a href="datashield.html#cb210-10" aria-hidden="true" tabindex="-1"></a><span class="fu">oadmin.install_github_package</span>(o, <span class="st">&quot;packageName&quot;</span>, <span class="at">username=</span><span class="st">&quot;orgOrUserName&quot;</span>, <span class="at">ref =</span> <span class="st">&quot;branchOrTagName&quot;</span>)</span>
+<span id="cb210-11"><a href="datashield.html#cb210-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-12"><a href="datashield.html#cb210-12" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 
 </div>
 </div>
