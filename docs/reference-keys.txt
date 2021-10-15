@@ -52,6 +52,7 @@ server
 demo-basic-statistical-analyses
 analysis-from-a-single-study
 analysis-from-multiple-studies
+practical-exercise
 tips-and-tricks
 how-to-create-a-new-project-into-opal
 manually

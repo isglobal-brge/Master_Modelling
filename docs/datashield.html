@@ -211,12 +211,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.1" data-path="datashield.html"><a href="datashield.html#analysis-from-a-single-study"><i class="fa fa-check"></i><b>6.6.1</b> Analysis from a single study</a></li>
 <li class="chapter" data-level="6.6.2" data-path="datashield.html"><a href="datashield.html#analysis-from-multiple-studies"><i class="fa fa-check"></i><b>6.6.2</b> Analysis from multiple studies</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="datashield.html"><a href="datashield.html#tips-and-tricks"><i class="fa fa-check"></i><b>6.7</b> Tips and tricks</a>
+<li class="chapter" data-level="6.7" data-path="datashield.html"><a href="datashield.html#practical-exercise"><i class="fa fa-check"></i><b>6.7</b> Practical exercise</a></li>
+<li class="chapter" data-level="6.8" data-path="datashield.html"><a href="datashield.html#tips-and-tricks"><i class="fa fa-check"></i><b>6.8</b> Tips and tricks</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="datashield.html"><a href="datashield.html#how-to-create-a-new-project-into-opal"><i class="fa fa-check"></i><b>6.7.1</b> How to create a new project into OPAL</a></li>
-<li class="chapter" data-level="6.7.2" data-path="datashield.html"><a href="datashield.html#how-to-upload-a-new-resource-into-opal"><i class="fa fa-check"></i><b>6.7.2</b> How to upload a new resource into OPAL</a></li>
-<li class="chapter" data-level="6.7.3" data-path="datashield.html"><a href="datashield.html#how-to-install-datashield-packages-into-opal-server"><i class="fa fa-check"></i><b>6.7.3</b> How to install DataSHIELD packages into OPAL server</a></li>
-<li class="chapter" data-level="6.7.4" data-path="datashield.html"><a href="datashield.html#how-to-install-r-packages-into-opal-server"><i class="fa fa-check"></i><b>6.7.4</b> How to install R packages into OPAL server</a></li>
+<li class="chapter" data-level="6.8.1" data-path="datashield.html"><a href="datashield.html#how-to-create-a-new-project-into-opal"><i class="fa fa-check"></i><b>6.8.1</b> How to create a new project into OPAL</a></li>
+<li class="chapter" data-level="6.8.2" data-path="datashield.html"><a href="datashield.html#how-to-upload-a-new-resource-into-opal"><i class="fa fa-check"></i><b>6.8.2</b> How to upload a new resource into OPAL</a></li>
+<li class="chapter" data-level="6.8.3" data-path="datashield.html"><a href="datashield.html#how-to-install-datashield-packages-into-opal-server"><i class="fa fa-check"></i><b>6.8.3</b> How to install DataSHIELD packages into OPAL server</a></li>
+<li class="chapter" data-level="6.8.4" data-path="datashield.html"><a href="datashield.html#how-to-install-r-packages-into-opal-server"><i class="fa fa-check"></i><b>6.8.4</b> How to install R packages into OPAL server</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -1458,8 +1459,26 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <p><img src="fig/unnamed-chunk-80-1.png" width="672" /></p>
 </div>
 </div>
-<div id="tips-and-tricks" class="section level2" number="6.7">
-<h2><span class="header-section-number">6.7</span> Tips and tricks</h2>
+<div id="practical-exercise" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> Practical exercise</h2>
+<blockquote>
+<p><em>EXERCISE</em>: We have access to 3 datasets corresponding to simulated data from UKBiobank available through CINECA study. This data reproduces the exact associations found at UKBiobank. Next table shows the data dictionary of XX selected variables. The three datasets are accessed in this Opal server (<a href="https://opal-demo.obiba.org/" class="uri">https://opal-demo.obiba.org/</a>) in a project called <strong>GWAS</strong> as three different resources (named <strong>ega_phenotypes_1</strong>, <strong>ega_phenotypes_2</strong> and <strong>ega_phenotypes_3</strong>). Load the three resources in R as <code>data.frame</code>’s using the functions available in the <code>dsOpal</code> library and answer the next questions using the functions available at <code>dsBaseClient</code> package.</p>
+<ul>
+<li>Check that your loaded objects are of class <code>data.frame</code></li>
+<li>How many individuals have been diagnosed with diabetes by doctor (variable <code>diabetes_diagnosed_doctor</code>)?</li>
+<li>Obtain the same information stratified by sex (Hint: create a 2x2 table).</li>
+<li>Create an histogram of the variable <code>height</code> by combining information across the three different datasets (Hint: type <code>?ds.histogram</code> to see how to get this plot).</li>
+<li>Create a correlation plot between <code>bmi</code> and <code>weight</code> combining data from the three studies (Hint: ?ds.scatterPlot).</li>
+<li>Compute the correlation between <code>bmi</code>and <code>weight</code>.</li>
+<li>Fit a regression model between <code>cholesterol</code> and <code>weight</code>.</li>
+<li>Fit a regression model between diabetes (variable <code>diabetes_diagnosed_doctor</code>) and colesterol level (variable <code>cholesterol</code>). Note: remember that outcome variable (e.g. diabetes) must be a factor variable.</li>
+<li>Fit the same model adjusted by <code>bmi</code>. Is still cholesterol associated with diabetes?</li>
+<li>Is there any interaction between cholesterol and sex adjusted by bmi?</li>
+</ul>
+</blockquote>
+</div>
+<div id="tips-and-tricks" class="section level2" number="6.8">
+<h2><span class="header-section-number">6.8</span> Tips and tricks</h2>
 <p>The user can see in <a href="http://opaldoc.obiba.org/en/latest/admin/installation.html">this link</a> how to create and install an Opal server. Next we illustrate how to deal with some of the basics for setting up a server to be used within DataSHIELD environment.</p>
 <p>In order to do that, we are using our Opal demo server available here: <a href="https://opal-demo.obiba.org/" class="uri">https://opal-demo.obiba.org/</a></p>
 <p>This is the how an Opal looks like once the user enters the credentials:</p>
@@ -1471,10 +1490,10 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <img src="fig/opal_1.png" alt="" />
 <p class="caption">Opal demo main page</p>
 </div>
-<div id="how-to-create-a-new-project-into-opal" class="section level3" number="6.7.1">
-<h3><span class="header-section-number">6.7.1</span> How to create a new project into OPAL</h3>
-<div id="manually" class="section level4" number="6.7.1.1">
-<h4><span class="header-section-number">6.7.1.1</span> Manually</h4>
+<div id="how-to-create-a-new-project-into-opal" class="section level3" number="6.8.1">
+<h3><span class="header-section-number">6.8.1</span> How to create a new project into OPAL</h3>
+<div id="manually" class="section level4" number="6.8.1.1">
+<h4><span class="header-section-number">6.8.1.1</span> Manually</h4>
 <p>The tab <code>Projects</code> (top-left) goes to the projects available in the Opal demo</p>
 <div class="figure">
 <img src="fig/opal_2.png" alt="" />
@@ -1486,8 +1505,8 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <p class="caption">Adding a new project to Opal</p>
 </div>
 </div>
-<div id="using-r" class="section level4" number="6.7.1.2">
-<h4><span class="header-section-number">6.7.1.2</span> Using R</h4>
+<div id="using-r" class="section level4" number="6.8.1.2">
+<h4><span class="header-section-number">6.8.1.2</span> Using R</h4>
 <p>A project can be created using the following R code:</p>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="datashield.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
 <span id="cb205-2"><a href="datashield.html#cb205-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
@@ -1503,10 +1522,10 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <p>See also the other <code>opal.project_*</code> functions.</p>
 </div>
 </div>
-<div id="how-to-upload-a-new-resource-into-opal" class="section level3" number="6.7.2">
-<h3><span class="header-section-number">6.7.2</span> How to upload a new resource into OPAL</h3>
-<div id="create_manually" class="section level4" number="6.7.2.1">
-<h4><span class="header-section-number">6.7.2.1</span> Manually</h4>
+<div id="how-to-upload-a-new-resource-into-opal" class="section level3" number="6.8.2">
+<h3><span class="header-section-number">6.8.2</span> How to upload a new resource into OPAL</h3>
+<div id="create_manually" class="section level4" number="6.8.2.1">
+<h4><span class="header-section-number">6.8.2.1</span> Manually</h4>
 <p>Once a new project has been created, a new resource can be uploaded by clicking on project’s name. In this case, let us assume that we are working on RSRC project that has been created to illustrate the main examples in this bookdown. After clicking on that project this window will appear</p>
 <div class="figure">
 <img src="fig/opal_4.png" alt="" />
@@ -1529,8 +1548,8 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 </div>
 <p>The different types of resources have been described Chapter <a href="#resourcer"><strong>??</strong></a></p>
 </div>
-<div id="using-r-1" class="section level4" number="6.7.2.2">
-<h4><span class="header-section-number">6.7.2.2</span> Using R</h4>
+<div id="using-r-1" class="section level4" number="6.8.2.2">
+<h4><span class="header-section-number">6.8.2.2</span> Using R</h4>
 <p>A resource can be added to a project by a simple function call, assuming that you know how to express the URL to the resource:</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="datashield.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
 <span id="cb206-2"><a href="datashield.html#cb206-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="st">&quot;administrator&quot;</span>,<span class="st">&quot;password&quot;</span>, </span>
@@ -1548,10 +1567,10 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <p>See also the other <code>opal.resource_*</code>functions.</p>
 </div>
 </div>
-<div id="how-to-install-datashield-packages-into-opal-server" class="section level3" number="6.7.3">
-<h3><span class="header-section-number">6.7.3</span> How to install DataSHIELD packages into OPAL server</h3>
-<div id="manually-1" class="section level4" number="6.7.3.1">
-<h4><span class="header-section-number">6.7.3.1</span> Manually</h4>
+<div id="how-to-install-datashield-packages-into-opal-server" class="section level3" number="6.8.3">
+<h3><span class="header-section-number">6.8.3</span> How to install DataSHIELD packages into OPAL server</h3>
+<div id="manually-1" class="section level4" number="6.8.3.1">
+<h4><span class="header-section-number">6.8.3.1</span> Manually</h4>
 <div class="figure">
 <img src="fig/opal_1_administration.png" alt="" />
 <p class="caption">Administration tab at Opal</p>
@@ -1572,8 +1591,8 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <p class="caption">Install DataSHIELD packages in Opal</p>
 </div>
 </div>
-<div id="using-r-2" class="section level4" number="6.7.3.2">
-<h4><span class="header-section-number">6.7.3.2</span> Using R</h4>
+<div id="using-r-2" class="section level4" number="6.8.3.2">
+<h4><span class="header-section-number">6.8.3.2</span> Using R</h4>
 <p>The user can install DataSHIELD R packages from CRAN or GitHub using the following R code:</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="datashield.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
 <span id="cb207-2"><a href="datashield.html#cb207-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
@@ -1597,18 +1616,18 @@ GENDER        0.4375805  0.39495629  0.29607590</code></pre>
 <span id="cb208-9"><a href="datashield.html#cb208-9" aria-hidden="true" tabindex="-1"></a><span class="fu">opal.logout</span>(o)</span></code></pre></div>
 </div>
 </div>
-<div id="how-to-install-r-packages-into-opal-server" class="section level3" number="6.7.4">
-<h3><span class="header-section-number">6.7.4</span> How to install R packages into OPAL server</h3>
-<div id="manually-2" class="section level4" number="6.7.4.1">
-<h4><span class="header-section-number">6.7.4.1</span> Manually</h4>
+<div id="how-to-install-r-packages-into-opal-server" class="section level3" number="6.8.4">
+<h3><span class="header-section-number">6.8.4</span> How to install R packages into OPAL server</h3>
+<div id="manually-2" class="section level4" number="6.8.4.1">
+<h4><span class="header-section-number">6.8.4.1</span> Manually</h4>
 <p>All the dependencies in a DataSHIELD package are automatically installed when installing it on the Opal Server. If necessary the user can also use the <code>+Install</code> button from the Administration/R tab</p>
 <div class="figure">
 <img src="fig/opal_10.png" alt="" />
 <p class="caption">Install DataSHIELD packages in Opal</p>
 </div>
 </div>
-<div id="using-r-3" class="section level4" number="6.7.4.2">
-<h4><span class="header-section-number">6.7.4.2</span> Using R</h4>
+<div id="using-r-3" class="section level4" number="6.8.4.2">
+<h4><span class="header-section-number">6.8.4.2</span> Using R</h4>
 <p>The user can install R packages from CRAN, Bioconductor or GitHub using the following R code:</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="datashield.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opalr)</span>
 <span id="cb209-2"><a href="datashield.html#cb209-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">opal.login</span>(<span class="at">username=</span><span class="st">&quot;administrator&quot;</span>, <span class="at">password=</span><span class="st">&quot;password&quot;</span>,</span>
