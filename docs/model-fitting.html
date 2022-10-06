@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-10-15" />
+<meta name="date" content="2022-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -718,17 +718,17 @@ Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code>
 <span id="cb120-7"><a href="model-fitting.html#cb120-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(carseats_miss)</span></code></pre></div>
 <pre><code>Rows: 400
 Columns: 11
-$ Sales       &lt;dbl&gt; 9.50, 11.22, 10.06, 7.40, 4.15, 10.81, 6.63, 11.85, 6.54, 4.69, 9.01, 11.96, 3.98, 10.96~
-$ CompPrice   &lt;dbl&gt; 138, 111, 113, 117, 141, 124, 115, NA, NA, NA, 121, 117, NA, 115, 107, NA, 118, NA, 110,~
-$ Income      &lt;dbl&gt; 73, 48, 35, 100, 64, 113, NA, 81, 110, 113, 78, 94, NA, 28, 117, 95, 32, 74, 110, 76, NA~
-$ Advertising &lt;dbl&gt; 11, 16, NA, 4, 3, 13, NA, 15, 0, 0, 9, 4, 2, NA, 11, 5, NA, 13, 0, 16, 2, 12, 6, 0, 16, ~
-$ Population  &lt;dbl&gt; 276, 260, 269, NA, 340, 501, 45, 425, 108, 131, 150, 503, NA, 29, 148, 400, 284, 251, 40~
-$ Price       &lt;dbl&gt; 120, NA, NA, 97, 128, 72, 108, 120, NA, 124, 100, NA, NA, NA, 118, 144, 110, 131, 68, 12~
-$ ShelveLoc   &lt;fct&gt; Bad, NA, Good, NA, Bad, Bad, Good, NA, Good, Good, Bad, Medium, NA, Medium, Medium, Good~
-$ Age         &lt;dbl&gt; 42, 65, NA, 55, 38, NA, 71, 67, 76, 76, 26, 50, NA, 53, 52, 76, 63, 52, 46, 69, NA, NA, ~
-$ Education   &lt;dbl&gt; NA, 10, 12, NA, 13, 16, 15, 10, 10, 17, 10, 13, NA, NA, NA, 18, 13, 10, 17, 12, 18, NA, ~
-$ Urban       &lt;fct&gt; NA, Yes, Yes, Yes, Yes, NA, NA, Yes, No, NA, NA, Yes, Yes, Yes, Yes, No, Yes, Yes, No, N~
-$ US          &lt;fct&gt; Yes, Yes, Yes, Yes, No, Yes, No, Yes, NA, Yes, Yes, Yes, No, Yes, Yes, No, No, NA, Yes, ~</code></pre>
+$ Sales       &lt;dbl&gt; 9.50, 11.22, 10.06, 7.40, 4.15, 10.81, 6.63, 11.85, 6.54, 4.69, 9.01, 11.96, 3.98, 10.96, 11.17, 8.71, 7.58, 12.29, 1~
+$ CompPrice   &lt;dbl&gt; 138, 111, 113, 117, 141, 124, 115, NA, NA, NA, 121, 117, NA, 115, 107, NA, 118, NA, 110, 129, 125, 134, 128, NA, 145,~
+$ Income      &lt;dbl&gt; 73, 48, 35, 100, 64, 113, NA, 81, 110, 113, 78, 94, NA, 28, 117, 95, 32, 74, 110, 76, NA, NA, 46, NA, 119, 32, 115, 1~
+$ Advertising &lt;dbl&gt; 11, 16, NA, 4, 3, 13, NA, 15, 0, 0, 9, 4, 2, NA, 11, 5, NA, 13, 0, 16, 2, 12, 6, 0, 16, 0, 11, 0, NA, 15, NA, 16, 12,~
+$ Population  &lt;dbl&gt; 276, 260, 269, NA, 340, 501, 45, 425, 108, 131, 150, 503, NA, 29, 148, 400, 284, 251, 408, 58, 367, 239, 497, 292, 29~
+$ Price       &lt;dbl&gt; 120, NA, NA, 97, 128, 72, 108, 120, NA, 124, 100, NA, NA, NA, 118, 144, 110, 131, 68, 121, NA, 109, 138, NA, 113, 82,~
+$ ShelveLoc   &lt;fct&gt; Bad, NA, Good, NA, Bad, Bad, Good, NA, Good, Good, Bad, Medium, NA, Medium, Medium, Good, Medium, Medium, Medium, Goo~
+$ Age         &lt;dbl&gt; 42, 65, NA, 55, 38, NA, 71, 67, 76, 76, 26, 50, NA, 53, 52, 76, 63, 52, 46, 69, NA, NA, NA, 79, 42, 54, 50, 64, NA, 5~
+$ Education   &lt;dbl&gt; NA, 10, 12, NA, 13, 16, 15, 10, 10, 17, 10, 13, NA, NA, NA, 18, 13, 10, 17, 12, 18, NA, NA, NA, 12, 11, 11, 17, 11, 1~
+$ Urban       &lt;fct&gt; NA, Yes, Yes, Yes, Yes, NA, NA, Yes, No, NA, NA, Yes, Yes, Yes, Yes, No, Yes, Yes, No, NA, Yes, No, Yes, NA, Yes, No,~
+$ US          &lt;fct&gt; Yes, Yes, Yes, Yes, No, Yes, No, Yes, NA, Yes, Yes, Yes, No, Yes, Yes, No, No, NA, Yes, Yes, NA, Yes, No, No, NA, No,~</code></pre>
 <p>There are now many missing observations. When we fit a regression model of Sales, notice that <code>lm()</code> silently removes the rows with NAs, producing a model based on a very small subset of the data.</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="model-fitting.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">lm</span>(Sales <span class="sc">~</span> CompPrice <span class="sc">+</span> Income <span class="sc">+</span> Advertising <span class="sc">+</span> Population <span class="sc">+</span> Price, <span class="at">data =</span> carseats_miss))</span></code></pre></div>
 <pre><code>lm(formula = Sales ~ CompPrice + Income + Advertising + Population + 
@@ -747,8 +747,8 @@ residual sd = 2.06, R-Squared = 0.59</code></pre>
 <p>We will demonstrate multiple imputation using the <code>mice()</code> function from the mice package. (mice stands for “multiple imputation using chained equations.”)</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="model-fitting.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
 <span id="cb124-2"><a href="model-fitting.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Carseats)</span></code></pre></div>
-<pre><code> [1] &quot;Sales&quot;       &quot;CompPrice&quot;   &quot;Income&quot;      &quot;Advertising&quot; &quot;Population&quot;  &quot;Price&quot;       &quot;ShelveLoc&quot;  
- [8] &quot;Age&quot;         &quot;Education&quot;   &quot;Urban&quot;       &quot;US&quot;         </code></pre>
+<pre><code> [1] &quot;Sales&quot;       &quot;CompPrice&quot;   &quot;Income&quot;      &quot;Advertising&quot; &quot;Population&quot;  &quot;Price&quot;       &quot;ShelveLoc&quot;   &quot;Age&quot;         &quot;Education&quot;  
+[10] &quot;Urban&quot;       &quot;US&quot;         </code></pre>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="model-fitting.html#cb126-1" aria-hidden="true" tabindex="-1"></a>mice_imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(carseats_miss, <span class="at">printFlag =</span> F)</span></code></pre></div>
 <p>The <code>carseats_imp</code> object created by <code>mice()</code> includes (among many other things) <span class="math inline">\(m\)</span> imputed datasets (the default setting in mice is m = 5). The imputed datasets differ because the imputations are randomly drawn from distributions of plausible values. We can visualize the variability of the predictors in these imputed datasets using the <code>densityplot()</code> function.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="model-fitting.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>

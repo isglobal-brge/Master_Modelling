@@ -49,8 +49,8 @@ This Opal/R integration works well for small to mid-size datasets (usually less 
 
 We have set up an [Opal demo site](http://opal-demo.obiba.org/) to illustrate how to perform some basic analyses using DataSHIELD as well as how to deal with different *resources* for 'omic data. The Opal server can be accessed with the credentials:
 
-- username: `administrator`
-- password: `password`
+- username: `dsuser`
+- password: `P@sswOrd`
 
 
 In this figure we can see all the projects available. 
